@@ -1,0 +1,620 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ee7e9f1..64c35b1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,6 +9,14 @@
+ # and is wrong about its own performance, which is the worst of both outcomes.
+ cmake_minimum_required(VERSION 3.24)
+ project(strata VERSION 0.1.54 LANGUAGES CXX)
++option(STRATA_14650HX_4060 "Local Windows i7-14650HX / RTX 4060 Laptop build" OFF)
++if(STRATA_14650HX_4060)
++  if(NOT MSVC OR NOT WIN32)
++    message(FATAL_ERROR "STRATA_14650HX_4060 needs Windows and MSVC")
++  endif()
++  add_compile_definitions(STRATA_14650HX_4060=1)
++  message(STATUS "Strata local profile: 14650HX / 4060 Laptop; same quantization and arithmetic")
++endif()
+ # EXPERIMENTAL: the Intel Arc engine, the SYCL port in sycl/ (PR #423; icpx + oneMKL, docs/INTEL_ARC.md). It is its
+ # own project that takes the unported sources from src/; with this on, nothing below is configured.
+ option(STRATA_ENABLE_SYCL "EXPERIMENTAL: build the Intel Arc (SYCL) engine from sycl/ - docs/INTEL_ARC.md" OFF)
+@@ -2750,6 +2758,23 @@ if(STRATA_HIP_GFX906)
+ endif()
+ 
+ # ---- DeepSeek-V4.1 on a box with no GPU toolkit ------------------------------------------------
++# Local 14650HX experiment: use the same precise floating-point rules with MSVC
++# whole-program/profile-guided optimization on the hot CPU translation units.
++set(STRATA_LOCAL_PGO "OFF" CACHE STRING "Local CPU PGO mode: OFF, GEN, USE")
++if(STRATA_14650HX_4060 AND MSVC AND NOT STRATA_LOCAL_PGO STREQUAL "OFF")
++  set_property(SOURCE src/kernels/cpu/tq_cpu.cpp src/kernels/cpu/tq_avx2.cpp
++                      src/kernels/cpu/pool.cpp src/kernels/cpu/native_expert.cpp
++               APPEND PROPERTY COMPILE_OPTIONS /GL)
++  target_link_options(strata PRIVATE /LTCG)
++  if(STRATA_LOCAL_PGO STREQUAL "GEN")
++    target_link_options(strata PRIVATE "/FASTGENPROFILE:EXACT,PGD=E:/Strata/custom/r3/pgo/strata.pgd")
++  elseif(STRATA_LOCAL_PGO STREQUAL "USE")
++    target_link_options(strata PRIVATE "/USEPROFILE:PGD=E:/Strata/custom/r3/pgo/strata.pgd")
++  else()
++    message(FATAL_ERROR "STRATA_LOCAL_PGO must be OFF, GEN, or USE")
++  endif()
++endif()
++
+ # The whole DSV41 block above lives inside if(STRATA_ENABLE_CUDA OR STRATA_ENABLE_HIP), so with neither backend on
+ # -DSTRATA_BUILD_DSV41=ON was silently unused and the host-side benchmark could not be built at all (found on p1004,
+ # 2026-10-23: the CPU lane is exactly what a box without a usable GPU needs to measure).  This branch builds the one target
+diff --git a/include/strata/kernels/cpu/pool.hpp b/include/strata/kernels/cpu/pool.hpp
+index 64c4a6c..8267d56 100644
+--- a/include/strata/kernels/cpu/pool.hpp
++++ b/include/strata/kernels/cpu/pool.hpp
+@@ -253,6 +253,9 @@ public:
+     /// run_split_multi's phases, accumulated ms: gate/up rows, the intermediate quantization, down rows.
+     double ms_multi_gu = 0, ms_multi_q = 0, ms_multi_down = 0;
+     int64_t multi_bytes = 0;
++#if defined(STRATA_14650HX_4060)
++    double ms_tq_prepare = 0, ms_phase_pre = 0, ms_phase_work = 0, ms_phase_post = 0;
++#endif
+ 
+     /// Total `_mm_pause` iterations spent waiting, over all workers, is no longer counted - see the note on the
+     /// atomics below.  It was a LOCKED read-modify-write in the park loop, so measuring the contention added to
+@@ -286,6 +289,12 @@ public:
+ 
+ private:
+     int phase_tasks(int64_t rows) const;
++#if defined(STRATA_14650HX_4060)
++    struct TqBatch;
++    std::unique_ptr<TqBatch> tq_batch_;
++    bool tq_prepared_ = false;
++    void quantize_native_job(int e);
++#endif
+     int tasks_ = 0;
+     void worker(int id);
+     void drain(int id, ExpertScratch& scratch, uint32_t epoch);
+diff --git a/include/strata/kernels/cpu/tq_cpu.hpp b/include/strata/kernels/cpu/tq_cpu.hpp
+index 3eaaf53..f096ff6 100644
+--- a/include/strata/kernels/cpu/tq_cpu.hpp
++++ b/include/strata/kernels/cpu/tq_cpu.hpp
+@@ -88,6 +88,9 @@ struct TqAct {
+     alignas(64) float d[kTqMaxN / 32];
+ };
+ void unpack_act(const void* q8_0, int n, TqAct& a);
++#if defined(STRATA_14650HX_4060)
++void unpack_act_avx2(const void* q8_0, int n, TqAct& a);
++#endif
+ // the per-ISA row kernels (dot products only; `out[t][r]` for rows [r0, r1))
+ void tq_rows_scalar(int kb, const int16_t* tab, const uint8_t* w, size_t row_bytes, int n, const TqAct* const* a, int nt,
+                     float* const* out, int r0, int r1);
+@@ -104,4 +107,11 @@ void tq_rows_avx512(int kb, const int16_t* tab, const uint8_t* w, size_t row_byt
+                     float* const* out, int r0, int r1);
+ }  // namespace tq_detail
+ 
++#if defined(STRATA_14650HX_4060)
++// Prepared activations are immutable until the pool phase has drained and parked.
++void tq_rows_prepared(TqIsa isa, int type, const uint8_t* w, size_t row_bytes, int n,
++                      const tq_detail::TqAct* const* a, int nt, float* const* out, int r0, int r1);
++void tq_gu_rows_prepared(TqIsa isa, int type, const uint8_t* blob, size_t row_bytes, size_t up_off, int n,
++                         const tq_detail::TqAct* const* a, int nt, float* const* ff, int r0, int r1);
++#endif
+ }  // namespace strata::kernels::cpu
+diff --git a/src/kernels/cpu/pool.cpp b/src/kernels/cpu/pool.cpp
+index a43b5c6..107da95 100644
+--- a/src/kernels/cpu/pool.cpp
++++ b/src/kernels/cpu/pool.cpp
+@@ -6,6 +6,8 @@
+ #include "strata/kernels/cpu/numa_pool.hpp"
+ 
+ #include <algorithm>
++#include <array>
++#include "strata/kernels/cpu/tq_cpu.hpp"
+ #include <atomic>
+ #include <cmath>
+ #include <chrono>
+@@ -33,6 +35,27 @@
+ #endif
+ 
+ namespace strata::kernels::cpu {
++#if defined(STRATA_14650HX_4060)
++struct ExpertPool::TqBatch {
++    struct Set { tq_detail::TqAct value[kTqMaxTokens]; };
++    Set gu;
++    std::vector<Set> down;
++    const tq_detail::TqAct* gp[kMaxSplitMulti][kTqMaxTokens] = {};
++    const tq_detail::TqAct* dp[kMaxSplitMulti][kTqMaxTokens] = {};
++};
++static bool local_flag(const char* name) { const char* e=std::getenv(name);return e && e[0]=='1'; }
++void ExpertPool::quantize_native_job(int e) {
++    // Quantization uses the layer format, exactly as the original serial loop.
++    const NativeFmt& f = *nfmt_;
++    auto& sb = split_multi_[(size_t)e];
++    for (int t=0;t<mjobs_[e].nt;++t) {
++        if (q2_native_kernels(f.d_type)) act_quant_any(sb.ff[t], FF, sb.a2[t]);
++        else native_quant_h(f,sb.ff[t],sb.hq[t]);
++        if (tq_prepared_) tq_detail::unpack_act(sb.hq[t],(int)f.n_ff,tq_batch_->down[(size_t)e].value[t]);
++    }
++}
++#endif
++
+ 
+ namespace {
+ // STRATA_POOL_UMWAIT=<TSC cycles> (experimental, x86 WAITPKG only): a parked worker waits with UMONITOR/UMWAIT on the
+@@ -1196,6 +1219,10 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
+             const int e = (int) i / parts_b_, part = (int) i % parts_b_;
+             const int r0 = H * part / parts_b_, r1 = H * (part + 1) / parts_b_;
+             s2_expert_down_rows(jobs_[e].blob, split_[(size_t) e].a2, jobs_[e].out, r0, r1);
++#if defined(STRATA_14650HX_4060)
++        } else if (mode_ == 7) {
++            quantize_native_job((int)i);
++#endif
+         } else if (mode_ >= 5) {
+             // plan v0.3 P6: native layers, 5 = gate/up rows, 6 = down rows (the layer's own n_ff / n_embd: Flash-Next's
+             // FF / H, or another family's smaller expert)
+@@ -1216,6 +1243,18 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
+                 const int r0 = row0 + l0, r1 = row0 + l1;
+                 SplitBufMulti& sb = split_multi_[(size_t) e];
+                 const NativeFmt* const nfmt = mjobs_[e].fmt != nullptr ? mjobs_[e].fmt : nfmt_;   // 149-cold: same types and rows
++#if defined(STRATA_14650HX_4060)
++                if (tq_prepared_) {
++                    if (mode_ == 5) {
++                        float* ff[MAXT];for (int t=0;t<mjobs_[e].nt;++t) ff[t]=sb.ff[t];
++                        tq_gu_rows_prepared(tq_isa(),nfmt->gu_type,mjobs_[e].blob,nfmt->gu_row,nfmt->up_off,
++                            (int)nfmt->n_embd,tq_batch_->gp[e],mjobs_[e].nt,ff,r0,r1);
++                    } else {
++                        tq_rows_prepared(tq_isa(),nfmt->d_type,mjobs_[e].blob+nfmt->down_off,nfmt->d_row,
++                            (int)nfmt->n_ff,tq_batch_->dp[e],mjobs_[e].nt,mjobs_[e].out,r0,r1);
++                    }
++                } else
++#endif
+                 if (mode_ == 5 && q2_native_kernels(nfmt->gu_type)) {
+                     // a native Q2_0 pack: gate and up rows on the Q2_0 kernels, then SwiGLU
+                     thread_local float gbuf[MAXT][FF], ubuf[MAXT][FF];
+@@ -1284,13 +1323,32 @@ void ExpertPool::drain(int id, ExpertScratch& scratch, uint32_t epoch) {
+ }
+ 
+ void ExpertPool::run_phase(int mode, int n_tasks) {
++#if defined(STRATA_14650HX_4060)
++    static const bool timing=std::getenv("STRATA_DECODE_TIMING")!=nullptr;
++    using PhaseClock=std::chrono::steady_clock;
++    const auto p0=timing?PhaseClock::now():PhaseClock::time_point{};
++#endif
+     wait_parked("before a phase");
++#if defined(STRATA_14650HX_4060)
++    const auto p1=timing?PhaseClock::now():PhaseClock::time_point{};
++#endif
+     mode_ = mode;
+     njobs_ = n_tasks;
+     const uint32_t e = begin_batch(n_tasks);
+     if (host_works_) drain(-1, host_scratch_, e);
+     wait_done(n_tasks);
++#if defined(STRATA_14650HX_4060)
++    const auto p2=timing?PhaseClock::now():PhaseClock::time_point{};
++#endif
+     wait_parked("after a phase");
++#if defined(STRATA_14650HX_4060)
++    if (timing) {
++        const auto p3=PhaseClock::now();
++        ms_phase_pre+=std::chrono::duration<double,std::milli>(p1-p0).count();
++        ms_phase_work+=std::chrono::duration<double,std::milli>(p2-p1).count();
++        ms_phase_post+=std::chrono::duration<double,std::milli>(p3-p2).count();
++    }
++#endif
+     // Each slice's stamp is stored after its last `done` increment, so `wait_done` can return before it lands; the
+     // thread that stored it has parked again since (it left the park to claim), and that re-park is what the wait
+     // above acquired.  So the stamps are read here, not in `wait_done`.
+@@ -1320,6 +1378,16 @@ void ExpertPool::run_split(ExpertJob* jobs, int n) {
+ }
+ 
+ int ExpertPool::phase_tasks(int64_t rows) const {
++#if defined(STRATA_14650HX_4060)
++    // The queue already lets faster workers claim more work. Finer, bounded row ranges
++    // shorten the last E-core/SMT task without changing any row's arithmetic or reductions.
++    // An explicit task count wins, and other topologies retain the upstream policy.
++    if (tasks_ == 0 && topo_.is_hybrid && topo_.p_cores == 8 && topo_.e_cores == 8) {
++        const int64_t threads = n_ + (host_works_ ? 1 : 0);
++        const int64_t want = (std::min)(6 * threads, (std::max)(threads, rows / 64));
++        return (int) (std::min)(rows, want);
++    }
++#endif
+     return tasks_ == 0 ? 3 * (n_ + (host_works_ ? 1 : 0)) : (int) (std::min)(rows, (int64_t) tasks_);
+ }
+ 
+@@ -1371,11 +1439,47 @@ void ExpertPool::run_split_multi_native(const NativeFmt& f, ExpertJobMulti* jobs
+         mjobs_ = jobs + b0;
+         nfmt_ = &f;
+         narithmetic_ = arithmetic;
++#if defined(STRATA_14650HX_4060)
++        static const bool prepare=local_flag("STRATA_R3_PREPARED");
++        static const bool parallel_quant=local_flag("STRATA_R3_PARALLEL_QUANT") && std::getenv("STRATA_ACT_DUMP")==nullptr;
++        tq_prepared_=false;
++        static const bool timing=std::getenv("STRATA_DECODE_TIMING")!=nullptr;
++        const auto prep0=timing?std::chrono::steady_clock::now():std::chrono::steady_clock::time_point{};
++        if (prepare && tq_kernels_enabled() && f.gu_type==145 && f.d_type==146 && f.n_embd==2560 && f.n_ff==640 && numa_n_==0) {
++            if (!tq_batch_) tq_batch_=std::make_unique<TqBatch>();
++            if ((int)tq_batch_->down.size()<nb) tq_batch_->down.resize((size_t)nb);
++            const void* unique[kTqMaxTokens]={};int count=0;bool valid=true;
++            for (int e=0;e<nb && valid;++e) {
++                const NativeFmt& ef=mjobs_[e].fmt?*mjobs_[e].fmt:f;
++                if (ef.gu_type!=145 || ef.d_type!=146 || ef.n_embd!=2560 || ef.n_ff!=640 ||
++                    mjobs_[e].nt<1 || mjobs_[e].nt>kTqMaxTokens) { valid=false;break; }
++                for (int t=0;t<mjobs_[e].nt;++t) {
++                    const void* a=mjobs_[e].nact[t];int k=0;
++                    while(k<count && unique[k]!=a)++k;
++                    if (k==count) {
++                        if(count==kTqMaxTokens){valid=false;break;}
++                        unique[count++]=a;tq_detail::unpack_act(a,(int)ef.n_embd,tq_batch_->gu.value[k]);
++                    }
++                    tq_batch_->gp[e][t]=&tq_batch_->gu.value[k];
++                    tq_batch_->dp[e][t]=&tq_batch_->down[(size_t)e].value[t];
++                }
++            }
++            tq_prepared_=valid; // no pointer memo survives this batch's lifetime
++        }
++        if (timing) ms_tq_prepare+=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-prep0).count();
++#endif
+         mrows_ = (int64_t) nb * f.n_ff;
+         mtasks_ = numa_n_ > 0 ? numa_plan_phase((int) f.n_ff, nb) : phase_tasks(mrows_);
+         const auto a = std::chrono::steady_clock::now();
+         run_phase(5, mtasks_);
+         const auto b = std::chrono::steady_clock::now();
++#if defined(STRATA_14650HX_4060)
++        if (parallel_quant && f.gu_type==145 && f.d_type==146 && numa_n_==0 && nb>=4) {
++            run_phase(7,nb);
++        } else if (tq_prepared_) {
++            for (int e=0;e<nb;++e) quantize_native_job(e);
++        } else
++#endif
+         for (int e = 0; e < nb; ++e)
+             for (int t = 0; t < mjobs_[e].nt; ++t)
+                 if (q2_native_kernels(f.d_type)) act_quant_any(split_multi_[(size_t) e].ff[t], FF, split_multi_[(size_t) e].a2[t]);
+diff --git a/src/kernels/cpu/tq_avx2.cpp b/src/kernels/cpu/tq_avx2.cpp
+index dbc6b5a..3c6e811 100644
+--- a/src/kernels/cpu/tq_avx2.cpp
++++ b/src/kernels/cpu/tq_avx2.cpp
+@@ -15,6 +15,9 @@
+ #include "tq_states.hpp"
+ 
+ #include <immintrin.h>
++#include <cstdlib>
++#include <cstdio>
++#include "strata/kernels/cpu/expert_layout.hpp"
+ 
+ namespace strata::kernels::cpu::tq_detail {
+ namespace {
+@@ -28,6 +31,17 @@ inline __m256i rows4(const long long* tab, uint32_t s0, uint32_t s1, uint32_t s2
+     return _mm256_blend_epi32(v, _mm256_set1_epi64x(tab[s3]), 0xC0);
+ }
+ 
++#if defined(STRATA_14650HX_4060) && defined(_MSC_VER)
++// MSVC does not implement the GCC unroll directive below. Constant group indices let it
++// fold each trellis bit offset. Only integer weight decoding is changed: the dot products,
++// scale multiplication, FMA order and final reduction are exactly the original operations.
++template <int KB, int M>
++__forceinline __m256i local_tq_group(const long long* tab, const uint8_t* qs, uint64_t wr) {
++    return rows4(tab, tq_state<KB>(qs, wr, 4 * M), tq_state<KB>(qs, wr, 4 * M + 1),
++                     tq_state<KB>(qs, wr, 4 * M + 2), tq_state<KB>(qs, wr, 4 * M + 3));
++}
++#endif
++
+ template <int KB>
+ void rows_t(const int16_t* table, const uint8_t* w, size_t row_bytes, int n, const TqAct* const* a, int nt, float* const* out, int r0,
+             int r1) {
+@@ -43,12 +57,23 @@ void rows_t(const int16_t* table, const uint8_t* w, size_t row_bytes, int n, con
+             const uint8_t* qs = blk + 2;
+             const uint64_t wr = tq_wrap<KB>(qs);
+             __m256i wv[8];   // wv[m] = weights 16m .. 16m+15 (states 4m .. 4m+3)
++#if defined(STRATA_14650HX_4060) && defined(_MSC_VER)
++            wv[0] = local_tq_group<KB, 0>(tab, qs, wr);
++            wv[1] = local_tq_group<KB, 1>(tab, qs, wr);
++            wv[2] = local_tq_group<KB, 2>(tab, qs, wr);
++            wv[3] = local_tq_group<KB, 3>(tab, qs, wr);
++            wv[4] = local_tq_group<KB, 4>(tab, qs, wr);
++            wv[5] = local_tq_group<KB, 5>(tab, qs, wr);
++            wv[6] = local_tq_group<KB, 6>(tab, qs, wr);
++            wv[7] = local_tq_group<KB, 7>(tab, qs, wr);
++#else
+ #if defined(__GNUC__)
+ #pragma GCC unroll 8
+ #endif
+             for (int m = 0; m < 8; ++m)
+                 wv[m] = rows4(tab, tq_state<KB>(qs, wr, 4 * m), tq_state<KB>(qs, wr, 4 * m + 1),
+                               tq_state<KB>(qs, wr, 4 * m + 2), tq_state<KB>(qs, wr, 4 * m + 3));
++#endif
+             const __m128 dx = _mm_set1_ps(tq_half_to_float(tq_ld16(blk)));
+             for (int t = 0; t < nt; ++t) {
+                 const __m256i* q = (const __m256i*) (a[t]->q + 128 * i);
+@@ -75,6 +100,86 @@ void rows_t(const int16_t* table, const uint8_t* w, size_t row_bytes, int n, con
+     }
+ }
+ 
++#if defined(STRATA_14650HX_4060) && defined(_MSC_VER)
++// r2: four trellis states share a bounded 64-bit load; fixed token counts let MSVC
++// keep accumulators in registers. AVX-VNNI fuses integer multiply/add only. Every
++// 32-weight sum fits int32; FP scaling, FMA and final reduction match r1 exactly.
++template <int KB, int M>
++__forceinline __m256i local_tq_group_r2(const long long* tab, const uint8_t* qs, uint64_t wr) {
++    if constexpr (KB == 6 || KB == 7) {
++        constexpr int low = (28 - 4 * M) * KB;
++        constexpr int byte = low / 8 < 4 * KB - 8 ? low / 8 : 4 * KB - 8;
++        constexpr int origin = M == 0 ? (4 * KB - 4) * 8 : byte * 8;
++        uint64_t v = wr;
++        if constexpr (M != 0) std::memcpy(&v, qs + byte, sizeof(v));
++        return rows4(tab, (uint32_t)(v >> ((31-4*M)*KB-origin)) & kTqStateMask,
++                         (uint32_t)(v >> ((30-4*M)*KB-origin)) & kTqStateMask,
++                         (uint32_t)(v >> ((29-4*M)*KB-origin)) & kTqStateMask,
++                         (uint32_t)(v >> ((28-4*M)*KB-origin)) & kTqStateMask);
++    } else {
++        return rows4(tab, tq_state<KB>(qs,wr,4*M), tq_state<KB>(qs,wr,4*M+1),
++                         tq_state<KB>(qs,wr,4*M+2), tq_state<KB>(qs,wr,4*M+3));
++    }
++}
++
++template <int KB, int NT = 0>
++void rows_r2(const int16_t* table, const uint8_t* w, size_t row_bytes, int n, const TqAct* const* a, int nt_dynamic, float* const* out, int r0,
++            int r1) {
++    const int nt = NT > 0 ? NT : nt_dynamic;
++    const int nb = n / 128;
++    constexpr size_t bsz = 2 + 4 * KB;
++    const long long* tab = (const long long*) table;
++    for (int r = r0; r < r1; ++r) {
++        const uint8_t* x = w + (size_t) r * row_bytes;
++        __m128 acc[kTqMaxTokens];
++        for (int t = 0; t < nt; ++t) acc[t] = _mm_setzero_ps();
++        for (int i = 0; i < nb; ++i) {
++            const uint8_t* blk = x + (size_t) i * bsz;
++            const uint8_t* qs = blk + 2;
++            const uint64_t wr = tq_wrap<KB>(qs);
++            __m256i wv[8];   // wv[m] = weights 16m .. 16m+15 (states 4m .. 4m+3)
++#if defined(STRATA_14650HX_4060) && defined(_MSC_VER)
++            wv[0] = local_tq_group_r2<KB, 0>(tab, qs, wr);
++            wv[1] = local_tq_group_r2<KB, 1>(tab, qs, wr);
++            wv[2] = local_tq_group_r2<KB, 2>(tab, qs, wr);
++            wv[3] = local_tq_group_r2<KB, 3>(tab, qs, wr);
++            wv[4] = local_tq_group_r2<KB, 4>(tab, qs, wr);
++            wv[5] = local_tq_group_r2<KB, 5>(tab, qs, wr);
++            wv[6] = local_tq_group_r2<KB, 6>(tab, qs, wr);
++            wv[7] = local_tq_group_r2<KB, 7>(tab, qs, wr);
++#else
++#if defined(__GNUC__)
++#pragma GCC unroll 8
++#endif
++            for (int m = 0; m < 8; ++m)
++                wv[m] = rows4(tab, tq_state<KB>(qs, wr, 4 * m), tq_state<KB>(qs, wr, 4 * m + 1),
++                              tq_state<KB>(qs, wr, 4 * m + 2), tq_state<KB>(qs, wr, 4 * m + 3));
++#endif
++            const __m128 dx = _mm_set1_ps(tq_half_to_float(tq_ld16(blk)));
++            for (int t = 0; t < nt; ++t) {
++                const __m256i* q = (const __m256i*) (a[t]->q + 128 * i);
++                const __m256i p0 = _mm256_dpwssd_avx_epi32(_mm256_madd_epi16(wv[0], _mm256_load_si256(q + 0)), wv[1], _mm256_load_si256(q + 1));
++                const __m256i p1 = _mm256_dpwssd_avx_epi32(_mm256_madd_epi16(wv[2], _mm256_load_si256(q + 2)), wv[3], _mm256_load_si256(q + 3));
++                const __m256i p2 = _mm256_dpwssd_avx_epi32(_mm256_madd_epi16(wv[4], _mm256_load_si256(q + 4)), wv[5], _mm256_load_si256(q + 5));
++                const __m256i p3 = _mm256_dpwssd_avx_epi32(_mm256_madd_epi16(wv[6], _mm256_load_si256(q + 6)), wv[7], _mm256_load_si256(q + 7));
++                // per 128-bit lane [p0, p1, p2, p3] partial sums, then the two lanes added: S[0..3], exact
++                const __m256i h = _mm256_hadd_epi32(_mm256_hadd_epi32(p0, p1), _mm256_hadd_epi32(p2, p3));
++                const __m128i s = _mm_add_epi32(_mm256_castsi256_si128(h), _mm256_extracti128_si256(h, 1));
++                const __m128 sc = _mm_mul_ps(dx, _mm_loadu_ps(a[t]->d + 4 * i));
++                acc[t] = _mm_fmadd_ps(_mm_cvtepi32_ps(s), sc, acc[t]);
++            }
++        }
++        for (int t = 0; t < nt; ++t) {
++            alignas(16) float v[4];
++            _mm_store_ps(v, acc[t]);
++            out[t][r] = ((v[0] + v[1]) + (v[2] + v[3])) * (1.0f / 8192.0f);
++        }
++    }
++}
++
++
++#endif
++
+ // TQP (147-149): 64 pair-steps per 128-value block.  A step's two weights are the FIRST pair of its state
+ // table row, so 8 states make one YMM of 16 int16 weights, and a 32-value group (16 steps) is two YMM of
+ // weights against two YMM of activations: VPMADDWD, one exact int32 sum per group, then the four group sums
+@@ -150,6 +255,40 @@ void tq_rows_avx2_tqp(int kb, const uint8_t* w, size_t row_bytes, int n, const T
+ 
+ void tq_rows_avx2(int kb, const int16_t* table, const uint8_t* w, size_t row_bytes, int n, const TqAct* const* a, int nt,
+                   float* const* out, int r0, int r1) {
++#if defined(STRATA_14650HX_4060) && defined(_MSC_VER)
++    static const bool r2_on = [] {
++        const char* value = std::getenv("STRATA_R2_TQ");
++        const bool enabled = (value == nullptr || value[0] != '0') && cpu_avxvnni_ok();
++        std::fprintf(stderr, "strata r2 trellis CPU: %s\n", enabled ? "AVX-VNNI, fixed token groups, bounded state loads" : "r1 AVX2 fallback");
++        return enabled;
++    }();
++    if (r2_on) {
++        if (kb == 6) {
++            switch (nt) {
++                case 1: rows_r2<6, 1>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 2: rows_r2<6, 2>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 3: rows_r2<6, 3>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 4: rows_r2<6, 4>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 5: rows_r2<6, 5>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 6: rows_r2<6, 6>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 7: rows_r2<6, 7>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 8: rows_r2<6, 8>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++            }
++        }
++        if (kb == 7) {
++            switch (nt) {
++                case 1: rows_r2<7, 1>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 2: rows_r2<7, 2>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 3: rows_r2<7, 3>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 4: rows_r2<7, 4>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 5: rows_r2<7, 5>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 6: rows_r2<7, 6>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 7: rows_r2<7, 7>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++                case 8: rows_r2<7, 8>(table,w,row_bytes,n,a,nt,out,r0,r1); return;
++            }
++        }
++    }
++#endif
+     if (kb == 8) rows_t<8>(table, w, row_bytes, n, a, nt, out, r0, r1);
+     else if (kb == 6) rows_t<6>(table, w, row_bytes, n, a, nt, out, r0, r1);
+     else if (kb == 5) rows_t<5>(table, w, row_bytes, n, a, nt, out, r0, r1);   // experimental TQK5X
+@@ -157,4 +296,17 @@ void tq_rows_avx2(int kb, const int16_t* table, const uint8_t* w, size_t row_byt
+     else rows_t<7>(table, w, row_bytes, n, a, nt, out, r0, r1);
+ }
+ 
++#if defined(STRATA_14650HX_4060)
++void unpack_act_avx2(const void* q8_0, int n, TqAct& a) {
++    const uint8_t* p = (const uint8_t*) q8_0;
++    for (int b = 0; b < n / 32; ++b, p += 34) {
++        a.d[b] = tq_half_to_float(tq_ld16(p)); // same conversion, including signed zero/subnormals
++        const __m128i lo = _mm_loadu_si128((const __m128i*)(p + 2));
++        const __m128i hi = _mm_loadu_si128((const __m128i*)(p + 18));
++        _mm256_store_si256((__m256i*)(a.q + 32*b), _mm256_cvtepi8_epi16(lo));
++        _mm256_store_si256((__m256i*)(a.q + 32*b + 16), _mm256_cvtepi8_epi16(hi));
++    }
++}
++#endif
++
+ }  // namespace strata::kernels::cpu::tq_detail
+diff --git a/src/kernels/cpu/tq_cpu.cpp b/src/kernels/cpu/tq_cpu.cpp
+index 9c898cd..d2cc2e3 100644
+--- a/src/kernels/cpu/tq_cpu.cpp
++++ b/src/kernels/cpu/tq_cpu.cpp
+@@ -191,6 +191,13 @@ const char* tq_isa_name(TqIsa isa) {
+ namespace tq_detail {
+ 
+ void unpack_act(const void* q8_0, int n, TqAct& a) {
++#if defined(STRATA_14650HX_4060)
++    static const bool vector_unpack = [] {
++        const char* e = std::getenv("STRATA_R3_UNPACK");
++        return e && e[0] == '1' && cpu_avx2_ok();
++    }();
++    if (vector_unpack) { unpack_act_avx2(q8_0,n,a); return; }
++#endif
+     const uint8_t* p = (const uint8_t*) q8_0;
+     for (int b = 0; b < n / 32; ++b, p += 34) {   // block_q8_0: fp16 d, 32 x int8
+         a.d[b] = tq_half_to_float(tq_ld16(p));
+@@ -305,4 +312,46 @@ void tq_gu_rows(TqIsa isa, int ggml_type, const uint8_t* blob, size_t gu_row, si
+         }
+ }
+ 
++#if defined(STRATA_14650HX_4060)
++void tq_rows_prepared(TqIsa isa, int ggml_type, const uint8_t* w, size_t row_bytes, int n, const tq_detail::TqAct* const* act, int nt,
++             float* const* out, int r0, int r1) {
++    if (!tq_isa_ok(isa)) std::abort();   // a caller bug: asked for an ISA this CPU does not have
++    const int16_t* tab = tq_state_table_for(ggml_type);
++    if (ggml_type >= 147 && ggml_type <= 149) {   // Gyro-L pair trellis: the AVX2 pair kernel (scalar is the reference)
++        const int kb = tq_kbits(ggml_type);
++        rows_pair_on(isa, kb, w, row_bytes, n, act, nt, out, r0, r1);
++        return;
++    }
++    rows_on(isa, tq_kbits(ggml_type), tab, w, row_bytes, n, act, nt, out, r0, r1);
++}
++void tq_gu_rows_prepared(TqIsa isa, int ggml_type, const uint8_t* blob, size_t gu_row, size_t up_off, int n,
++                const tq_detail::TqAct* const* act, int nt, float* const* ff, int r0, int r1) {
++    if (!tq_isa_ok(isa)) std::abort();
++    const int16_t* tab = tq_state_table_for(ggml_type);
++    thread_local std::vector<float> gbuf, ubuf;
++    const size_t nr = (size_t) r1;   // row r of token t at [t * r1 + r]
++    if (gbuf.size() < nr * kTqMaxTokens) { gbuf.resize(nr * kTqMaxTokens); ubuf.resize(nr * kTqMaxTokens); }
++    float* gp[kTqMaxTokens];
++    float* up[kTqMaxTokens];
++    for (int t = 0; t < nt; ++t) {
++        gp[t] = gbuf.data() + (size_t) t * nr;
++        up[t] = ubuf.data() + (size_t) t * nr;
++    }
++    const int kb = tq_kbits(ggml_type);
++    const bool pair = ggml_type >= 147 && ggml_type <= 149;   // Gyro-L pair trellis: its own kernels
++    auto rows = [&](const uint8_t* w, float* const* o) {
++        if (pair) rows_pair_on(isa, kb, w, gu_row, n, act, nt, o, r0, r1);
++        else rows_on(isa, kb, tab, w, gu_row, n, act, nt, o, r0, r1);
++    };
++    rows(blob, gp);
++    rows(blob + up_off, up);
++    for (int t = 0; t < nt; ++t)
++        for (int r = r0; r < r1; ++r) {
++            const float g = gp[t][r], u = up[t][r];
++            ff[t][r] = (g / (1.f + std::exp(-g))) * u;   // native_gu_rows' SwiGLU expression
++        }
++}
++
++#endif
++
+ }  // namespace strata::kernels::cpu
+diff --git a/src/program/generate.cpp b/src/program/generate.cpp
+index 956d2c5..8f238f6 100644
+--- a/src/program/generate.cpp
++++ b/src/program/generate.cpp
+@@ -685,7 +685,13 @@ struct Options {
+     bool no_fast_select = false;       ///< plan v0.3 P7 A/B: FP64 row scores + bit-serial cell top-k
+     /// Plan v0.3 P4: `--expert-cache auto` sizes the VRAM tier from what is free after the weights, the session
+     /// and the KV state, minus this reserve for the graphs, the hit scratch and the head.
++#if defined(STRATA_14650HX_4060)
++    // An automatic target: the small-card planner may trade some of this for the
++    // minimum cache that can LEND prefill buffers, avoiding a second allocation.
++    int vram_reserve_mib = 1024;
++#else
+     int vram_reserve_mib = 700;
++#endif
+     bool vram_reserve_given = false;   ///< --vram-reserve-mib on the command line (#496: no smaller automatic reserve)
+     /// #533 (opt-in): the expert cache in physical segments (CUDA virtual memory management), so the serve loop's
+     /// `VRAM <reserve_mib>` command can give part of it back to other programs and take it again.  Off: one cudaMalloc.
+@@ -2895,7 +2901,10 @@ int main(int argc, char** argv) {
+     if (std::getenv("STRATA_ARENA_MMAP") && std::getenv("STRATA_ARENA_MMAP")[0] == '1')
+         setenv("GPU_PINNED_MIN_XFER_SIZE", "1000000", 0);   // MiB; an explicit setting wins
+ #endif
+-    // Load every CUDA kernel when the context is created, before the expert cache takes the free VRAM.  With the
++#if defined(STRATA_14650HX_4060)
++    std::fprintf(stderr, "strata local build: 14650HX-4060-r3; sm_89; exact Gyro kernels; prepared activation and quantization experiments; weights unchanged\n");
++#endif
++    // Load every CUDA kernel when the context is created, before the expert cache takes the free VRAM. With the
+     // default lazy loading, a kernel first used mid-prompt (MMQ for IQ3_XXS at 64K+ on a 12 GB card) found no VRAM
+     // left for its code and the engine ended ("out of memory: cudaFuncSetAttribute").  Costs ~30 MB of VRAM.
+     if (std::getenv("CUDA_MODULE_LOADING") == nullptr) {
+@@ -6733,9 +6742,14 @@ int main(int argc, char** argv) {
+         o.pool_affinity = measure_pool_affinity(srcp, o.pool_workers, !o.no_host_worker, o.pool_tasks);
+     strata::kernels::cpu::ExpertPool pool(o.pool_workers, /*pin=*/true, /*host_works=*/!o.no_host_worker,
+                                         o.pool_affinity, o.pool_tasks);
++    int auto_pool_tasks = 3 * (pool.workers() + (pool.host_works() ? 1 : 0));
++#if defined(STRATA_14650HX_4060)
++    if (pool.is_hybrid() && pool.p_cores() == 8 && pool.e_cores() == 8)
++        auto_pool_tasks = 6 * (pool.workers() + (pool.host_works() ? 1 : 0));
++#endif
+     std::fprintf(stderr, "strata generate: CPU pool tasks/phase: %d%s, participating threads: %d\n",
+-                 o.pool_tasks ? o.pool_tasks : 3 * (pool.workers() + (pool.host_works() ? 1 : 0)),
+-                 o.pool_tasks ? " (capped by rows)" : " (automatic)",
++                 o.pool_tasks ? o.pool_tasks : auto_pool_tasks,
++                 o.pool_tasks ? " (capped by rows)" : " (automatic upper bound, capped by row granularity)",
+                  pool.workers() + (pool.host_works() ? 1 : 0));
+     if (pool.plan_limit()[0] != '\0' && !pool.explicit_cores())   // the default count: what it was bounded by (a configured count is never changed; --pool-cores has its own line below)
+         std::fprintf(stderr, "strata generate: CPU pool: %d workers by default (%d physical cores, %d logical processors; bounded by %s)\n",
+@@ -6949,6 +6963,17 @@ int main(int argc, char** argv) {
+                 reserve_adapted = true;
+             }
+         }
++#if defined(STRATA_14650HX_4060)
++        // On this 8 GiB card a cache too small for the loan caused the prompt path
++        // to allocate its buffers AGAIN, silently consuming the requested reserve.
++        // Keep the automatic minimum-cache tradeoff above; never enter that fallback.
++        if (pf_borrow && o.prefill_auto && o.expert_cache > 0 && o.expert_cache < min_slots) {
++            std::fprintf(stderr, "strata local profile: only %d expert slots fit; %lld are needed to reuse prompt buffers. "
++                                 "Free GPU memory or remove a fixed VRAM reserve; refusing duplicated prompt buffers.\n",
++                         o.expert_cache, (long long) min_slots);
++            return 1;
++        }
++#endif
+         if (o.expert_cache == 0) {
+             // what is short, and what makes room: the numbers a small card picks from
+             const int64_t at_reserve = o.vram_reserve_given ? o.vram_reserve_mib
+@@ -15811,6 +15836,10 @@ int main(int argc, char** argv) {
+                                drive.d.pcie_experts};
+             };
+             const DecSnap ds0 = dec_snap();
++#if defined(STRATA_14650HX_4060)
++            const double phase0[]={pool.ms_multi_gu,pool.ms_multi_q,pool.ms_multi_down,pool.ms_tq_prepare,
++                                   pool.ms_phase_pre,pool.ms_phase_work,pool.ms_phase_post};
++#endif
+             double dt_run = 0, dt_commit = 0, dt_draft = 0;
+             double dt_adapt_wait = 0, dt_adapt_join = 0;   // the tier's wait before a window / join after the draft (ms, summed)
+             const int64_t dt_sw0 = ajob ? a_swapped : adapt_nswaps;
+@@ -16884,6 +16913,11 @@ int main(int argc, char** argv) {
+             if (dec_timing && dec_windows > 0) {
+                 const DecSnap d1 = dec_snap();
+                 const double w = (double) dec_windows, L = (double) g.n_layers;
++#if defined(STRATA_14650HX_4060)
++                std::fprintf(stderr,"strata r3 CPU phases ms/window: GU %.3f quant %.3f down %.3f prepare %.3f; prewait %.3f work %.3f postwait %.3f\n",
++                    (pool.ms_multi_gu-phase0[0])/w,(pool.ms_multi_q-phase0[1])/w,(pool.ms_multi_down-phase0[2])/w,
++                    (pool.ms_tq_prepare-phase0[3])/w,(pool.ms_phase_pre-phase0[4])/w,(pool.ms_phase_work-phase0[5])/w,(pool.ms_phase_post-phase0[6])/w);
++#endif
+                 if (!pl_ran) {
+                     const double dt_other = decode_ms - dt_adapt_wait - dt_run - dt_commit - dt_draft - dt_adapt_join;
+                     std::fprintf(stderr,

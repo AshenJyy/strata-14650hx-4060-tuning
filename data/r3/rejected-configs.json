@@ -1,0 +1,6 @@
+{
+  "r3-spec0": {
+    "reason": "This native expert pack requires --spec >= 2, even with no MTP drafter. No runtime change deployed.",
+    "replacement": "r3-no-mtp: --spec 2, no --mtp; keeps verified single-token or prompt-lookup decoding."
+  }
+}

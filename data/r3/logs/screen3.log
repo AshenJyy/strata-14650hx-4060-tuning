@@ -1,0 +1,67 @@
+SWITCH r2 1-r2
+WARMUP r2
+RUN r2 prose
+{"mode": "r2", "case": "prose", "tps": 18.2, "ttft": 1.311}
+RUN r2 code
+{"mode": "r2", "case": "code", "tps": 20.1, "ttft": 2.287}
+RUN r2 json
+{"mode": "r2", "case": "json", "tps": 20.8, "ttft": 1.843}
+SWITCH r3-pgo-use 2-r3-pgo-use
+WARMUP r3-pgo-use
+RUN r3-pgo-use prose
+{"mode": "r3-pgo-use", "case": "prose", "tps": 24.9, "ttft": 1.11}
+RUN r3-pgo-use code
+{"mode": "r3-pgo-use", "case": "code", "tps": 22.8, "ttft": 1.852}
+RUN r3-pgo-use json
+{"mode": "r3-pgo-use", "case": "json", "tps": 21.6, "ttft": 1.555}
+SWITCH r3-p8t 3-r3-p8t
+WARMUP r3-p8t
+RUN r3-p8t prose
+{"mode": "r3-p8t", "case": "prose", "tps": 24.9, "ttft": 1.186}
+RUN r3-p8t code
+{"mode": "r3-p8t", "case": "code", "tps": 25.1, "ttft": 1.698}
+RUN r3-p8t json
+{"mode": "r3-p8t", "case": "json", "tps": 23.7, "ttft": 1.414}
+SWITCH r3-p16t 4-r3-p16t
+WARMUP r3-p16t
+RUN r3-p16t prose
+{"mode": "r3-p16t", "case": "prose", "tps": 18.8, "ttft": 1.747}
+RUN r3-p16t code
+{"mode": "r3-p16t", "case": "code", "tps": 15.1, "ttft": 2.389}
+RUN r3-p16t json
+{"mode": "r3-p16t", "case": "json", "tps": 14.3, "ttft": 1.382}
+SWITCH r3-p8e8t16 5-r3-p8e8t16
+WARMUP r3-p8e8t16
+RUN r3-p8e8t16 prose
+{"mode": "r3-p8e8t16", "case": "prose", "tps": 26.7, "ttft": 1.138}
+RUN r3-p8e8t16 code
+{"mode": "r3-p8e8t16", "case": "code", "tps": 26.1, "ttft": 1.595}
+RUN r3-p8e8t16 json
+{"mode": "r3-p8e8t16", "case": "json", "tps": 24.7, "ttft": 1.42}
+SWITCH r3-p8e8t23 6-r3-p8e8t23
+WARMUP r3-p8e8t23
+RUN r3-p8e8t23 prose
+{"mode": "r3-p8e8t23", "case": "prose", "tps": 24.0, "ttft": 1.114}
+RUN r3-p8e8t23 code
+{"mode": "r3-p8e8t23", "case": "code", "tps": 24.0, "ttft": 1.57}
+RUN r3-p8e8t23 json
+{"mode": "r3-p8e8t23", "case": "json", "tps": 24.0, "ttft": 1.377}
+SWITCH r3-host1 7-r3-host1
+WARMUP r3-host1
+RUN r3-host1 prose
+{"mode": "r3-host1", "case": "prose", "tps": 25.0, "ttft": 1.126}
+RUN r3-host1 code
+{"mode": "r3-host1", "case": "code", "tps": 25.0, "ttft": 1.575}
+RUN r3-host1 json
+{"mode": "r3-host1", "case": "json", "tps": 23.8, "ttft": 1.344}
+SWITCH r3-wait-deep 8-r3-wait-deep
+WARMUP r3-wait-deep
+RUN r3-wait-deep prose
+{"mode": "r3-wait-deep", "case": "prose", "tps": 24.9, "ttft": 1.16}
+RUN r3-wait-deep code
+{"mode": "r3-wait-deep", "case": "code", "tps": 24.0, "ttft": 1.672}
+RUN r3-wait-deep json
+{"mode": "r3-wait-deep", "case": "json", "tps": 22.5, "ttft": 1.372}
+SUMMARY {"r2": {"median_tps": 20.1, "by_workload": {"prose": 18.2, "code": 20.1, "json": 20.8}, "median_ttft": 1.8428350000003775, "wall_tps": 15.462853084686662}, "r3-pgo-use": {"median_tps": 22.8, "by_workload": {"prose": 24.9, "code": 22.8, "json": 21.6}, "median_ttft": 1.5553509999999733, "wall_tps": 18.24421347829837}, "r3-p8t": {"median_tps": 24.9, "by_workload": {"prose": 24.9, "code": 25.1, "json": 23.7}, "median_ttft": 1.4142424000001483, "wall_tps": 19.41796156995249}, "r3-p16t": {"median_tps": 15.1, "by_workload": {"prose": 18.8, "code": 15.1, "json": 14.3}, "median_ttft": 1.7465434000005189, "wall_tps": 12.978713335109513}, "r3-p8e8t16": {"median_tps": 26.1, "by_workload": {"prose": 26.7, "code": 26.1, "json": 24.7}, "median_ttft": 1.4199824999996054, "wall_tps": 20.336514555593094}, "r3-p8e8t23": {"median_tps": 24.0, "by_workload": {"prose": 24.0, "code": 24.0, "json": 24.0}, "median_ttft": 1.3772313999998005, "wall_tps": 19.269098312128893}, "r3-host1": {"median_tps": 25.0, "by_workload": {"prose": 25.0, "code": 25.0, "json": 23.8}, "median_ttft": 1.3435738000007404, "wall_tps": 19.67103049695174}, "r3-wait-deep": {"median_tps": 24.0, "by_workload": {"prose": 24.9, "code": 24.0, "json": 22.5}, "median_ttft": 1.3717991000003167, "wall_tps": 18.999563722518115}}
+SWITCH r2 restore-r2
+RESULT ${STRATA_ROOT}\custom\r3\experiments\20261030-134017\results.json

@@ -1,0 +1,96 @@
+integrated.cpp
+integrated.cpp(215): warning C4068: unknown pragma 'GCC'
+integrated.cpp(225): warning C4068: unknown pragma 'GCC'
+integrated-check.cpp
+CPU core=0 avx_vnni=1
+strata r2 trellis CPU: AVX-VNNI, fixed token groups, bounded state loads
+PARITY core=0 passed
+BENCH core=0 K=6 T=1 variant=r1 ms=0.051311
+BENCH core=0 K=6 T=1 variant=r2 ms=0.046631
+BENCH core=0 K=6 T=2 variant=r1 ms=0.064435
+BENCH core=0 K=6 T=2 variant=r2 ms=0.060061
+BENCH core=0 K=6 T=3 variant=r1 ms=0.076349
+BENCH core=0 K=6 T=3 variant=r2 ms=0.070337
+BENCH core=0 K=6 T=4 variant=r1 ms=0.095790
+BENCH core=0 K=6 T=4 variant=r2 ms=0.086711
+BENCH core=0 K=6 T=6 variant=r1 ms=0.135318
+BENCH core=0 K=6 T=6 variant=r2 ms=0.117878
+BENCH core=0 K=7 T=1 variant=r1 ms=0.010605
+BENCH core=0 K=7 T=1 variant=r2 ms=0.009948
+BENCH core=0 K=7 T=2 variant=r1 ms=0.012839
+BENCH core=0 K=7 T=2 variant=r2 ms=0.011673
+BENCH core=0 K=7 T=3 variant=r1 ms=0.014302
+BENCH core=0 K=7 T=3 variant=r2 ms=0.012370
+BENCH core=0 K=7 T=4 variant=r1 ms=0.016679
+BENCH core=0 K=7 T=4 variant=r2 ms=0.014557
+BENCH core=0 K=7 T=6 variant=r1 ms=0.021794
+BENCH core=0 K=7 T=6 variant=r2 ms=0.018961
+CPU core=16 avx_vnni=1
+PARITY core=16 passed
+BENCH core=16 K=6 T=1 variant=r1 ms=0.137730
+BENCH core=16 K=6 T=1 variant=r2 ms=0.126445
+BENCH core=16 K=6 T=2 variant=r1 ms=0.181418
+BENCH core=16 K=6 T=2 variant=r2 ms=0.160652
+BENCH core=16 K=6 T=3 variant=r1 ms=0.218724
+BENCH core=16 K=6 T=3 variant=r2 ms=0.201036
+BENCH core=16 K=6 T=4 variant=r1 ms=0.255325
+BENCH core=16 K=6 T=4 variant=r2 ms=0.234881
+BENCH core=16 K=6 T=6 variant=r1 ms=0.323201
+BENCH core=16 K=6 T=6 variant=r2 ms=0.299952
+BENCH core=16 K=7 T=1 variant=r1 ms=0.026591
+BENCH core=16 K=7 T=1 variant=r2 ms=0.024222
+BENCH core=16 K=7 T=2 variant=r1 ms=0.035427
+BENCH core=16 K=7 T=2 variant=r2 ms=0.031274
+BENCH core=16 K=7 T=3 variant=r1 ms=0.040254
+BENCH core=16 K=7 T=3 variant=r2 ms=0.037454
+BENCH core=16 K=7 T=4 variant=r1 ms=0.047036
+BENCH core=16 K=7 T=4 variant=r2 ms=0.043102
+BENCH core=16 K=7 T=6 variant=r1 ms=0.060226
+BENCH core=16 K=7 T=6 variant=r2 ms=0.054320
+PASS: 2240 bitwise comparisons; all token counts 1..8, P/E cores, finite half scales and row boundaries.
+CPU core=0 avx_vnni=1
+strata r2 trellis CPU: r1 AVX2 fallback
+PARITY core=0 passed
+BENCH core=0 K=6 T=1 variant=r1 ms=0.055286
+BENCH core=0 K=6 T=1 variant=r2 ms=0.054904
+BENCH core=0 K=6 T=2 variant=r1 ms=0.066242
+BENCH core=0 K=6 T=2 variant=r2 ms=0.075067
+BENCH core=0 K=6 T=3 variant=r1 ms=0.082059
+BENCH core=0 K=6 T=3 variant=r2 ms=0.085022
+BENCH core=0 K=6 T=4 variant=r1 ms=0.100605
+BENCH core=0 K=6 T=4 variant=r2 ms=0.100370
+BENCH core=0 K=6 T=6 variant=r1 ms=0.130941
+BENCH core=0 K=6 T=6 variant=r2 ms=0.131278
+BENCH core=0 K=7 T=1 variant=r1 ms=0.010405
+BENCH core=0 K=7 T=1 variant=r2 ms=0.011648
+BENCH core=0 K=7 T=2 variant=r1 ms=0.012617
+BENCH core=0 K=7 T=2 variant=r2 ms=0.012642
+BENCH core=0 K=7 T=3 variant=r1 ms=0.015582
+BENCH core=0 K=7 T=3 variant=r2 ms=0.017114
+BENCH core=0 K=7 T=4 variant=r1 ms=0.017577
+BENCH core=0 K=7 T=4 variant=r2 ms=0.018490
+BENCH core=0 K=7 T=6 variant=r1 ms=0.025545
+BENCH core=0 K=7 T=6 variant=r2 ms=0.022965
+CPU core=16 avx_vnni=1
+PARITY core=16 passed
+BENCH core=16 K=6 T=1 variant=r1 ms=0.133360
+BENCH core=16 K=6 T=1 variant=r2 ms=0.134438
+BENCH core=16 K=6 T=2 variant=r1 ms=0.176919
+BENCH core=16 K=6 T=2 variant=r2 ms=0.177526
+BENCH core=16 K=6 T=3 variant=r1 ms=0.225998
+BENCH core=16 K=6 T=3 variant=r2 ms=0.216864
+BENCH core=16 K=6 T=4 variant=r1 ms=0.252938
+BENCH core=16 K=6 T=4 variant=r2 ms=0.251148
+BENCH core=16 K=6 T=6 variant=r1 ms=0.319889
+BENCH core=16 K=6 T=6 variant=r2 ms=0.314738
+BENCH core=16 K=7 T=1 variant=r1 ms=0.026217
+BENCH core=16 K=7 T=1 variant=r2 ms=0.026438
+BENCH core=16 K=7 T=2 variant=r1 ms=0.033735
+BENCH core=16 K=7 T=2 variant=r2 ms=0.033342
+BENCH core=16 K=7 T=3 variant=r1 ms=0.041379
+BENCH core=16 K=7 T=3 variant=r2 ms=0.039920
+BENCH core=16 K=7 T=4 variant=r1 ms=0.046292
+BENCH core=16 K=7 T=4 variant=r2 ms=0.046539
+BENCH core=16 K=7 T=6 variant=r1 ms=0.059069
+BENCH core=16 K=7 T=6 variant=r2 ms=0.059539
+PASS: 2240 bitwise comparisons; all token counts 1..8, P/E cores, finite half scales and row boundaries.

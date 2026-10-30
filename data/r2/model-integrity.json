@@ -1,0 +1,9 @@
+{
+  "path": "${STRATA_ROOT}\\data\\models\\gyro-s-abliterated\\Qwen3.8-Flash-Next-Gyro-S-abliterated-TQ1_0.gguf",
+  "sha256": "783e1af72859c48146162840f1a2173922c03e4befaeea4add7578ad25c303a3",
+  "bytes": 58487015904,
+  "matches_r1": true,
+  "mtime_unchanged_during_hash": true,
+  "checked_at": "2026-10-30T13:03:06.337946-07:00",
+  "seconds": 47.68207249999978
+}

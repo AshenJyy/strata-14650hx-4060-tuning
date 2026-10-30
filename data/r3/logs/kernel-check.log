@@ -1,0 +1,98 @@
+r2.cpp
+r2.cpp(141): warning C4068: unknown pragma 'GCC'
+r2.cpp(151): warning C4068: unknown pragma 'GCC'
+f16.cpp
+f16.cpp(145): warning C4068: unknown pragma 'GCC'
+f16.cpp(155): warning C4068: unknown pragma 'GCC'
+unroll2.cpp
+unroll2.cpp(144): warning C4068: unknown pragma 'GCC'
+unroll2.cpp(154): warning C4068: unknown pragma 'GCC'
+f16unroll2.cpp
+f16unroll2.cpp(148): warning C4068: unknown pragma 'GCC'
+f16unroll2.cpp(158): warning C4068: unknown pragma 'GCC'
+kernel-check.cpp
+CPU core=0 avx_vnni=1
+PARITY core=0 passed
+BENCH core=0 K=6 T=1 variant=r2 ms=0.048077
+BENCH core=0 K=6 T=1 variant=f16 ms=0.048140
+BENCH core=0 K=6 T=1 variant=unroll2 ms=0.060185
+BENCH core=0 K=6 T=1 variant=f16unroll2 ms=0.058362
+BENCH core=0 K=6 T=2 variant=r2 ms=0.062721
+BENCH core=0 K=6 T=2 variant=f16 ms=0.060236
+BENCH core=0 K=6 T=2 variant=unroll2 ms=0.070058
+BENCH core=0 K=6 T=2 variant=f16unroll2 ms=0.068362
+BENCH core=0 K=6 T=3 variant=r2 ms=0.076073
+BENCH core=0 K=6 T=3 variant=f16 ms=0.074431
+BENCH core=0 K=6 T=3 variant=unroll2 ms=0.085549
+BENCH core=0 K=6 T=3 variant=f16unroll2 ms=0.084402
+BENCH core=0 K=6 T=4 variant=r2 ms=0.093231
+BENCH core=0 K=6 T=4 variant=f16 ms=0.091918
+BENCH core=0 K=6 T=4 variant=unroll2 ms=0.101013
+BENCH core=0 K=6 T=4 variant=f16unroll2 ms=0.099788
+BENCH core=0 K=6 T=6 variant=r2 ms=0.119299
+BENCH core=0 K=6 T=6 variant=f16 ms=0.115883
+BENCH core=0 K=6 T=6 variant=unroll2 ms=0.139659
+BENCH core=0 K=6 T=6 variant=f16unroll2 ms=0.132579
+BENCH core=0 K=7 T=1 variant=r2 ms=0.012063
+BENCH core=0 K=7 T=1 variant=f16 ms=0.012724
+BENCH core=0 K=7 T=1 variant=unroll2 ms=0.014898
+BENCH core=0 K=7 T=1 variant=f16unroll2 ms=0.014475
+BENCH core=0 K=7 T=2 variant=r2 ms=0.013626
+BENCH core=0 K=7 T=2 variant=f16 ms=0.014145
+BENCH core=0 K=7 T=2 variant=unroll2 ms=0.018397
+BENCH core=0 K=7 T=2 variant=f16unroll2 ms=0.018250
+BENCH core=0 K=7 T=3 variant=r2 ms=0.017678
+BENCH core=0 K=7 T=3 variant=f16 ms=0.016394
+BENCH core=0 K=7 T=3 variant=unroll2 ms=0.021678
+BENCH core=0 K=7 T=3 variant=f16unroll2 ms=0.020637
+BENCH core=0 K=7 T=4 variant=r2 ms=0.019006
+BENCH core=0 K=7 T=4 variant=f16 ms=0.019973
+BENCH core=0 K=7 T=4 variant=unroll2 ms=0.023104
+BENCH core=0 K=7 T=4 variant=f16unroll2 ms=0.023691
+BENCH core=0 K=7 T=6 variant=r2 ms=0.026252
+BENCH core=0 K=7 T=6 variant=f16 ms=0.025846
+BENCH core=0 K=7 T=6 variant=unroll2 ms=0.030806
+BENCH core=0 K=7 T=6 variant=f16unroll2 ms=0.030072
+CPU core=16 avx_vnni=1
+PARITY core=16 passed
+BENCH core=16 K=6 T=1 variant=r2 ms=0.135479
+BENCH core=16 K=6 T=1 variant=f16 ms=0.132471
+BENCH core=16 K=6 T=1 variant=unroll2 ms=0.163659
+BENCH core=16 K=6 T=1 variant=f16unroll2 ms=0.158224
+BENCH core=16 K=6 T=2 variant=r2 ms=0.173273
+BENCH core=16 K=6 T=2 variant=f16 ms=0.171044
+BENCH core=16 K=6 T=2 variant=unroll2 ms=0.206284
+BENCH core=16 K=6 T=2 variant=f16unroll2 ms=0.203823
+BENCH core=16 K=6 T=3 variant=r2 ms=0.205725
+BENCH core=16 K=6 T=3 variant=f16 ms=0.203262
+BENCH core=16 K=6 T=3 variant=unroll2 ms=0.247561
+BENCH core=16 K=6 T=3 variant=f16unroll2 ms=0.242861
+BENCH core=16 K=6 T=4 variant=r2 ms=0.243883
+BENCH core=16 K=6 T=4 variant=f16 ms=0.256164
+BENCH core=16 K=6 T=4 variant=unroll2 ms=0.278505
+BENCH core=16 K=6 T=4 variant=f16unroll2 ms=0.272594
+BENCH core=16 K=6 T=6 variant=r2 ms=0.310084
+BENCH core=16 K=6 T=6 variant=f16 ms=0.309607
+BENCH core=16 K=6 T=6 variant=unroll2 ms=0.341473
+BENCH core=16 K=6 T=6 variant=f16unroll2 ms=0.336051
+BENCH core=16 K=7 T=1 variant=r2 ms=0.030121
+BENCH core=16 K=7 T=1 variant=f16 ms=0.031987
+BENCH core=16 K=7 T=1 variant=unroll2 ms=0.038636
+BENCH core=16 K=7 T=1 variant=f16unroll2 ms=0.040081
+BENCH core=16 K=7 T=2 variant=r2 ms=0.040138
+BENCH core=16 K=7 T=2 variant=f16 ms=0.039918
+BENCH core=16 K=7 T=2 variant=unroll2 ms=0.049484
+BENCH core=16 K=7 T=2 variant=f16unroll2 ms=0.046204
+BENCH core=16 K=7 T=3 variant=r2 ms=0.049079
+BENCH core=16 K=7 T=3 variant=f16 ms=0.048566
+BENCH core=16 K=7 T=3 variant=unroll2 ms=0.053749
+BENCH core=16 K=7 T=3 variant=f16unroll2 ms=0.054664
+BENCH core=16 K=7 T=4 variant=r2 ms=0.056324
+BENCH core=16 K=7 T=4 variant=f16 ms=0.054568
+BENCH core=16 K=7 T=4 variant=unroll2 ms=0.061319
+BENCH core=16 K=7 T=4 variant=f16unroll2 ms=0.073655
+BENCH core=16 K=7 T=6 variant=r2 ms=0.068641
+BENCH core=16 K=7 T=6 variant=f16 ms=0.069865
+BENCH core=16 K=7 T=6 variant=unroll2 ms=0.077734
+BENCH core=16 K=7 T=6 variant=f16unroll2 ms=0.081699
+PASS: 5120 bitwise comparisons; all token counts 1..8, P/E cores, finite half scales and row boundaries.

@@ -1,0 +1,9 @@
+{
+  "training_kind": "bounded live-engine sample",
+  "completed_prompt_suite": false,
+  "stopped_intentionally": "The exact shared profiling counters made the 32-token training request impractically slow. Captured counters with pgosweep before stopping only the instrumented candidate; r2 restored.",
+  "sweep_succeeded": true,
+  "pgc_bytes": 139264,
+  "runtime_instrumentation_in_final_candidate": false,
+  "profile_source_prompt": "用中文说明如何检查并保养自行车。"
+}

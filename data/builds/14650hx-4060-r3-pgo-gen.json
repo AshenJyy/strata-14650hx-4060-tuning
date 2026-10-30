@@ -1,0 +1,116 @@
+{
+  "build": "14650hx-4060-r3-pgo-gen",
+  "created_utc": "2026-10-30T20:34:53.004963+00:00",
+  "source_tag": "v0.2.8",
+  "source_commit": "870aedd9e1ebe1c91f94da93b59af17729f6c5c0",
+  "engine_version": "0.1.54",
+  "original_binary_commit": "8c1aea4bca1b",
+  "exact_original_commit_available": false,
+  "patch_sha256": "35385352de0f153b7b43323b0f2a6aae0b86920da0e976994d5047f8b810af23",
+  "cuda": "13.0.48",
+  "cublas": "original installed CUDA 13 libraries",
+  "architectures": [
+    "sm_89",
+    "compute_89"
+  ],
+  "hardware": {
+    "cpu": "Intel i7-14650HX",
+    "cores": "8P8E24T",
+    "gpu": "RTX 4060 Laptop 8GB",
+    "ram": "32GB DDR5-5600"
+  },
+  "model_integrity": {
+    "path": "${STRATA_ROOT}\\data\\models\\gyro-s-abliterated\\Qwen3.8-Flash-Next-Gyro-S-abliterated-TQ1_0.gguf",
+    "sha256": "783e1af72859c48146162840f1a2173922c03e4befaeea4add7578ad25c303a3",
+    "bytes": 58487015904,
+    "matches_r1": true,
+    "mtime_unchanged_during_hash": true,
+    "checked_at": "2026-10-30T13:03:06.337946-07:00",
+    "seconds": 47.68207249999978
+  },
+  "precision": {
+    "weights": "Existing Gyro-S TQK6/TQK7, unchanged",
+    "kv": "fp16",
+    "route_tail_skip": 0,
+    "route_prior": 0
+  },
+  "validation": {
+    "cpu_pool_parity": {
+      "reference_sha256": "830c1e6012049fa8d9ff466766538919149f9395724d50611839d6f78c312b9e",
+      "cases_per_variant": 144,
+      "floats_per_variant": 67829760,
+      "variants": {
+        "off": {
+          "returncode": 0,
+          "sha256": "830c1e6012049fa8d9ff466766538919149f9395724d50611839d6f78c312b9e",
+          "bitwise_equal": true,
+          "seconds": 2.928194522857666
+        },
+        "unpack": {
+          "returncode": 0,
+          "sha256": "830c1e6012049fa8d9ff466766538919149f9395724d50611839d6f78c312b9e",
+          "bitwise_equal": true,
+          "seconds": 1.7187626361846924
+        },
+        "prepared": {
+          "returncode": 0,
+          "sha256": "830c1e6012049fa8d9ff466766538919149f9395724d50611839d6f78c312b9e",
+          "bitwise_equal": true,
+          "seconds": 2.671731472015381
+        },
+        "all": {
+          "returncode": 0,
+          "sha256": "830c1e6012049fa8d9ff466766538919149f9395724d50611839d6f78c312b9e",
+          "bitwise_equal": true,
+          "seconds": 1.6950905323028564
+        },
+        "quant": {
+          "returncode": 0,
+          "sha256": "830c1e6012049fa8d9ff466766538919149f9395724d50611839d6f78c312b9e",
+          "bitwise_equal": true,
+          "seconds": 1.6253328323364258
+        }
+      }
+    },
+    "model_performance_benchmark": false
+  },
+  "original_config": "${STRATA_ROOT}\\install\\strata-gyro-s-abliterated.json",
+  "custom_config": "${STRATA_ROOT}\\custom\\r3\\configs\\r3-pgo-gen.json",
+  "files": [
+    {
+      "path": "cublas64_13.dll",
+      "bytes": 51776624,
+      "sha256": "b5846446f2a151ca24b74b8113d4ca32c52105ad89d4c2f1bc56a4ccffa9ea61"
+    },
+    {
+      "path": "cublasLt64_13.dll",
+      "bytes": 478140016,
+      "sha256": "680561bdc5d8a8c921e9ae974e6b60a6608c9d9fca8c0fd125e9da08c5c33ff1"
+    },
+    {
+      "path": "cudart64_13.dll",
+      "bytes": 470640,
+      "sha256": "58c509047f9dd1879cf82c6d5375a95c02c7bd295ae6c8362c745c936e2afc31"
+    },
+    {
+      "path": "pgort140.dll",
+      "bytes": 50728,
+      "sha256": "3a620df77fc0eb13003ee0da1728ed22e424b12997a95678de2ab8c9c742fc3c"
+    },
+    {
+      "path": "strata.exe",
+      "bytes": 93360640,
+      "sha256": "f43c435479ffc0e12f792c579f11ebe64250d312bcc1f236dcdaef26a98dfc41"
+    },
+    {
+      "path": "strata_kq.dll",
+      "bytes": 11106304,
+      "sha256": "f84eb508877da5c5da8c8b0211009948d3e347d56415367cf8d2352d3fa2f537"
+    }
+  ],
+  "baseline": "14650hx-4060-r2; same public source commit",
+  "r1_baseline_patch_sha256": "b83aa2d1e5148de2e55c03176a6c782ff50b86e73c1bb141712add2bc69c2668",
+  "r2_only_patch": "${STRATA_ROOT}\\custom\\r2\\14650hx-4060-r2-only.patch",
+  "r2_only_patch_sha256": "4cee637233518281a5d4b77a4ba420bf836572b9196983d793d4ffc4215bb918",
+  "pgo": "gen"
+}

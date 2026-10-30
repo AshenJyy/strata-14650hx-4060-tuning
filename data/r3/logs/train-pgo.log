@@ -1,0 +1,11 @@
+{"mode": "r3-pgo-gen", "exe": "${STRATA_ROOT}\\custom\\releases\\14650hx-4060-r3-pgo-gen\\strata.exe", "loaded": true}
+TRAIN 0
+{"mode": "r2", "exe": "${STRATA_ROOT}\\custom\\releases\\14650hx-4060-r2\\strata.exe", "loaded": true}
+Traceback (most recent call last):
+  File "${STRATA_ROOT}\custom\r3\train-pgo.py", line 12, in <module>
+    r=bench.stream_case({'id':'train-'+str(i),'messages':bench.message(prompt),'max_tokens':32,'extra':{'seed':99}})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${WORKSPACE}\work\strata_abliterated_bench.py", line 60, in stream_case
+    if item.get('error'): raise RuntimeError(str(item['error']))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: {'type': 'server_error', 'message': 'the engine stopped unexpectedly (exit code 4294967295); the next request restarts it'}

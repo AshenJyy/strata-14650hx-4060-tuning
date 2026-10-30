@@ -1,0 +1,15 @@
+strata r2 trellis CPU: AVX-VNNI, fixed token groups, bounded state loads
+workers=1 tasks=1 GU=135.828 quant=1.135 down=59.702 ms
+workers=1 tasks=41 GU=68.877 quant=1.245 down=30.221 ms
+workers=1 tasks=144 GU=71.732 quant=1.148 down=31.331 ms
+workers=1 tasks=256 GU=72.679 quant=1.153 down=31.477 ms
+workers=3 tasks=1 GU=134.122 quant=1.216 down=59.673 ms
+workers=3 tasks=41 GU=36.965 quant=1.229 down=15.733 ms
+workers=3 tasks=144 GU=35.745 quant=1.147 down=16.036 ms
+workers=3 tasks=256 GU=41.853 quant=1.135 down=16.093 ms
+strata cpu pool: warning: 23 CPU expert workers are configured, but this CPU has 16 physical cores. Two workers on one core share its memory bandwidth and slow each other down. Recommended: --pool-workers 15 (or leave it out: the engine picks that by itself). It still runs as configured.
+workers=23 tasks=1 GU=245.329 quant=1.274 down=120.506 ms
+workers=23 tasks=41 GU=60.058 quant=1.318 down=8.571 ms
+workers=23 tasks=144 GU=32.523 quant=1.282 down=7.156 ms
+workers=23 tasks=256 GU=26.625 quant=1.271 down=8.981 ms
+PASS finite: 144 batches, 67829760 floats, 1.787 sec; reference comparison is external

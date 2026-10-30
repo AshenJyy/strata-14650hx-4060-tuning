@@ -1,0 +1,51 @@
+SWITCH r1 1-r1
+WARMUP r1
+RUN r1 prose
+{"mode": "r1", "case": "prose", "tps": 15.8, "ttft": 1.59}
+RUN r1 code
+{"mode": "r1", "case": "code", "tps": 19.4, "ttft": 2.846}
+RUN r1 json
+{"mode": "r1", "case": "json", "tps": 20.0, "ttft": 1.737}
+SWITCH r2 2-r2
+WARMUP r2
+RUN r2 prose
+{"mode": "r2", "case": "prose", "tps": 18.5, "ttft": 1.376}
+RUN r2 code
+{"mode": "r2", "case": "code", "tps": 19.9, "ttft": 2.492}
+RUN r2 json
+{"mode": "r2", "case": "json", "tps": 21.6, "ttft": 1.703}
+SWITCH r2-t96 3-r2-t96
+WARMUP r2-t96
+RUN r2-t96 prose
+{"mode": "r2-t96", "case": "prose", "tps": 20.0, "ttft": 1.402}
+RUN r2-t96 code
+{"mode": "r2-t96", "case": "code", "tps": 15.8, "ttft": 2.394}
+RUN r2-t96 json
+{"mode": "r2-t96", "case": "json", "tps": 20.8, "ttft": 1.882}
+SWITCH r2-t192 4-r2-t192
+WARMUP r2-t192
+RUN r2-t192 prose
+{"mode": "r2-t192", "case": "prose", "tps": 19.3, "ttft": 1.371}
+RUN r2-t192 code
+{"mode": "r2-t192", "case": "code", "tps": 16.6, "ttft": 2.222}
+RUN r2-t192 json
+{"mode": "r2-t192", "case": "json", "tps": 20.1, "ttft": 1.741}
+SWITCH r2-mtp6 5-r2-mtp6
+WARMUP r2-mtp6
+RUN r2-mtp6 prose
+{"mode": "r2-mtp6", "case": "prose", "tps": 18.4, "ttft": 1.566}
+RUN r2-mtp6 code
+{"mode": "r2-mtp6", "case": "code", "tps": 20.3, "ttft": 2.182}
+RUN r2-mtp6 json
+{"mode": "r2-mtp6", "case": "json", "tps": 20.5, "ttft": 1.709}
+SWITCH r2-mtp4p3 6-r2-mtp4p3
+WARMUP r2-mtp4p3
+RUN r2-mtp4p3 prose
+{"mode": "r2-mtp4p3", "case": "prose", "tps": 15.5, "ttft": 1.521}
+RUN r2-mtp4p3 code
+{"mode": "r2-mtp4p3", "case": "code", "tps": 18.4, "ttft": 2.864}
+RUN r2-mtp4p3 json
+{"mode": "r2-mtp4p3", "case": "json", "tps": 20.2, "ttft": 1.778}
+SUMMARY {"r1": {"median_tps": 19.4, "by_workload": {"prose": 15.8, "code": 19.4, "json": 20.0}, "median_ttft": 1.7370181999999659, "wall_tps": 15.91569621503389}, "r2": {"median_tps": 19.9, "by_workload": {"prose": 18.5, "code": 19.9, "json": 21.6}, "median_ttft": 1.7030334000000948, "wall_tps": 17.465294827491768}, "r2-t96": {"median_tps": 20.0, "by_workload": {"prose": 20.0, "code": 15.8, "json": 20.8}, "median_ttft": 1.8819499999999607, "wall_tps": 16.394655109322635}, "r2-t192": {"median_tps": 19.3, "by_workload": {"prose": 19.3, "code": 16.6, "json": 20.1}, "median_ttft": 1.7407210999999734, "wall_tps": 16.47398892287267}, "r2-mtp6": {"median_tps": 20.3, "by_workload": {"prose": 18.4, "code": 20.3, "json": 20.5}, "median_ttft": 1.7090638999998191, "wall_tps": 17.3460734400501}, "r2-mtp4p3": {"median_tps": 18.4, "by_workload": {"prose": 15.5, "code": 18.4, "json": 20.2}, "median_ttft": 1.7780493000000206, "wall_tps": 15.628153642617116}}
+SWITCH r1 restore-r1
+RESULT ${STRATA_ROOT}\custom\r2\experiments\20261030-124800\results.json

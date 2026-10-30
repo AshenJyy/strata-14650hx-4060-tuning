@@ -1,0 +1,15 @@
+workers=1 tasks=1 GU=133.540 quant=1.148 down=57.303 ms
+workers=1 tasks=41 GU=67.256 quant=1.109 down=29.111 ms
+workers=1 tasks=144 GU=68.626 quant=1.176 down=30.682 ms
+workers=1 tasks=256 GU=71.142 quant=1.123 down=30.178 ms
+workers=3 tasks=1 GU=132.266 quant=1.211 down=58.595 ms
+workers=3 tasks=41 GU=34.675 quant=1.143 down=15.420 ms
+workers=3 tasks=144 GU=35.085 quant=1.138 down=15.750 ms
+workers=3 tasks=256 GU=36.216 quant=1.123 down=15.951 ms
+workers=23 tasks=1 GU=172.125 quant=1.391 down=88.852 ms
+workers=23 tasks=41 GU=54.570 quant=1.310 down=8.697 ms
+workers=23 tasks=144 GU=532.052 quant=1.306 down=29.039 ms
+workers=23 tasks=256 GU=50.479 quant=1.307 down=6.992 ms
+PASS finite: 144 batches, 67829760 floats, 2.755 sec; reference comparison is external
+strata r2 trellis CPU: AVX-VNNI, fixed token groups, bounded state loads
+strata cpu pool: warning: 23 CPU expert workers are configured, but this CPU has 16 physical cores. Two workers on one core share its memory bandwidth and slow each other down. Recommended: --pool-workers 15 (or leave it out: the engine picks that by itself). It still runs as configured.

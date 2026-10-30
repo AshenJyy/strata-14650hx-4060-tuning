@@ -1,0 +1,3258 @@
+{
+  "started": "2026-10-30T13:57:35.348797-07:00",
+  "order": [
+    "r3-chain16",
+    "r3-cost16",
+    "r3-plain16"
+  ],
+  "sessions": [
+    {
+      "index": 1,
+      "mode": "r3-chain16",
+      "engine_start": {
+        "model": "qwen3.8-flash-next-gyro-s-abliterated",
+        "max_context": 8192,
+        "images": false,
+        "version": "0.1.54",
+        "logit_bias": 1,
+        "context": 8192,
+        "kv": "fp16",
+        "kv_resident": 0,
+        "expert_slots": 398,
+        "expert_cache_mib": 398,
+        "expert_slots_primary": 398,
+        "expert_cache_primary_mib": 398,
+        "spec": 8,
+        "mtp_max": 4,
+        "lookup": 3,
+        "vram_free_mib": 489,
+        "cvec": 0,
+        "arena_mib": 0,
+        "pool_workers": 15,
+        "pcie_frac": "0.34",
+        "spec_min_p": "0.50",
+        "conversation_cache_mib": 768,
+        "conversation_cache_slots": 2,
+        "conversation_cache_min_free_mib": 2560,
+        "conversation_cache_min_tokens": 0,
+        "tail_role_token": -1,
+        "vram_elastic": 0,
+        "prefill_cap": 256,
+        "prefill_stages": 1,
+        "stream_all_min": 1024,
+        "prefill_pipe": 0,
+        "engine": "0.1.54",
+        "drafting": "mtp",
+        "drafting_note": ""
+      },
+      "runs": [
+        {
+          "id": "prose",
+          "messages": [
+            {
+              "role": "user",
+              "content": "用中文详细说明如何维护一台家用自行车，给出至少二十条具体步骤，每条都解释原因。持续写作，不要过早总结。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "维护一台家用自行车不仅能延长其使用寿命，还能确保骑行时的安全与舒适。以下是一份详尽的维护指南，包含至少二十条具体步骤，每条均附带了详细的原理解释。\n\n### 1. 定期清洁车架与零部件\n**步骤：** 使用温和的肥皂水或专用自行车清洁剂，配合软布或海绵擦拭车架、轮圈和传动系统，避免使用高压水枪直接冲洗轴承部位。\n**原因：** 灰尘、泥土和盐分（尤其是冬季道路撒盐后）会加速金属部件的腐蚀。清洁能防止污垢堆积在齿轮缝隙中，减少摩擦",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 40,
+            "completion_tokens": 128,
+            "total_tokens": 168,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 6.101391899999726,
+          "first_token_seconds": 1.0818248000005042,
+          "server_metrics": {
+            "id": "eecfefedad23",
+            "projection": null,
+            "time": 1793393873.348079,
+            "duration_s": 6.1,
+            "finish": "length",
+            "prompt_tokens": 40,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.08,
+            "prompt_total": 40,
+            "prompt_read": 40,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1034.4,
+            "decode_ms": 5063.6,
+            "decode_tok_s": 25.3,
+            "hit_rate": 0.287,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 51053.6,
+            "drafts_offered": 117,
+            "drafts_accepted": 63
+          },
+          "completion_tokens_per_wall_second": 20.978819603442577,
+          "stream_decode_tokens_per_second": 25.300986612973,
+          "started_unix": 1793393873.3460724,
+          "ended_unix": 1793393879.4667659
+        },
+        {
+          "id": "code",
+          "messages": [
+            {
+              "role": "user",
+              "content": "编写一个完整的Python模块，实现带TTL、最大容量和LRU淘汰的线程安全缓存。包含详细中文注释、类型标注、使用示例和至少六个单元测试。只输出代码，完整写出所有部分。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "```python\n\"\"\"\n线程安全的LRU缓存模块，支持TTL过期机制和最大容量限制。\n\n该模块实现了一个基于LRU（最近最少使用）策略的缓存系统，具有以下特性：\n- 线程安全：使用锁保护并发访问\n- TTL支持：每个条目可设置生存时间，过期后自动失效\n- LRU淘汰：当缓存达到最大容量时，淘汰最久未使用的条目\n- 类型标注：完整的类型提示支持\n\n使用示例：\n    cache = ThreadSafeLRUCache(max_size=100, default_ttl=60)\n    cache",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 58,
+            "completion_tokens": 128,
+            "total_tokens": 186,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 6.649389499999415,
+          "first_token_seconds": 1.576829099999486,
+          "server_metrics": {
+            "id": "e38c836b01a2",
+            "projection": null,
+            "time": 1793393879.4700294,
+            "duration_s": 6.6,
+            "finish": "length",
+            "prompt_tokens": 58,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.575,
+            "prompt_total": 58,
+            "prompt_read": 58,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1530.5,
+            "decode_ms": 5116.4,
+            "decode_tok_s": 25.0,
+            "hit_rate": 0.219,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 51609.9,
+            "drafts_offered": 119,
+            "drafts_accepted": 76
+          },
+          "completion_tokens_per_wall_second": 19.24988752727017,
+          "stream_decode_tokens_per_second": 25.03666590150445,
+          "started_unix": 1793393879.4679475,
+          "ended_unix": 1793393886.118118
+        },
+        {
+          "id": "json",
+          "messages": [
+            {
+              "role": "user",
+              "content": "只输出JSON数组，包含100个按id升序排列的对象。每个对象具有id、name、description、duration_minutes四个字段。id从1到100，内容是家庭整理工作的具体任务，description用完整中文句子详细解释。不要代码块，不要省略号，写出全部对象。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "[{\"id\": 1, \"name\": \"清理厨房台面杂物\", \"description\": \"将厨房台面上所有不必要的物品移走，只保留常用的烹饪工具，并擦拭干净表面以去除油污和灰尘。\", \"duration_minutes\": 20}, {\"id\": 2, \"name\": \"整理冰箱内部食物\", \"description\": \"检查冰箱内所有食材的保质期，丢弃过期或变质的食品，并将剩余物品按类别整齐摆放以便快速取用。\", \"duration_minutes\": 30}, {\"id\": 3, \"name\": \"清洗厨房水槽及龙头\", \"description",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 78,
+            "completion_tokens": 128,
+            "total_tokens": 206,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 6.58600639999986,
+          "first_token_seconds": 1.431868200000281,
+          "server_metrics": {
+            "id": "d7f50ccb998f",
+            "projection": null,
+            "time": 1793393886.1215806,
+            "duration_s": 6.6,
+            "finish": "length",
+            "prompt_tokens": 78,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.43,
+            "prompt_total": 78,
+            "prompt_read": 78,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1384.9,
+            "decode_ms": 5198.8,
+            "decode_tok_s": 24.6,
+            "hit_rate": 0.221,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 54001.9,
+            "drafts_offered": 111,
+            "drafts_accepted": 69
+          },
+          "completion_tokens_per_wall_second": 19.43514661631709,
+          "stream_decode_tokens_per_second": 24.64039478025839,
+          "started_unix": 1793393886.119335,
+          "ended_unix": 1793393892.7065651
+        }
+      ],
+      "pool_cores": "2,4,6,8,10,12,14,16-23",
+      "env": {
+        "STRATA_ROUTE_TAIL_SKIP": "0",
+        "STRATA_ROUTE_PRIOR": "0",
+        "STRATA_TQ_ISA": "avx2",
+        "STRATA_R3_UNPACK": "1",
+        "STRATA_R3_PREPARED": "1",
+        "STRATA_R3_PARALLEL_QUANT": "1",
+        "STRATA_POOL_UMWAIT": "10000",
+        "STRATA_POOL_UMWAIT_ESC": "20000"
+      },
+      "args": [
+        "--pack",
+        "${STRATA_ROOT}\\data\\packs\\gyro-s-abliterated",
+        "--native",
+        "${STRATA_ROOT}\\data\\models\\gyro-s-abliterated\\Qwen3.8-Flash-Next-Gyro-S-abliterated-TQ1_0.gguf",
+        "--ple-gguf",
+        "${STRATA_ROOT}\\data\\models\\gyro-s-abliterated\\Qwen3.8-Flash-Next-Gyro-S-abliterated-TQ1_0.gguf",
+        "--expert-profile",
+        "${STRATA_ROOT}\\terminal\\0.1.54\\data\\expert-profile.bin",
+        "--prefill",
+        "auto",
+        "--spec",
+        "4",
+        "--spec-min-p",
+        "0.5",
+        "--mtp",
+        "${STRATA_ROOT}\\data\\mtp\\rt",
+        "--max-context",
+        "8192",
+        "--mmap-experts",
+        "--expert-cache",
+        "auto",
+        "--kv",
+        "fp16",
+        "--conversation-cache-mib",
+        "768",
+        "--conversation-cache-slots",
+        "2",
+        "--lookup-chain",
+        "2"
+      ],
+      "warmup": {
+        "id": "warmup",
+        "messages": [
+          {
+            "role": "user",
+            "content": "用中文详细说明城市公共图书馆如何服务不同年龄的读者，至少写二十项具体措施并解释原因。"
+          }
+        ],
+        "max_tokens": 128,
+        "extra": {
+          "seed": 42
+        },
+        "content": "城市公共图书馆作为城市的“文化客厅”，承担着促进全民阅读、终身学习以及社会包容的重要职能。为了满足不同年龄段读者的需求，图书馆需要从空间设计、馆藏资源、服务模式和技术应用等多个维度进行精细化运营。以下是针对儿童、青少年、成年人及老年读者等群体，图书馆采取的具体措施及其背后的原因说明：\n\n### 一、针对婴幼儿与学龄前儿童（0-6岁）\n\n1. **设立专门的“亲子阅读区”或“绘本馆”**\n   *   **措施**：提供色彩鲜艳、低矮书架、软垫地板和适合幼儿身高的家具。\n  ",
+        "reasoning": "",
+        "tool_calls": [],
+        "usage": {
+          "prompt_tokens": 34,
+          "completion_tokens": 128,
+          "total_tokens": 162,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "finish_reason": "length",
+        "wall_seconds": 6.872229300000072,
+        "first_token_seconds": 1.3195168000002013,
+        "server_metrics": {
+          "id": "463bf89414ee",
+          "projection": null,
+          "time": 1793393866.4757745,
+          "duration_s": 6.8,
+          "finish": "length",
+          "prompt_tokens": 34,
+          "reused": 0,
+          "output_tokens": 128,
+          "first_engine_token_s": 1.298,
+          "prompt_total": 34,
+          "prompt_read": 34,
+          "reasoning_recoveries": 0,
+          "reasoning_repeat_coverage": 0.0,
+          "engine_generated": 128,
+          "prompt_ms": 1198.9,
+          "decode_ms": 5650.8,
+          "decode_tok_s": 22.7,
+          "hit_rate": 0.214,
+          "pcie_share": 0.0,
+          "ram_blobs": 0,
+          "file_blobs": 0,
+          "file_mb": 53412.0,
+          "drafts_offered": 106,
+          "drafts_accepted": 62
+        },
+        "completion_tokens_per_wall_second": 18.62568817370495,
+        "stream_decode_tokens_per_second": 22.871704594826937,
+        "started_unix": 1793393866.4533713,
+        "ended_unix": 1793393873.3449528
+      },
+      "engine_end": {
+        "model": "qwen3.8-flash-next-gyro-s-abliterated",
+        "max_context": 8192,
+        "images": false,
+        "version": "0.1.54",
+        "logit_bias": 1,
+        "context": 8192,
+        "kv": "fp16",
+        "kv_resident": 0,
+        "expert_slots": 398,
+        "expert_cache_mib": 398,
+        "expert_slots_primary": 398,
+        "expert_cache_primary_mib": 398,
+        "spec": 8,
+        "mtp_max": 4,
+        "lookup": 3,
+        "vram_free_mib": 489,
+        "cvec": 0,
+        "arena_mib": 0,
+        "pool_workers": 15,
+        "pcie_frac": "0.34",
+        "spec_min_p": "0.50",
+        "conversation_cache_mib": 768,
+        "conversation_cache_slots": 2,
+        "conversation_cache_min_free_mib": 2560,
+        "conversation_cache_min_tokens": 0,
+        "tail_role_token": -1,
+        "vram_elastic": 0,
+        "prefill_cap": 256,
+        "prefill_stages": 1,
+        "stream_all_min": 1024,
+        "prefill_pipe": 0,
+        "engine": "0.1.54",
+        "drafting": "mtp",
+        "drafting_note": ""
+      }
+    },
+    {
+      "index": 2,
+      "mode": "r3-cost16",
+      "engine_start": {
+        "model": "qwen3.8-flash-next-gyro-s-abliterated",
+        "max_context": 8192,
+        "images": false,
+        "version": "0.1.54",
+        "logit_bias": 1,
+        "context": 8192,
+        "kv": "fp16",
+        "kv_resident": 0,
+        "expert_slots": 398,
+        "expert_cache_mib": 398,
+        "expert_slots_primary": 398,
+        "expert_cache_primary_mib": 398,
+        "spec": 6,
+        "mtp_max": 4,
+        "lookup": 3,
+        "vram_free_mib": 503,
+        "cvec": 0,
+        "arena_mib": 0,
+        "pool_workers": 15,
+        "pcie_frac": "0.34",
+        "spec_min_p": "0.50",
+        "conversation_cache_mib": 768,
+        "conversation_cache_slots": 2,
+        "conversation_cache_min_free_mib": 2560,
+        "conversation_cache_min_tokens": 0,
+        "tail_role_token": -1,
+        "vram_elastic": 0,
+        "prefill_cap": 256,
+        "prefill_stages": 1,
+        "stream_all_min": 1024,
+        "prefill_pipe": 0,
+        "engine": "0.1.54",
+        "drafting": "mtp",
+        "drafting_note": ""
+      },
+      "runs": [
+        {
+          "id": "prose",
+          "messages": [
+            {
+              "role": "user",
+              "content": "用中文详细说明如何维护一台家用自行车，给出至少二十条具体步骤，每条都解释原因。持续写作，不要过早总结。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "维护一台家用自行车不仅能延长其使用寿命，还能确保骑行时的安全与舒适。以下是一份详尽的维护指南，包含至少二十条具体步骤，每条均附带详细的原因说明。\n\n### 1. 定期清洁车架与零部件\n**操作：** 使用温和的肥皂水、软布或海绵擦拭车架、轮圈、辐条和传动系统，去除灰尘、泥土和油污。避免使用高压水枪直接冲洗轴承部位。\n**原因：** 污垢积累会加速金属部件的腐蚀，尤其是链条和齿轮上的泥沙会像研磨剂一样磨损齿面。清洁还能让你更容易发现潜在的",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 40,
+            "completion_tokens": 128,
+            "total_tokens": 168,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 6.646622299999763,
+          "first_token_seconds": 1.195531000000301,
+          "server_metrics": {
+            "id": "c3eaefc7adc3",
+            "projection": null,
+            "time": 1793393912.8680148,
+            "duration_s": 6.6,
+            "finish": "length",
+            "prompt_tokens": 40,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.194,
+            "prompt_total": 40,
+            "prompt_read": 40,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1149.3,
+            "decode_ms": 5494.7,
+            "decode_tok_s": 23.3,
+            "hit_rate": 0.295,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 45988.2,
+            "drafts_offered": 73,
+            "drafts_accepted": 49
+          },
+          "completion_tokens_per_wall_second": 19.257901866938425,
+          "stream_decode_tokens_per_second": 23.29808711881464,
+          "started_unix": 1793393912.8660204,
+          "ended_unix": 1793393919.513679
+        },
+        {
+          "id": "code",
+          "messages": [
+            {
+              "role": "user",
+              "content": "编写一个完整的Python模块，实现带TTL、最大容量和LRU淘汰的线程安全缓存。包含详细中文注释、类型标注、使用示例和至少六个单元测试。只输出代码，完整写出所有部分。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "```python\n\"\"\"\n线程安全的LRU缓存模块，支持TTL过期机制和最大容量限制。\n\n功能特性：\n- 线程安全：使用锁保护并发访问\n- TTL（Time-To-Live）：条目在指定时间后自动过期\n- LRU淘汰：当缓存达到最大容量时，淘汰最近最少使用的条目\n- 类型标注：完整的类型提示支持\n\n使用示例：\n    cache = ThreadSafeLRUCache(max_size=100, ttl_seconds=60)\n    cache.set(\"key1\", \"value1\")\n    value = cache.get(\"key",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 58,
+            "completion_tokens": 128,
+            "total_tokens": 186,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 7.112926300000254,
+          "first_token_seconds": 1.6853031999999075,
+          "server_metrics": {
+            "id": "80115af69a6e",
+            "projection": null,
+            "time": 1793393919.5310218,
+            "duration_s": 7.1,
+            "finish": "length",
+            "prompt_tokens": 58,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.67,
+            "prompt_total": 58,
+            "prompt_read": 58,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1621.8,
+            "decode_ms": 5474.4,
+            "decode_tok_s": 23.4,
+            "hit_rate": 0.219,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 48919.8,
+            "drafts_offered": 84,
+            "drafts_accepted": 63
+          },
+          "completion_tokens_per_wall_second": 17.995406475671683,
+          "stream_decode_tokens_per_second": 23.39882443200448,
+          "started_unix": 1793393919.5156727,
+          "ended_unix": 1793393926.6295755
+        },
+        {
+          "id": "json",
+          "messages": [
+            {
+              "role": "user",
+              "content": "只输出JSON数组，包含100个按id升序排列的对象。每个对象具有id、name、description、duration_minutes四个字段。id从1到100，内容是家庭整理工作的具体任务，description用完整中文句子详细解释。不要代码块，不要省略号，写出全部对象。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "[{\"id\": 1, \"name\": \"清理厨房台面杂物\", \"description\": \"将厨房台面上所有不必要的物品移走，擦拭表面并整理常用调料瓶的位置。\", \"duration_minutes\": 15}, {\"id\": 2, \"name\": \"清洗厨房水槽\", \"description\": \"使用专用清洁剂彻底清洗水槽内部及边缘，去除水垢和残留食物残渣。\", \"duration_minutes\": 10}, {\"id\": 3, \"name\": \"整理橱柜上层物品\", \"description\": \"将不常用的餐具或季节性厨具移至橱柜上层，腾出下层空间用于",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 78,
+            "completion_tokens": 128,
+            "total_tokens": 206,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 6.3041510000002745,
+          "first_token_seconds": 1.4291317999995954,
+          "server_metrics": {
+            "id": "17e1edf9b413",
+            "projection": null,
+            "time": 1793393926.6348403,
+            "duration_s": 6.3,
+            "finish": "length",
+            "prompt_tokens": 78,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.427,
+            "prompt_total": 78,
+            "prompt_read": 78,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1381.5,
+            "decode_ms": 4919.9,
+            "decode_tok_s": 26.0,
+            "hit_rate": 0.245,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 46375.5,
+            "drafts_offered": 65,
+            "drafts_accepted": 54
+          },
+          "completion_tokens_per_wall_second": 20.304082183309763,
+          "stream_decode_tokens_per_second": 26.051179449710126,
+          "started_unix": 1793393926.6328268,
+          "ended_unix": 1793393932.9379053
+        }
+      ],
+      "pool_cores": "2,4,6,8,10,12,14,16-23",
+      "env": {
+        "STRATA_ROUTE_TAIL_SKIP": "0",
+        "STRATA_ROUTE_PRIOR": "0",
+        "STRATA_TQ_ISA": "avx2",
+        "STRATA_R3_UNPACK": "1",
+        "STRATA_R3_PREPARED": "1",
+        "STRATA_R3_PARALLEL_QUANT": "1",
+        "STRATA_POOL_UMWAIT": "10000",
+        "STRATA_POOL_UMWAIT_ESC": "20000",
+        "STRATA_SPEC_COST": "1"
+      },
+      "args": [
+        "--pack",
+        "${STRATA_ROOT}\\data\\packs\\gyro-s-abliterated",
+        "--native",
+        "${STRATA_ROOT}\\data\\models\\gyro-s-abliterated\\Qwen3.8-Flash-Next-Gyro-S-abliterated-TQ1_0.gguf",
+        "--ple-gguf",
+        "${STRATA_ROOT}\\data\\models\\gyro-s-abliterated\\Qwen3.8-Flash-Next-Gyro-S-abliterated-TQ1_0.gguf",
+        "--expert-profile",
+        "${STRATA_ROOT}\\terminal\\0.1.54\\data\\expert-profile.bin",
+        "--prefill",
+        "auto",
+        "--spec",
+        "4",
+        "--spec-min-p",
+        "0.5",
+        "--mtp",
+        "${STRATA_ROOT}\\data\\mtp\\rt",
+        "--max-context",
+        "8192",
+        "--mmap-experts",
+        "--expert-cache",
+        "auto",
+        "--kv",
+        "fp16",
+        "--conversation-cache-mib",
+        "768",
+        "--conversation-cache-slots",
+        "2"
+      ],
+      "warmup": {
+        "id": "warmup",
+        "messages": [
+          {
+            "role": "user",
+            "content": "用中文详细说明城市公共图书馆如何服务不同年龄的读者，至少写二十项具体措施并解释原因。"
+          }
+        ],
+        "max_tokens": 128,
+        "extra": {
+          "seed": 42
+        },
+        "content": "城市公共图书馆作为城市的“文化客厅”，承担着促进全民阅读、终身学习以及社会包容的重要职能。为了满足不同年龄段读者的需求，图书馆需要从空间设计、馆藏资源、服务模式和技术应用等多个维度进行精细化运营。以下是针对儿童、青少年、成年人及老年读者等群体，图书馆采取的具体措施及其背后的原因说明：\n\n### 一、针对婴幼儿与学龄前儿童（0-6岁）\n\n1. **设立专门的“亲子阅读区”或“绘本馆”**\n   *   **措施**：提供色彩鲜艳、低矮书架、软垫地板和适合幼儿身高的家具。\n  ",
+        "reasoning": "",
+        "tool_calls": [],
+        "usage": {
+          "prompt_tokens": 34,
+          "completion_tokens": 128,
+          "total_tokens": 162,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "finish_reason": "length",
+        "wall_seconds": 7.054490600000463,
+        "first_token_seconds": 1.2420732000000498,
+        "server_metrics": {
+          "id": "6fcc54c7f6c8",
+          "projection": null,
+          "time": 1793393905.8102329,
+          "duration_s": 7.1,
+          "finish": "length",
+          "prompt_tokens": 34,
+          "reused": 0,
+          "output_tokens": 128,
+          "first_engine_token_s": 1.24,
+          "prompt_total": 34,
+          "prompt_read": 34,
+          "reasoning_recoveries": 0,
+          "reasoning_repeat_coverage": 0.0,
+          "engine_generated": 128,
+          "prompt_ms": 1177.1,
+          "decode_ms": 5873.1,
+          "decode_tok_s": 21.8,
+          "hit_rate": 0.214,
+          "pcie_share": 0.0,
+          "ram_blobs": 0,
+          "file_blobs": 0,
+          "file_mb": 52793.8,
+          "drafts_offered": 82,
+          "drafts_accepted": 50
+        },
+        "completion_tokens_per_wall_second": 18.14447098419716,
+        "stream_decode_tokens_per_second": 21.849772867308356,
+        "started_unix": 1793393905.8082106,
+        "ended_unix": 1793393912.864027
+      },
+      "engine_end": {
+        "model": "qwen3.8-flash-next-gyro-s-abliterated",
+        "max_context": 8192,
+        "images": false,
+        "version": "0.1.54",
+        "logit_bias": 1,
+        "context": 8192,
+        "kv": "fp16",
+        "kv_resident": 0,
+        "expert_slots": 398,
+        "expert_cache_mib": 398,
+        "expert_slots_primary": 398,
+        "expert_cache_primary_mib": 398,
+        "spec": 6,
+        "mtp_max": 4,
+        "lookup": 3,
+        "vram_free_mib": 503,
+        "cvec": 0,
+        "arena_mib": 0,
+        "pool_workers": 15,
+        "pcie_frac": "0.34",
+        "spec_min_p": "0.50",
+        "conversation_cache_mib": 768,
+        "conversation_cache_slots": 2,
+        "conversation_cache_min_free_mib": 2560,
+        "conversation_cache_min_tokens": 0,
+        "tail_role_token": -1,
+        "vram_elastic": 0,
+        "prefill_cap": 256,
+        "prefill_stages": 1,
+        "stream_all_min": 1024,
+        "prefill_pipe": 0,
+        "engine": "0.1.54",
+        "drafting": "mtp",
+        "drafting_note": ""
+      }
+    },
+    {
+      "index": 3,
+      "mode": "r3-plain16",
+      "engine_start": {
+        "model": "qwen3.8-flash-next-gyro-s-abliterated",
+        "max_context": 8192,
+        "images": false,
+        "version": "0.1.54",
+        "logit_bias": 1,
+        "context": 8192,
+        "kv": "fp16",
+        "kv_resident": 0,
+        "expert_slots": 398,
+        "expert_cache_mib": 398,
+        "expert_slots_primary": 398,
+        "expert_cache_primary_mib": 398,
+        "spec": 6,
+        "mtp_max": 4,
+        "lookup": 3,
+        "vram_free_mib": 527,
+        "cvec": 0,
+        "arena_mib": 0,
+        "pool_workers": 15,
+        "pcie_frac": "0.34",
+        "spec_min_p": "0.50",
+        "conversation_cache_mib": 768,
+        "conversation_cache_slots": 2,
+        "conversation_cache_min_free_mib": 2560,
+        "conversation_cache_min_tokens": 0,
+        "tail_role_token": -1,
+        "vram_elastic": 0,
+        "prefill_cap": 256,
+        "prefill_stages": 1,
+        "stream_all_min": 1024,
+        "prefill_pipe": 0,
+        "engine": "0.1.54",
+        "drafting": "mtp",
+        "drafting_note": ""
+      },
+      "runs": [
+        {
+          "id": "prose",
+          "messages": [
+            {
+              "role": "user",
+              "content": "用中文详细说明如何维护一台家用自行车，给出至少二十条具体步骤，每条都解释原因。持续写作，不要过早总结。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "维护一台家用自行车不仅能延长其使用寿命，还能确保骑行时的安全与舒适。以下是一份详尽的维护指南，包含至少二十条具体步骤，每条均附带了详细的原理解释。\n\n### 1. 定期清洁车架与零部件\n**步骤：** 使用温和的肥皂水或专用自行车清洁剂，配合软布或海绵擦拭车架、轮圈和传动系统，避免使用高压水枪直接冲洗轴承部位。\n**原因：** 灰尘、泥土和盐分（尤其是冬季道路撒盐后）会加速金属部件的腐蚀。清洁能防止污垢堆积在齿轮缝隙中，减少摩擦",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 40,
+            "completion_tokens": 128,
+            "total_tokens": 168,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 6.367677499999445,
+          "first_token_seconds": 1.1370458000001236,
+          "server_metrics": {
+            "id": "f965d18ccfc6",
+            "projection": null,
+            "time": 1793393953.0794716,
+            "duration_s": 6.4,
+            "finish": "length",
+            "prompt_tokens": 40,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.135,
+            "prompt_total": 40,
+            "prompt_read": 40,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1086.4,
+            "decode_ms": 5278.1,
+            "decode_tok_s": 24.3,
+            "hit_rate": 0.287,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 49673.4,
+            "drafts_offered": 115,
+            "drafts_accepted": 65
+          },
+          "completion_tokens_per_wall_second": 20.101520530838936,
+          "stream_decode_tokens_per_second": 24.280050151498237,
+          "started_unix": 1793393953.0784745,
+          "ended_unix": 1793393959.4477117
+        },
+        {
+          "id": "code",
+          "messages": [
+            {
+              "role": "user",
+              "content": "编写一个完整的Python模块，实现带TTL、最大容量和LRU淘汰的线程安全缓存。包含详细中文注释、类型标注、使用示例和至少六个单元测试。只输出代码，完整写出所有部分。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "```python\n\"\"\"\n线程安全的LRU缓存模块，支持TTL过期机制和最大容量限制。\n\n功能特性：\n- 线程安全：使用锁保护并发访问\n- TTL（Time-To-Live）：条目在指定时间后自动过期\n- LRU淘汰：当缓存达到最大容量时，淘汰最近最少使用的条目\n- 类型标注：完整的类型提示支持\n\n使用示例：\n    cache = ThreadSafeLRUCache(max_size=100, ttl=60)\n    cache.set(\"key\", \"value\")\n    value = cache.get(\"key\")\n\"\"\"",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 58,
+            "completion_tokens": 128,
+            "total_tokens": 186,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 6.726766900000257,
+          "first_token_seconds": 1.6473878999995577,
+          "server_metrics": {
+            "id": "b3be4010da88",
+            "projection": null,
+            "time": 1793393959.4516985,
+            "duration_s": 6.7,
+            "finish": "length",
+            "prompt_tokens": 58,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.645,
+            "prompt_total": 58,
+            "prompt_read": 58,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1598.3,
+            "decode_ms": 5124.9,
+            "decode_tok_s": 25.0,
+            "hit_rate": 0.211,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 51551.1,
+            "drafts_offered": 121,
+            "drafts_accepted": 76
+          },
+          "completion_tokens_per_wall_second": 19.02845778705296,
+          "stream_decode_tokens_per_second": 25.003056475994903,
+          "started_unix": 1793393959.4497042,
+          "ended_unix": 1793393966.1787975
+        },
+        {
+          "id": "json",
+          "messages": [
+            {
+              "role": "user",
+              "content": "只输出JSON数组，包含100个按id升序排列的对象。每个对象具有id、name、description、duration_minutes四个字段。id从1到100，内容是家庭整理工作的具体任务，description用完整中文句子详细解释。不要代码块，不要省略号，写出全部对象。"
+            }
+          ],
+          "max_tokens": 128,
+          "extra": {
+            "seed": 42
+          },
+          "content": "[{\"id\": 1, \"name\": \"清理厨房台面杂物\", \"description\": \"将厨房台面上所有不必要的物品移走，只保留常用的烹饪工具，并擦拭干净表面以去除油污和灰尘。\", \"duration_minutes\": 20}, {\"id\": 2, \"name\": \"整理冰箱内部食物\", \"description\": \"检查冰箱内所有食材的保质期，丢弃过期或变质的食品，并将剩余物品按类别整齐摆放以便快速取用。\", \"duration_minutes\": 30}, {\"id\": 3, \"name\": \"清洗厨房水槽及龙头\", \"description",
+          "reasoning": "",
+          "tool_calls": [],
+          "usage": {
+            "prompt_tokens": 78,
+            "completion_tokens": 128,
+            "total_tokens": 206,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "wall_seconds": 6.90829980000035,
+          "first_token_seconds": 1.4123841000000539,
+          "server_metrics": {
+            "id": "a80fc7cfe9bc",
+            "projection": null,
+            "time": 1793393966.1837811,
+            "duration_s": 6.9,
+            "finish": "length",
+            "prompt_tokens": 78,
+            "reused": 0,
+            "output_tokens": 128,
+            "first_engine_token_s": 1.41,
+            "prompt_total": 78,
+            "prompt_read": 78,
+            "reasoning_recoveries": 0,
+            "reasoning_repeat_coverage": 0.0,
+            "engine_generated": 128,
+            "prompt_ms": 1364.9,
+            "decode_ms": 5539.8,
+            "decode_tok_s": 23.1,
+            "hit_rate": 0.23,
+            "pcie_share": 0.0,
+            "ram_blobs": 0,
+            "file_blobs": 0,
+            "file_mb": 55954.2,
+            "drafts_offered": 119,
+            "drafts_accepted": 69
+          },
+          "completion_tokens_per_wall_second": 18.528437344307715,
+          "stream_decode_tokens_per_second": 23.108069143053477,
+          "started_unix": 1793393966.1817875,
+          "ended_unix": 1793393973.091146
+        }
+      ],
+      "pool_cores": "2,4,6,8,10,12,14,16-23",
+      "env": {
+        "STRATA_ROUTE_TAIL_SKIP": "0",
+        "STRATA_ROUTE_PRIOR": "0",
+        "STRATA_TQ_ISA": "avx2",
+        "STRATA_R3_UNPACK": "1",
+        "STRATA_R3_PREPARED": "1",
+        "STRATA_R3_PARALLEL_QUANT": "1",
+        "STRATA_POOL_UMWAIT": "10000",
+        "STRATA_POOL_UMWAIT_ESC": "20000"
+      },
+      "args": [
+        "--pack",
+        "${STRATA_ROOT}\\data\\packs\\gyro-s-abliterated",
+        "--native",
+        "${STRATA_ROOT}\\data\\models\\gyro-s-abliterated\\Qwen3.8-Flash-Next-Gyro-S-abliterated-TQ1_0.gguf",
+        "--ple-gguf",
+        "${STRATA_ROOT}\\data\\models\\gyro-s-abliterated\\Qwen3.8-Flash-Next-Gyro-S-abliterated-TQ1_0.gguf",
+        "--expert-profile",
+        "${STRATA_ROOT}\\terminal\\0.1.54\\data\\expert-profile.bin",
+        "--prefill",
+        "auto",
+        "--spec",
+        "4",
+        "--spec-min-p",
+        "0.5",
+        "--mtp",
+        "${STRATA_ROOT}\\data\\mtp\\rt",
+        "--max-context",
+        "8192",
+        "--mmap-experts",
+        "--expert-cache",
+        "auto",
+        "--kv",
+        "fp16",
+        "--conversation-cache-mib",
+        "768",
+        "--conversation-cache-slots",
+        "2"
+      ],
+      "warmup": {
+        "id": "warmup",
+        "messages": [
+          {
+            "role": "user",
+            "content": "用中文详细说明城市公共图书馆如何服务不同年龄的读者，至少写二十项具体措施并解释原因。"
+          }
+        ],
+        "max_tokens": 128,
+        "extra": {
+          "seed": 42
+        },
+        "content": "城市公共图书馆作为城市的“文化客厅”，承担着促进全民阅读、终身学习以及社会包容的重要职能。为了满足不同年龄段读者的需求，图书馆需要从空间设计、馆藏资源、服务模式和技术应用等多个维度进行精细化运营。以下是针对儿童、青少年、成年人及老年读者等群体，图书馆采取的具体措施及其背后的原因说明：\n\n### 一、针对婴幼儿与学龄前儿童（0-6岁）\n\n1. **设立专门的“亲子阅读区”或“绘本馆”**\n   *   **措施**：提供色彩鲜艳、低矮书架、软垫地板和适合幼儿身高的家具。\n  ",
+        "reasoning": "",
+        "tool_calls": [],
+        "usage": {
+          "prompt_tokens": 34,
+          "completion_tokens": 128,
+          "total_tokens": 162,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "finish_reason": "length",
+        "wall_seconds": 6.888400499999989,
+        "first_token_seconds": 1.1961252000000968,
+        "server_metrics": {
+          "id": "232a5edbcdda",
+          "projection": null,
+          "time": 1793393946.1877346,
+          "duration_s": 6.9,
+          "finish": "length",
+          "prompt_tokens": 34,
+          "reused": 0,
+          "output_tokens": 128,
+          "first_engine_token_s": 1.195,
+          "prompt_total": 34,
+          "prompt_read": 34,
+          "reasoning_recoveries": 0,
+          "reasoning_repeat_coverage": 0.0,
+          "engine_generated": 128,
+          "prompt_ms": 1131.5,
+          "decode_ms": 5754.7,
+          "decode_tok_s": 22.2,
+          "hit_rate": 0.214,
+          "pcie_share": 0.0,
+          "ram_blobs": 0,
+          "file_blobs": 0,
+          "file_mb": 53412.0,
+          "drafts_offered": 106,
+          "drafts_accepted": 62
+        },
+        "completion_tokens_per_wall_second": 18.581962532521185,
+        "stream_decode_tokens_per_second": 22.310937772107124,
+        "started_unix": 1793393946.1867173,
+        "ended_unix": 1793393953.0764818
+      },
+      "engine_end": {
+        "model": "qwen3.8-flash-next-gyro-s-abliterated",
+        "max_context": 8192,
+        "images": false,
+        "version": "0.1.54",
+        "logit_bias": 1,
+        "context": 8192,
+        "kv": "fp16",
+        "kv_resident": 0,
+        "expert_slots": 398,
+        "expert_cache_mib": 398,
+        "expert_slots_primary": 398,
+        "expert_cache_primary_mib": 398,
+        "spec": 6,
+        "mtp_max": 4,
+        "lookup": 3,
+        "vram_free_mib": 527,
+        "cvec": 0,
+        "arena_mib": 0,
+        "pool_workers": 15,
+        "pcie_frac": "0.34",
+        "spec_min_p": "0.50",
+        "conversation_cache_mib": 768,
+        "conversation_cache_slots": 2,
+        "conversation_cache_min_free_mib": 2560,
+        "conversation_cache_min_tokens": 0,
+        "tail_role_token": -1,
+        "vram_elastic": 0,
+        "prefill_cap": 256,
+        "prefill_stages": 1,
+        "stream_all_min": 1024,
+        "prefill_pipe": 0,
+        "engine": "0.1.54",
+        "drafting": "mtp",
+        "drafting_note": ""
+      }
+    }
+  ],
+  "completed": true,
+  "method": {
+    "warmup_tokens": 128,
+    "measured_tokens": 128,
+    "temperature": 0,
+    "seed": 42,
+    "thinking": false,
+    "context": 8192,
+    "kv": "fp16",
+    "cpu": "see each session pool_cores",
+    "pruning": false
+  },
+  "system_samples": [
+    {
+      "time": 1793393856.637362,
+      "page_reads_s": 954.2026377255618,
+      "pages_input_s": 97181.86864220336,
+      "disk_read_Bps": 398042206.30694216,
+      "available_MB": 24496.0,
+      "cpu_performance_pct": 216.39817385732593
+    },
+    {
+      "time": 1793393857.6392803,
+      "page_reads_s": 10.980985325809828,
+      "pages_input_s": 125.78219555018529,
+      "disk_read_Bps": 421158.7215577506,
+      "available_MB": 25068.0,
+      "cpu_performance_pct": 216.01963001492604
+    },
+    {
+      "time": 1793393858.6508722,
+      "page_reads_s": 2.965821575580849,
+      "pages_input_s": 9.88607191860283,
+      "disk_read_Bps": 0.0,
+      "available_MB": 24997.0,
+      "cpu_performance_pct": 198.86717223047455
+    },
+    {
+      "time": 1793393859.651735,
+      "page_reads_s": 11.989059982765726,
+      "pages_input_s": 49.954416594857186,
+      "disk_read_Bps": 188244.22714273224,
+      "available_MB": 24916.0,
+      "cpu_performance_pct": 200.64282134803307
+    },
+    {
+      "time": 1793393860.6644094,
+      "page_reads_s": 10324.677787100109,
+      "pages_input_s": 48487.965504219545,
+      "disk_read_Bps": 158822163.12813148,
+      "available_MB": 23796.0,
+      "cpu_performance_pct": 215.03941135602855
+    },
+    {
+      "time": 1793393861.664819,
+      "page_reads_s": 598.63985826127,
+      "pages_input_s": 128306.81062272938,
+      "disk_read_Bps": 525442357.8775009,
+      "available_MB": 23780.0,
+      "cpu_performance_pct": 208.4493246479548
+    },
+    {
+      "time": 1793393862.6730485,
+      "page_reads_s": 1871.9116433896224,
+      "pages_input_s": 211303.80679570392,
+      "disk_read_Bps": 865402874.6690179,
+      "available_MB": 22976.0,
+      "cpu_performance_pct": 215.5199100834939
+    },
+    {
+      "time": 1793393863.687595,
+      "page_reads_s": 1836.1832777024665,
+      "pages_input_s": 206221.22154778327,
+      "disk_read_Bps": 844746716.1099013,
+      "available_MB": 22171.0,
+      "cpu_performance_pct": 212.8798503185787
+    },
+    {
+      "time": 1793393864.6907158,
+      "page_reads_s": 819.3806857618252,
+      "pages_input_s": 78793.12202681688,
+      "disk_read_Bps": 339529793.11036414,
+      "available_MB": 23670.0,
+      "cpu_performance_pct": 218.80281212942572
+    },
+    {
+      "time": 1793393865.7048469,
+      "page_reads_s": 2721.7493511438297,
+      "pages_input_s": 130492.10313023855,
+      "disk_read_Bps": 525463927.6006783,
+      "available_MB": 23024.0,
+      "cpu_performance_pct": 210.51386586439082
+    },
+    {
+      "time": 1793393866.7097127,
+      "page_reads_s": 6679.424536681464,
+      "pages_input_s": 14453.347358831363,
+      "disk_read_Bps": 34874170.00961268,
+      "available_MB": 20544.0,
+      "cpu_performance_pct": 193.00205748087185
+    },
+    {
+      "time": 1793393867.7150288,
+      "page_reads_s": 1287.3089542485025,
+      "pages_input_s": 17121.010125669804,
+      "disk_read_Bps": 71733136.67550173,
+      "available_MB": 16642.0,
+      "cpu_performance_pct": 185.27912291123715
+    },
+    {
+      "time": 1793393868.7154088,
+      "page_reads_s": 545.7464462010951,
+      "pages_input_s": 6836.823611749982,
+      "disk_read_Bps": 29694491.93904512,
+      "available_MB": 15333.0,
+      "cpu_performance_pct": 184.89122793809727
+    },
+    {
+      "time": 1793393869.7210484,
+      "page_reads_s": 306.2821857330974,
+      "pages_input_s": 3822.560785578007,
+      "disk_read_Bps": 18382149.874215476,
+      "available_MB": 14454.0,
+      "cpu_performance_pct": 184.7378226785187
+    },
+    {
+      "time": 1793393870.724642,
+      "page_reads_s": 225.1853020955485,
+      "pages_input_s": 2887.5531215615024,
+      "disk_read_Bps": 14227183.472913345,
+      "available_MB": 13644.0,
+      "cpu_performance_pct": 184.5997414948016
+    },
+    {
+      "time": 1793393871.7283149,
+      "page_reads_s": 578.8551102743892,
+      "pages_input_s": 7286.0024465346105,
+      "disk_read_Bps": 32312397.641778152,
+      "available_MB": 12643.0,
+      "cpu_performance_pct": 184.50616480961583
+    },
+    {
+      "time": 1793393872.736143,
+      "page_reads_s": 312.56803316118607,
+      "pages_input_s": 3796.4612535704696,
+      "disk_read_Bps": 17834485.005962607,
+      "available_MB": 11847.0,
+      "cpu_performance_pct": 184.38605629125132
+    },
+    {
+      "time": 1793393873.751039,
+      "page_reads_s": 57.14482765415557,
+      "pages_input_s": 541.8906070652683,
+      "disk_read_Bps": 3962966.210657511,
+      "available_MB": 11144.0,
+      "cpu_performance_pct": 184.3086466352123
+    },
+    {
+      "time": 1793393874.7577653,
+      "page_reads_s": 76.48567969545589,
+      "pages_input_s": 1001.2670796496043,
+      "disk_read_Bps": 5773401.340029108,
+      "available_MB": 10128.0,
+      "cpu_performance_pct": 183.51717659624114
+    },
+    {
+      "time": 1793393875.7723029,
+      "page_reads_s": 143.91444936557386,
+      "pages_input_s": 1747.6734159257703,
+      "disk_read_Bps": 9205477.896514867,
+      "available_MB": 9799.0,
+      "cpu_performance_pct": 183.9269413942873
+    },
+    {
+      "time": 1793393876.7766135,
+      "page_reads_s": 283.7811034046563,
+      "pages_input_s": 3361.5614213828762,
+      "disk_read_Bps": 15861216.901166111,
+      "available_MB": 9450.0,
+      "cpu_performance_pct": 182.875099808509
+    },
+    {
+      "time": 1793393877.782448,
+      "page_reads_s": 62.633904826290326,
+      "pages_input_s": 761.5487475704506,
+      "disk_read_Bps": 5802882.153810974,
+      "available_MB": 9117.0,
+      "cpu_performance_pct": 182.47828219879682
+    },
+    {
+      "time": 1793393878.7912476,
+      "page_reads_s": 165.54722378297015,
+      "pages_input_s": 1980.6188809483494,
+      "disk_read_Bps": 10861483.961348787,
+      "available_MB": 8734.0,
+      "cpu_performance_pct": 181.91626568068298
+    },
+    {
+      "time": 1793393879.7963357,
+      "page_reads_s": 245.7448336874579,
+      "pages_input_s": 3215.5761233921617,
+      "disk_read_Bps": 16105133.420541242,
+      "available_MB": 8051.0,
+      "cpu_performance_pct": 181.8990004497976
+    },
+    {
+      "time": 1793393880.7971718,
+      "page_reads_s": 160.8658539643791,
+      "pages_input_s": 2114.236937817554,
+      "disk_read_Bps": 10869911.580732828,
+      "available_MB": 7192.0,
+      "cpu_performance_pct": 178.0296592348232
+    },
+    {
+      "time": 1793393881.800025,
+      "page_reads_s": 78.77232435092851,
+      "pages_input_s": 1066.91629184169,
+      "disk_read_Bps": 5926167.597792101,
+      "available_MB": 6792.0,
+      "cpu_performance_pct": 179.50344705046197
+    },
+    {
+      "time": 1793393882.8024123,
+      "page_reads_s": 907.8393423651709,
+      "pages_input_s": 10711.506614258065,
+      "disk_read_Bps": 46309750.79311239,
+      "available_MB": 6568.0,
+      "cpu_performance_pct": 181.52629327757052
+    },
+    {
+      "time": 1793393883.8088164,
+      "page_reads_s": 589.2424597583669,
+      "pages_input_s": 6740.01956920911,
+      "disk_read_Bps": 30114268.3223353,
+      "available_MB": 6267.0,
+      "cpu_performance_pct": 179.77448075413523
+    },
+    {
+      "time": 1793393884.8126974,
+      "page_reads_s": 507.03064228231125,
+      "pages_input_s": 6199.918895019853,
+      "disk_read_Bps": 27704233.984779716,
+      "available_MB": 6073.0,
+      "cpu_performance_pct": 178.6650978298538
+    },
+    {
+      "time": 1793393885.8155634,
+      "page_reads_s": 630.1433456463875,
+      "pages_input_s": 7675.385244914385,
+      "disk_read_Bps": 33814225.765205406,
+      "available_MB": 5410.0,
+      "cpu_performance_pct": 179.14708168632055
+    },
+    {
+      "time": 1793393886.8270185,
+      "page_reads_s": 731.7506818630847,
+      "pages_input_s": 3821.9140343254353,
+      "disk_read_Bps": 18348035.25930772,
+      "available_MB": 4877.0,
+      "cpu_performance_pct": 189.1184234664813
+    },
+    {
+      "time": 1793393887.8338578,
+      "page_reads_s": 222.43905616725192,
+      "pages_input_s": 2582.8749334420636,
+      "disk_read_Bps": 11295328.164140956,
+      "available_MB": 4320.0,
+      "cpu_performance_pct": 187.9342984186151
+    },
+    {
+      "time": 1793393888.8356652,
+      "page_reads_s": 168.7044803617503,
+      "pages_input_s": 2090.3383543047644,
+      "disk_read_Bps": 10663688.416999942,
+      "available_MB": 4210.0,
+      "cpu_performance_pct": 175.45557210283798
+    },
+    {
+      "time": 1793393889.8424442,
+      "page_reads_s": 352.60212922023777,
+      "pages_input_s": 4407.02999253576,
+      "disk_read_Bps": 20305051.49729266,
+      "available_MB": 4063.0,
+      "cpu_performance_pct": 176.6236709733759
+    },
+    {
+      "time": 1793393890.8488984,
+      "page_reads_s": 451.1074538948807,
+      "pages_input_s": 5425.212991775437,
+      "disk_read_Bps": 24199645.45338833,
+      "available_MB": 3880.0,
+      "cpu_performance_pct": 177.74300578961265
+    },
+    {
+      "time": 1793393891.8551345,
+      "page_reads_s": 413.43808953439117,
+      "pages_input_s": 5048.7151318142005,
+      "disk_read_Bps": 23134214.526266538,
+      "available_MB": 3775.0,
+      "cpu_performance_pct": 178.43567216243088
+    },
+    {
+      "time": 1793393892.8601696,
+      "page_reads_s": 1817.9654389545715,
+      "pages_input_s": 21642.445701840137,
+      "disk_read_Bps": 89303143.10005,
+      "available_MB": 3543.0,
+      "cpu_performance_pct": 177.37273563873202
+    },
+    {
+      "time": 1793393893.8750873,
+      "page_reads_s": 5.908958897577357,
+      "pages_input_s": 5.908958897577357,
+      "disk_read_Bps": 60507.73911119214,
+      "available_MB": 3541.0,
+      "cpu_performance_pct": 208.63026592342138
+    },
+    {
+      "time": 1793393894.8764563,
+      "page_reads_s": 13.984960573399366,
+      "pages_input_s": 35.96132718874123,
+      "disk_read_Bps": 85923.59776296571,
+      "available_MB": 11034.0,
+      "cpu_performance_pct": 214.38291262135922
+    },
+    {
+      "time": 1793393895.8818245,
+      "page_reads_s": 1.9896239123347828,
+      "pages_input_s": 16.911803254845655,
+      "disk_read_Bps": 101868.74431154088,
+      "available_MB": 22453.0,
+      "cpu_performance_pct": 220.34661847957946
+    },
+    {
+      "time": 1793393896.8965194,
+      "page_reads_s": 375.5027153478505,
+      "pages_input_s": 382.40171536736483,
+      "disk_read_Bps": 0.0,
+      "available_MB": 25195.0,
+      "cpu_performance_pct": 217.1139853171456
+    },
+    {
+      "time": 1793393897.8986747,
+      "page_reads_s": 1.9956401250188713,
+      "pages_input_s": 16.962941062660406,
+      "disk_read_Bps": 65393.135616618376,
+      "available_MB": 25009.0,
+      "cpu_performance_pct": 208.85742068445037
+    },
+    {
+      "time": 1793393898.8992493,
+      "page_reads_s": 0.9994207357415642,
+      "pages_input_s": 7.995365885932514,
+      "disk_read_Bps": 0.0,
+      "available_MB": 25005.0,
+      "cpu_performance_pct": 196.62381778383514
+    },
+    {
+      "time": 1793393899.9129477,
+      "page_reads_s": 8.878392655793595,
+      "pages_input_s": 2692.125950851191,
+      "disk_read_Bps": 10938053.481464382,
+      "available_MB": 24091.0,
+      "cpu_performance_pct": 211.61929365737493
+    },
+    {
+      "time": 1793393900.927693,
+      "page_reads_s": 506.24254178667763,
+      "pages_input_s": 125514.6635023553,
+      "disk_read_Bps": 514035446.43303865,
+      "available_MB": 23812.0,
+      "cpu_performance_pct": 213.80028440110712
+    },
+    {
+      "time": 1793393901.9402475,
+      "page_reads_s": 1590.4077667217548,
+      "pages_input_s": 186589.4051183471,
+      "disk_read_Bps": 764270203.3647497,
+      "available_MB": 23118.0,
+      "cpu_performance_pct": 222.02668862000306
+    },
+    {
+      "time": 1793393902.945665,
+      "page_reads_s": 1802.7059691056788,
+      "pages_input_s": 210119.7068394187,
+      "disk_read_Bps": 860589194.3496112,
+      "available_MB": 22304.0,
+      "cpu_performance_pct": 191.3319182715538
+    },
+    {
+      "time": 1793393903.9600031,
+      "page_reads_s": 1019.4379406801485,
+      "pages_input_s": 109792.6774778356,
+      "disk_read_Bps": 466619232.23900515,
+      "available_MB": 23675.0,
+      "cpu_performance_pct": 220.07736405036164
+    },
+    {
+      "time": 1793393904.9747314,
+      "page_reads_s": 505.6206685901936,
+      "pages_input_s": 128185.18844866709,
+      "disk_read_Bps": 525050568.96616644,
+      "available_MB": 23141.0,
+      "cpu_performance_pct": 209.15180633454307
+    },
+    {
+      "time": 1793393905.9788513,
+      "page_reads_s": 0.9957051255116182,
+      "pages_input_s": 15.93128200818589,
+      "disk_read_Bps": 505722.6160678529,
+      "available_MB": 21052.0,
+      "cpu_performance_pct": 194.98097667197612
+    },
+    {
+      "time": 1793393906.9848385,
+      "page_reads_s": 0.9940308447771133,
+      "pages_input_s": 7.952246758216907,
+      "disk_read_Bps": 1836269.2034333826,
+      "available_MB": 16700.0,
+      "cpu_performance_pct": 184.47695542032133
+    },
+    {
+      "time": 1793393907.9978874,
+      "page_reads_s": 547.8257831095539,
+      "pages_input_s": 6731.84115460749,
+      "disk_read_Bps": 29473856.273019783,
+      "available_MB": 15334.0,
+      "cpu_performance_pct": 184.92766758982106
+    },
+    {
+      "time": 1793393909.0029216,
+      "page_reads_s": 46.770436665713675,
+      "pages_input_s": 516.4650346703276,
+      "disk_read_Bps": 4393921.316004654,
+      "available_MB": 14616.0,
+      "cpu_performance_pct": 184.38856296420903
+    },
+    {
+      "time": 1793393910.008237,
+      "page_reads_s": 145.22051436708324,
+      "pages_input_s": 1734.6888839465287,
+      "disk_read_Bps": 9150499.777394855,
+      "available_MB": 13904.0,
+      "cpu_performance_pct": 184.44390035741566
+    },
+    {
+      "time": 1793393911.0109854,
+      "page_reads_s": 92.74390625166727,
+      "pages_input_s": 1117.9131065389142,
+      "disk_read_Bps": 6384418.704630903,
+      "available_MB": 12954.0,
+      "cpu_performance_pct": 183.77226519051192
+    },
+    {
+      "time": 1793393912.0218546,
+      "page_reads_s": 102.88154387210321,
+      "pages_input_s": 1252.3849475200254,
+      "disk_read_Bps": 6920730.660767597,
+      "available_MB": 12241.0,
+      "cpu_performance_pct": 184.21371174800285
+    },
+    {
+      "time": 1793393913.026045,
+      "page_reads_s": 53.77281523292242,
+      "pages_input_s": 629.3410968001291,
+      "disk_read_Bps": 4376517.650578072,
+      "available_MB": 11579.0,
+      "cpu_performance_pct": 183.60783359389595
+    },
+    {
+      "time": 1793393914.027738,
+      "page_reads_s": 183.69620321911623,
+      "pages_input_s": 2355.105127140735,
+      "disk_read_Bps": 11189175.3418197,
+      "available_MB": 10482.0,
+      "cpu_performance_pct": 179.61232605805185
+    },
+    {
+      "time": 1793393915.031583,
+      "page_reads_s": 126.51951683093117,
+      "pages_input_s": 1574.022335376939,
+      "disk_read_Bps": 8311985.572391728,
+      "available_MB": 10119.0,
+      "cpu_performance_pct": 181.80602986690516
+    },
+    {
+      "time": 1793393916.037161,
+      "page_reads_s": 111.37077738194746,
+      "pages_input_s": 1320.5392175288057,
+      "disk_read_Bps": 6740795.851597643,
+      "available_MB": 9824.0,
+      "cpu_performance_pct": 179.45198346936002
+    },
+    {
+      "time": 1793393917.0527422,
+      "page_reads_s": 176.2703305423208,
+      "pages_input_s": 2160.542487205876,
+      "disk_read_Bps": 10741311.275973655,
+      "available_MB": 9540.0,
+      "cpu_performance_pct": 179.35646505668294
+    },
+    {
+      "time": 1793393918.0657692,
+      "page_reads_s": 864.630967409532,
+      "pages_input_s": 9594.83748194984,
+      "disk_read_Bps": 41302165.82161163,
+      "available_MB": 9230.0,
+      "cpu_performance_pct": 178.0190777492308
+    },
+    {
+      "time": 1793393919.0803206,
+      "page_reads_s": 1274.5242416876476,
+      "pages_input_s": 15362.304954912597,
+      "disk_read_Bps": 65201135.30242893,
+      "available_MB": 8948.0,
+      "cpu_performance_pct": 183.3573307136009
+    },
+    {
+      "time": 1793393920.0933387,
+      "page_reads_s": 696.9315269710527,
+      "pages_input_s": 8325.666428433227,
+      "disk_read_Bps": 36418790.695470534,
+      "available_MB": 7869.0,
+      "cpu_performance_pct": 180.37570413667046
+    },
+    {
+      "time": 1793393921.0988357,
+      "page_reads_s": 106.40822131796229,
+      "pages_input_s": 1096.8997019973121,
+      "disk_read_Bps": 6101873.04325723,
+      "available_MB": 7293.0,
+      "cpu_performance_pct": 174.01963051782482
+    },
+    {
+      "time": 1793393922.1041589,
+      "page_reads_s": 66.6524607392136,
+      "pages_input_s": 810.7724701859564,
+      "disk_read_Bps": 5211609.625092841,
+      "available_MB": 7041.0,
+      "cpu_performance_pct": 178.40136371008117
+    },
+    {
+      "time": 1793393923.1080446,
+      "page_reads_s": 585.6505457057921,
+      "pages_input_s": 6991.950392609967,
+      "disk_read_Bps": 30262723.034004487,
+      "available_MB": 6725.0,
+      "cpu_performance_pct": 179.730081031133
+    },
+    {
+      "time": 1793393924.1090305,
+      "page_reads_s": 782.247634225402,
+      "pages_input_s": 9325.03118500626,
+      "disk_read_Bps": 40159518.57503453,
+      "available_MB": 6392.0,
+      "cpu_performance_pct": 180.80968455083558
+    },
+    {
+      "time": 1793393925.1240668,
+      "page_reads_s": 247.30681888943278,
+      "pages_input_s": 2810.0360457078177,
+      "disk_read_Bps": 13596381.08345216,
+      "available_MB": 6010.0,
+      "cpu_performance_pct": 177.7218858101302
+    },
+    {
+      "time": 1793393926.1263974,
+      "page_reads_s": 1410.2937480301766,
+      "pages_input_s": 16815.808056427708,
+      "disk_read_Bps": 70597445.91214289,
+      "available_MB": 5303.0,
+      "cpu_performance_pct": 178.65345368453603
+    },
+    {
+      "time": 1793393927.1418977,
+      "page_reads_s": 4061.178707130703,
+      "pages_input_s": 48574.573554073126,
+      "disk_read_Bps": 203710158.11804804,
+      "available_MB": 4785.0,
+      "cpu_performance_pct": 187.47471650617817
+    },
+    {
+      "time": 1793393928.1462336,
+      "page_reads_s": 46.79496784837235,
+      "pages_input_s": 540.63122429077,
+      "disk_read_Bps": 2585535.476310545,
+      "available_MB": 4239.0,
+      "cpu_performance_pct": 195.19067746101123
+    },
+    {
+      "time": 1793393929.1507897,
+      "page_reads_s": 26.878316485606362,
+      "pages_input_s": 307.60739977971724,
+      "disk_read_Bps": 3058155.1201401018,
+      "available_MB": 4094.0,
+      "cpu_performance_pct": 176.04677359211937
+    },
+    {
+      "time": 1793393930.1591918,
+      "page_reads_s": 475.9742573289376,
+      "pages_input_s": 5692.850440261313,
+      "disk_read_Bps": 25198457.962399818,
+      "available_MB": 3932.0,
+      "cpu_performance_pct": 176.90985570448578
+    },
+    {
+      "time": 1793393931.1624274,
+      "page_reads_s": 547.2349483974389,
+      "pages_input_s": 6465.147313853895,
+      "disk_read_Bps": 28106210.229525685,
+      "available_MB": 3850.0,
+      "cpu_performance_pct": 179.954588261396
+    },
+    {
+      "time": 1793393932.163446,
+      "page_reads_s": 2070.4537851132777,
+      "pages_input_s": 24364.80436410089,
+      "disk_read_Bps": 100821474.52282636,
+      "available_MB": 3552.0,
+      "cpu_performance_pct": 177.99547286717612
+    },
+    {
+      "time": 1793393933.163618,
+      "page_reads_s": 1103.6033649506367,
+      "pages_input_s": 44216.108730522246,
+      "disk_read_Bps": 183057665.07517198,
+      "available_MB": 3461.0,
+      "cpu_performance_pct": 179.5032325754512
+    },
+    {
+      "time": 1793393934.1740773,
+      "page_reads_s": 890.5376809250986,
+      "pages_input_s": 89529.71100864871,
+      "disk_read_Bps": 366227343.97928256,
+      "available_MB": 3458.0,
+      "cpu_performance_pct": 210.8185578747628
+    },
+    {
+      "time": 1793393935.1893404,
+      "page_reads_s": 2.9546004951713454,
+      "pages_input_s": 39.39467326895127,
+      "disk_read_Bps": 129088.46536769954,
+      "available_MB": 11977.0,
+      "cpu_performance_pct": 214.95872456425366
+    },
+    {
+      "time": 1793393936.2006948,
+      "page_reads_s": 0.0,
+      "pages_input_s": 0.0,
+      "disk_read_Bps": 32399.411336867262,
+      "available_MB": 22760.0,
+      "cpu_performance_pct": 222.8530340597677
+    },
+    {
+      "time": 1793393937.215475,
+      "page_reads_s": 7.885668841731275,
+      "pages_input_s": 37.45692699822356,
+      "disk_read_Bps": 93366.31908609829,
+      "available_MB": 25175.0,
+      "cpu_performance_pct": 217.83749972124969
+    },
+    {
+      "time": 1793393938.2297568,
+      "page_reads_s": 1.9718133229116426,
+      "pages_input_s": 31.54901316658628,
+      "disk_read_Bps": 66126.73159716485,
+      "available_MB": 25012.0,
+      "cpu_performance_pct": 211.21706710853354
+    },
+    {
+      "time": 1793393939.2321134,
+      "page_reads_s": 4.988100885338026,
+      "pages_input_s": 40.90242725977182,
+      "disk_read_Bps": 130760.07184860516,
+      "available_MB": 24992.0,
+      "cpu_performance_pct": 195.11161324013818
+    },
+    {
+      "time": 1793393940.2346468,
+      "page_reads_s": 5.984638032634032,
+      "pages_input_s": 2689.0973559968916,
+      "disk_read_Bps": 11014542.770163268,
+      "available_MB": 24413.0,
+      "cpu_performance_pct": 209.40370085798438
+    },
+    {
+      "time": 1793393941.2379394,
+      "page_reads_s": 543.3403668494584,
+      "pages_input_s": 127318.10684264914,
+      "disk_read_Bps": 521441879.77821743,
+      "available_MB": 23803.0,
+      "cpu_performance_pct": 219.37233330656602
+    },
+    {
+      "time": 1793393942.2506833,
+      "page_reads_s": 1112.8251668719354,
+      "pages_input_s": 146832.6892540882,
+      "disk_read_Bps": 601426695.1847453,
+      "available_MB": 23255.0,
+      "cpu_performance_pct": 219.78315838993268
+    },
+    {
+      "time": 1793393943.265725,
+      "page_reads_s": 1611.598147804828,
+      "pages_input_s": 213532.81424637,
+      "disk_read_Bps": 874594093.000246,
+      "available_MB": 22438.0,
+      "cpu_performance_pct": 197.5568200682468
+    },
+    {
+      "time": 1793393944.2803302,
+      "page_reads_s": 1128.459937011239,
+      "pages_input_s": 145874.88266973317,
+      "disk_read_Bps": 598528874.5795132,
+      "available_MB": 23705.0,
+      "cpu_performance_pct": 215.1894852135816
+    },
+    {
+      "time": 1793393945.2952938,
+      "page_reads_s": 506.3701662460544,
+      "pages_input_s": 128141.20673921553,
+      "disk_read_Bps": 540708573.4281566,
+      "available_MB": 23460.0,
+      "cpu_performance_pct": 214.3764745762712
+    },
+    {
+      "time": 1793393946.3091562,
+      "page_reads_s": 3.9452945458275552,
+      "pages_input_s": 19.726472729137775,
+      "disk_read_Bps": 517117.6467107093,
+      "available_MB": 21421.0,
+      "cpu_performance_pct": 199.6069558754413
+    },
+    {
+      "time": 1793393947.3121557,
+      "page_reads_s": 0.9970076808474725,
+      "pages_input_s": 7.97606144677978,
+      "disk_read_Bps": 1845852.0442595638,
+      "available_MB": 16679.0,
+      "cpu_performance_pct": 184.248318148204
+    },
+    {
+      "time": 1793393948.313099,
+      "page_reads_s": 41.9616135159556,
+      "pages_input_s": 526.5183410216333,
+      "disk_read_Bps": 4063610.609014873,
+      "available_MB": 15329.0,
+      "cpu_performance_pct": 184.8077935422121
+    },
+    {
+      "time": 1793393949.318865,
+      "page_reads_s": 133.23058007699734,
+      "pages_input_s": 1575.8990255376177,
+      "disk_read_Bps": 8886153.574491952,
+      "available_MB": 14557.0,
+      "cpu_performance_pct": 184.441247323655
+    },
+    {
+      "time": 1793393950.3237715,
+      "page_reads_s": 509.50804709247546,
+      "pages_input_s": 5953.880167488829,
+      "disk_read_Bps": 26832731.792078126,
+      "available_MB": 13741.0,
+      "cpu_performance_pct": 184.03018158695596
+    },
+    {
+      "time": 1793393951.3260632,
+      "page_reads_s": 68.83958998741133,
+      "pages_input_s": 858.9983620168283,
+      "disk_read_Bps": 5876354.91777061,
+      "available_MB": 12701.0,
+      "cpu_performance_pct": 182.48129356693607
+    },
+    {
+      "time": 1793393952.3295908,
+      "page_reads_s": 436.44385941924065,
+      "pages_input_s": 5167.575011297219,
+      "disk_read_Bps": 23447916.453883674,
+      "available_MB": 11897.0,
+      "cpu_performance_pct": 182.6540216784738
+    },
+    {
+      "time": 1793393953.3322613,
+      "page_reads_s": 365.05516422395556,
+      "pages_input_s": 4405.597432724622,
+      "disk_read_Bps": 19953221.073218297,
+      "available_MB": 11353.0,
+      "cpu_performance_pct": 183.6238574629233
+    },
+    {
+      "time": 1793393954.3343396,
+      "page_reads_s": 100.79022530407464,
+      "pages_input_s": 1297.2999296564062,
+      "disk_read_Bps": 6777062.898988336,
+      "available_MB": 10288.0,
+      "cpu_performance_pct": 177.73510382795453
+    },
+    {
+      "time": 1793393955.338198,
+      "page_reads_s": 114.55688252271389,
+      "pages_input_s": 1314.9137819998464,
+      "disk_read_Bps": 7438236.158714476,
+      "available_MB": 9920.0,
+      "cpu_performance_pct": 179.03432641116947
+    },
+    {
+      "time": 1793393956.3386579,
+      "page_reads_s": 833.6286184504802,
+      "pages_input_s": 9877.599529409646,
+      "disk_read_Bps": 42472982.28639141,
+      "available_MB": 9554.0,
+      "cpu_performance_pct": 179.37602710976944
+    },
+    {
+      "time": 1793393957.3426623,
+      "page_reads_s": 746.0230695432945,
+      "pages_input_s": 8785.940582698799,
+      "disk_read_Bps": 38720625.21713355,
+      "available_MB": 9217.0,
+      "cpu_performance_pct": 181.07762123732957
+    },
+    {
+      "time": 1793393958.34278,
+      "page_reads_s": 720.6648908257661,
+      "pages_input_s": 8522.037252677506,
+      "disk_read_Bps": 37268558.12047398,
+      "available_MB": 8888.0,
+      "cpu_performance_pct": 181.29400926685605
+    },
+    {
+      "time": 1793393959.3437848,
+      "page_reads_s": 1890.7245172406695,
+      "pages_input_s": 22505.817575463592,
+      "disk_read_Bps": 94742102.97733149,
+      "available_MB": 8579.0,
+      "cpu_performance_pct": 181.03362799642667
+    },
+    {
+      "time": 1793393960.3528845,
+      "page_reads_s": 134.7765122990009,
+      "pages_input_s": 1664.8863283994228,
+      "disk_read_Bps": 9299515.924389979,
+      "available_MB": 7420.0,
+      "cpu_performance_pct": 176.4660848753007
+    },
+    {
+      "time": 1793393961.3586588,
+      "page_reads_s": 35.790728034111744,
+      "pages_input_s": 355.9189065614446,
+      "disk_read_Bps": 2936048.630055204,
+      "available_MB": 6885.0,
+      "cpu_performance_pct": 173.56832386565867
+    },
+    {
+      "time": 1793393962.365314,
+      "page_reads_s": 0.0,
+      "pages_input_s": 0.0,
+      "disk_read_Bps": 2115746.1931031635,
+      "available_MB": 6711.0,
+      "cpu_performance_pct": 175.1437592614772
+    },
+    {
+      "time": 1793393963.3702812,
+      "page_reads_s": 163.20551555030113,
+      "pages_input_s": 2062.957522779111,
+      "disk_read_Bps": 11127909.3373458,
+      "available_MB": 6299.0,
+      "cpu_performance_pct": 174.0339728949916
+    },
+    {
+      "time": 1793393964.37295,
+      "page_reads_s": 283.2233731883801,
+      "pages_input_s": 3383.721497282302,
+      "disk_read_Bps": 16188058.724172445,
+      "available_MB": 6075.0,
+      "cpu_performance_pct": 175.0924734884028
+    },
+    {
+      "time": 1793393965.374795,
+      "page_reads_s": 363.3260302139531,
+      "pages_input_s": 4449.745721686272,
+      "disk_read_Bps": 20266278.05420944,
+      "available_MB": 5451.0,
+      "cpu_performance_pct": 177.0269359073615
+    },
+    {
+      "time": 1793393966.3894734,
+      "page_reads_s": 1161.2461215808917,
+      "pages_input_s": 13749.627252810082,
+      "disk_read_Bps": 61785580.53680524,
+      "available_MB": 4803.0,
+      "cpu_performance_pct": 175.97274485960645
+    },
+    {
+      "time": 1793393967.3920796,
+      "page_reads_s": 1.99476732634952,
+      "pages_input_s": 8.97645296857284,
+      "disk_read_Bps": 36767.55135927435,
+      "available_MB": 4186.0,
+      "cpu_performance_pct": 214.0202101859337
+    },
+    {
+      "time": 1793393968.3928628,
+      "page_reads_s": 414.59788151471884,
+      "pages_input_s": 4952.196864261353,
+      "disk_read_Bps": 21966023.154142797,
+      "available_MB": 4024.0,
+      "cpu_performance_pct": 173.38913483597776
+    },
+    {
+      "time": 1793393969.3971453,
+      "page_reads_s": 120.48922208971727,
+      "pages_input_s": 1469.7693537555595,
+      "disk_read_Bps": 8328724.869533075,
+      "available_MB": 3975.0,
+      "cpu_performance_pct": 176.38034149788035
+    },
+    {
+      "time": 1793393970.41194,
+      "page_reads_s": 806.0871602928953,
+      "pages_input_s": 9743.011923980264,
+      "disk_read_Bps": 41671261.100697234,
+      "available_MB": 3765.0,
+      "cpu_performance_pct": 173.1177127961011
+    },
+    {
+      "time": 1793393971.425942,
+      "page_reads_s": 687.3508315564444,
+      "pages_input_s": 8222.569918963605,
+      "disk_read_Bps": 35820473.03543398,
+      "available_MB": 3694.0,
+      "cpu_performance_pct": 173.6809690852675
+    },
+    {
+      "time": 1793393972.429835,
+      "page_reads_s": 1494.1807635980908,
+      "pages_input_s": 18329.613487312316,
+      "disk_read_Bps": 76771342.33016096,
+      "available_MB": 3509.0,
+      "cpu_performance_pct": 176.02367529651096
+    },
+    {
+      "time": 1793393973.4399984,
+      "page_reads_s": 1444.4504836137041,
+      "pages_input_s": 78262.68346822956,
+      "disk_read_Bps": 321210241.5994413,
+      "available_MB": 3351.0,
+      "cpu_performance_pct": 175.03866852501434
+    },
+    {
+      "time": 1793393974.4515452,
+      "page_reads_s": 825.4250691973111,
+      "pages_input_s": 83960.06326611308,
+      "disk_read_Bps": 343914084.61842626,
+      "available_MB": 3349.0,
+      "cpu_performance_pct": 203.67686997420725
+    },
+    {
+      "time": 1793393975.4595637,
+      "page_reads_s": 23.80553496542097,
+      "pages_input_s": 2415.2699017000027,
+      "disk_read_Bps": 9848254.593054794,
+      "available_MB": 7407.0,
+      "cpu_performance_pct": 209.78192177145627
+    },
+    {
+      "time": 1793393976.4602876,
+      "page_reads_s": 0.0,
+      "pages_input_s": 0.0,
+      "disk_read_Bps": 36839.10413342663,
+      "available_MB": 19092.0,
+      "cpu_performance_pct": 219.81156011510072
+    },
+    {
+      "time": 1793393977.4753933,
+      "page_reads_s": 9.847763425209685,
+      "pages_input_s": 66.96479129142585,
+      "disk_read_Bps": 226388.2638294604,
+      "available_MB": 25215.0,
+      "cpu_performance_pct": 218.68621559633027
+    },
+    {
+      "time": 1793393978.4904616,
+      "page_reads_s": 3.9415437529093524,
+      "pages_input_s": 42.37159534377554,
+      "disk_read_Bps": 169517.91372512543,
+      "available_MB": 25011.0,
+      "cpu_performance_pct": 214.13289965253284
+    },
+    {
+      "time": 1793393979.492993,
+      "page_reads_s": 23.948326695489143,
+      "pages_input_s": 216.5327872050477,
+      "disk_read_Bps": 645774.61211943,
+      "available_MB": 24999.0,
+      "cpu_performance_pct": 198.48614506090422
+    },
+    {
+      "time": 1793393980.5064118,
+      "page_reads_s": 1813.4514885447188,
+      "pages_input_s": 32336.267184746797,
+      "disk_read_Bps": 126864282.88896042,
+      "available_MB": 24768.0,
+      "cpu_performance_pct": 208.56923238917554
+    },
+    {
+      "time": 1793393981.5204918,
+      "page_reads_s": 8073.151608698967,
+      "pages_input_s": 116643.08751554701,
+      "disk_read_Bps": 446511947.8600824,
+      "available_MB": 23374.0,
+      "cpu_performance_pct": 216.34239692099354
+    },
+    {
+      "time": 1793393982.5340507,
+      "page_reads_s": 1286.6309962036491,
+      "pages_input_s": 122962.06135651162,
+      "disk_read_Bps": 503013045.0964164,
+      "available_MB": 23398.0,
+      "cpu_performance_pct": 215.2380777903044
+    },
+    {
+      "time": 1793393983.5482395,
+      "page_reads_s": 1775.8877047336725,
+      "pages_input_s": 216358.53881024595,
+      "disk_read_Bps": 884647079.0492877,
+      "available_MB": 22556.0,
+      "cpu_performance_pct": 207.18664581491808
+    },
+    {
+      "time": 1793393984.5482433,
+      "page_reads_s": 1653.622147339333,
+      "pages_input_s": 186704.33805875358,
+      "disk_read_Bps": 764657531.7539942,
+      "available_MB": 23766.0,
+      "cpu_performance_pct": 213.09026901230672
+    },
+    {
+      "time": 1793393985.5605912,
+      "page_reads_s": 619.1177029647049,
+      "pages_input_s": 164405.86670800703,
+      "disk_read_Bps": 690092550.6908791,
+      "available_MB": 23242.0,
+      "cpu_performance_pct": 216.70788239032504
+    },
+    {
+      "time": 1793393986.5623918,
+      "page_reads_s": 5557.927537208901,
+      "pages_input_s": 19310.427481030387,
+      "disk_read_Bps": 56587959.821127616,
+      "available_MB": 22122.0,
+      "cpu_performance_pct": 212.41174748885786
+    }
+  ],
+  "system_monitor_errors": [],
+  "resource_samples": [
+    {
+      "time": 1793393855.3502495,
+      "system_ram_used_gib": 10.015483856201172,
+      "system_ram_free_gib": 21.71941375732422,
+      "gpu_memory_mib": 7106.0,
+      "gpu_utilization_percent": 36.0,
+      "gpu_temperature_c": 57.98,
+      "gpu_power_w": 17.24
+    },
+    {
+      "time": 1793393856.4042366,
+      "system_ram_used_gib": 8.928749084472656,
+      "system_ram_free_gib": 22.806148529052734,
+      "gpu_memory_mib": 2879.0,
+      "gpu_utilization_percent": 28.0,
+      "gpu_temperature_c": 58.04,
+      "gpu_power_w": 17.26
+    },
+    {
+      "time": 1793393857.4675248,
+      "system_ram_used_gib": 7.183876037597656,
+      "system_ram_free_gib": 24.551021575927734,
+      "gpu_memory_mib": 762.0,
+      "gpu_utilization_percent": 34.0,
+      "gpu_temperature_c": 58.06,
+      "gpu_power_w": 17.33
+    },
+    {
+      "time": 1793393858.527058,
+      "system_ram_used_gib": 7.308696746826172,
+      "system_ram_free_gib": 24.42620086669922,
+      "gpu_memory_mib": 757.0,
+      "gpu_utilization_percent": 33.0,
+      "gpu_temperature_c": 58.06,
+      "gpu_power_w": 17.26
+    },
+    {
+      "time": 1793393859.588339,
+      "system_ram_used_gib": 7.3522186279296875,
+      "system_ram_free_gib": 24.382678985595703,
+      "gpu_memory_mib": 757.0,
+      "gpu_utilization_percent": 41.0,
+      "gpu_temperature_c": 58.23,
+      "gpu_power_w": 17.31
+    },
+    {
+      "time": 1793393860.6489801,
+      "system_ram_used_gib": 8.480278015136719,
+      "system_ram_free_gib": 23.254619598388672,
+      "gpu_memory_mib": 932.0,
+      "gpu_utilization_percent": 58.0,
+      "gpu_temperature_c": 60.27,
+      "gpu_power_w": 20.44
+    },
+    {
+      "time": 1793393861.711276,
+      "system_ram_used_gib": 8.54874038696289,
+      "system_ram_free_gib": 23.1861572265625,
+      "gpu_memory_mib": 2531.0,
+      "gpu_utilization_percent": 42.0,
+      "gpu_temperature_c": 60.64,
+      "gpu_power_w": 30.45
+    },
+    {
+      "time": 1793393862.7663503,
+      "system_ram_used_gib": 9.357166290283203,
+      "system_ram_free_gib": 22.377731323242188,
+      "gpu_memory_mib": 3494.0,
+      "gpu_utilization_percent": 17.0,
+      "gpu_temperature_c": 60.88,
+      "gpu_power_w": 30.87
+    },
+    {
+      "time": 1793393863.8273659,
+      "system_ram_used_gib": 10.192298889160156,
+      "system_ram_free_gib": 21.542598724365234,
+      "gpu_memory_mib": 4436.0,
+      "gpu_utilization_percent": 19.0,
+      "gpu_temperature_c": 59.9,
+      "gpu_power_w": 27.82
+    },
+    {
+      "time": 1793393864.8921697,
+      "system_ram_used_gib": 8.687664031982422,
+      "system_ram_free_gib": 23.04723358154297,
+      "gpu_memory_mib": 6249.0,
+      "gpu_utilization_percent": 27.0,
+      "gpu_temperature_c": 60.04,
+      "gpu_power_w": 25.87
+    },
+    {
+      "time": 1793393865.9569197,
+      "system_ram_used_gib": 9.626998901367188,
+      "system_ram_free_gib": 22.107898712158203,
+      "gpu_memory_mib": 6766.0,
+      "gpu_utilization_percent": 14.0,
+      "gpu_temperature_c": 59.96,
+      "gpu_power_w": 25.42
+    },
+    {
+      "time": 1793393867.0548677,
+      "system_ram_used_gib": 13.70388412475586,
+      "system_ram_free_gib": 18.03101348876953,
+      "gpu_memory_mib": 7134.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 63.68,
+      "gpu_power_w": 32.78
+    },
+    {
+      "time": 1793393868.151493,
+      "system_ram_used_gib": 16.25650405883789,
+      "system_ram_free_gib": 15.4783935546875,
+      "gpu_memory_mib": 7226.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 64.49,
+      "gpu_power_w": 46.01
+    },
+    {
+      "time": 1793393869.2498424,
+      "system_ram_used_gib": 17.223011016845703,
+      "system_ram_free_gib": 14.511886596679688,
+      "gpu_memory_mib": 7227.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 66.04,
+      "gpu_power_w": 52.81
+    },
+    {
+      "time": 1793393870.3657517,
+      "system_ram_used_gib": 18.171276092529297,
+      "system_ram_free_gib": 13.563621520996094,
+      "gpu_memory_mib": 7222.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 67.04,
+      "gpu_power_w": 56.25
+    },
+    {
+      "time": 1793393871.5382476,
+      "system_ram_used_gib": 19.256690979003906,
+      "system_ram_free_gib": 12.478206634521484,
+      "gpu_memory_mib": 7222.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 67.33,
+      "gpu_power_w": 56.76
+    },
+    {
+      "time": 1793393872.6106098,
+      "system_ram_used_gib": 20.10793685913086,
+      "system_ram_free_gib": 11.626960754394531,
+      "gpu_memory_mib": 7226.0,
+      "gpu_utilization_percent": 97.0,
+      "gpu_temperature_c": 68.59,
+      "gpu_power_w": 57.15
+    },
+    {
+      "time": 1793393873.6897383,
+      "system_ram_used_gib": 20.794586181640625,
+      "system_ram_free_gib": 10.940311431884766,
+      "gpu_memory_mib": 7227.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 67.88,
+      "gpu_power_w": 54.17
+    },
+    {
+      "time": 1793393874.773712,
+      "system_ram_used_gib": 21.8450927734375,
+      "system_ram_free_gib": 9.88980484008789,
+      "gpu_memory_mib": 7222.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 71.06,
+      "gpu_power_w": 53.38
+    },
+    {
+      "time": 1793393875.8657818,
+      "system_ram_used_gib": 22.20675277709961,
+      "system_ram_free_gib": 9.528144836425781,
+      "gpu_memory_mib": 7226.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 70.54,
+      "gpu_power_w": 57.75
+    },
+    {
+      "time": 1793393876.9814584,
+      "system_ram_used_gib": 22.582782745361328,
+      "system_ram_free_gib": 9.152114868164062,
+      "gpu_memory_mib": 7227.0,
+      "gpu_utilization_percent": 96.0,
+      "gpu_temperature_c": 70.2,
+      "gpu_power_w": 57.78
+    },
+    {
+      "time": 1793393878.111295,
+      "system_ram_used_gib": 22.927474975585938,
+      "system_ram_free_gib": 8.807422637939453,
+      "gpu_memory_mib": 7222.0,
+      "gpu_utilization_percent": 98.0,
+      "gpu_temperature_c": 72.89,
+      "gpu_power_w": 59.88
+    },
+    {
+      "time": 1793393879.2619493,
+      "system_ram_used_gib": 23.367008209228516,
+      "system_ram_free_gib": 8.367889404296875,
+      "gpu_memory_mib": 7222.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.03,
+      "gpu_power_w": 62.72
+    },
+    {
+      "time": 1793393880.4698417,
+      "system_ram_used_gib": 24.57740020751953,
+      "system_ram_free_gib": 7.157497406005859,
+      "gpu_memory_mib": 7226.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 69.8,
+      "gpu_power_w": 51.88
+    },
+    {
+      "time": 1793393881.546852,
+      "system_ram_used_gib": 25.05902862548828,
+      "system_ram_free_gib": 6.675868988037109,
+      "gpu_memory_mib": 7227.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 72.52,
+      "gpu_power_w": 53.62
+    },
+    {
+      "time": 1793393882.6619592,
+      "system_ram_used_gib": 25.294795989990234,
+      "system_ram_free_gib": 6.440101623535156,
+      "gpu_memory_mib": 7222.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 71.63,
+      "gpu_power_w": 56.85
+    },
+    {
+      "time": 1793393883.7616346,
+      "system_ram_used_gib": 25.584545135498047,
+      "system_ram_free_gib": 6.150352478027344,
+      "gpu_memory_mib": 7226.0,
+      "gpu_utilization_percent": 96.0,
+      "gpu_temperature_c": 71.86,
+      "gpu_power_w": 58.47
+    },
+    {
+      "time": 1793393884.859733,
+      "system_ram_used_gib": 25.808349609375,
+      "system_ram_free_gib": 5.926548004150391,
+      "gpu_memory_mib": 7227.0,
+      "gpu_utilization_percent": 96.0,
+      "gpu_temperature_c": 72.03,
+      "gpu_power_w": 60.5
+    },
+    {
+      "time": 1793393885.9868302,
+      "system_ram_used_gib": 26.552539825439453,
+      "system_ram_free_gib": 5.1823577880859375,
+      "gpu_memory_mib": 7222.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 71.66,
+      "gpu_power_w": 55.44
+    },
+    {
+      "time": 1793393887.1754596,
+      "system_ram_used_gib": 27.18899154663086,
+      "system_ram_free_gib": 4.545906066894531,
+      "gpu_memory_mib": 7258.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 72.78,
+      "gpu_power_w": 54.18
+    },
+    {
+      "time": 1793393888.24118,
+      "system_ram_used_gib": 27.58987808227539,
+      "system_ram_free_gib": 4.14501953125,
+      "gpu_memory_mib": 7264.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 73.07,
+      "gpu_power_w": 51.5
+    },
+    {
+      "time": 1793393889.4949825,
+      "system_ram_used_gib": 27.66238021850586,
+      "system_ram_free_gib": 4.072517395019531,
+      "gpu_memory_mib": 7265.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 71.77,
+      "gpu_power_w": 56.99
+    },
+    {
+      "time": 1793393890.6914978,
+      "system_ram_used_gib": 27.93415069580078,
+      "system_ram_free_gib": 3.8007469177246094,
+      "gpu_memory_mib": 7278.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 73.24,
+      "gpu_power_w": 56.96
+    },
+    {
+      "time": 1793393891.8235211,
+      "system_ram_used_gib": 28.046016693115234,
+      "system_ram_free_gib": 3.6888809204101562,
+      "gpu_memory_mib": 7282.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 71.95,
+      "gpu_power_w": 60.5
+    },
+    {
+      "time": 1793393892.9234846,
+      "system_ram_used_gib": 28.275188446044922,
+      "system_ram_free_gib": 3.4597091674804688,
+      "gpu_memory_mib": 7283.0,
+      "gpu_utilization_percent": 19.0,
+      "gpu_temperature_c": 70.05,
+      "gpu_power_w": 54.74
+    },
+    {
+      "time": 1793393893.9844642,
+      "system_ram_used_gib": 28.270217895507812,
+      "system_ram_free_gib": 3.464679718017578,
+      "gpu_memory_mib": 7282.0,
+      "gpu_utilization_percent": 9.0,
+      "gpu_temperature_c": 68.59,
+      "gpu_power_w": 33.2
+    },
+    {
+      "time": 1793393895.0497546,
+      "system_ram_used_gib": 18.953903198242188,
+      "system_ram_free_gib": 12.780994415283203,
+      "gpu_memory_mib": 6806.0,
+      "gpu_utilization_percent": 19.0,
+      "gpu_temperature_c": 66.21,
+      "gpu_power_w": 29.7
+    },
+    {
+      "time": 1793393896.1151202,
+      "system_ram_used_gib": 8.520172119140625,
+      "system_ram_free_gib": 23.214725494384766,
+      "gpu_memory_mib": 2916.0,
+      "gpu_utilization_percent": 38.0,
+      "gpu_temperature_c": 65.32,
+      "gpu_power_w": 17.72
+    },
+    {
+      "time": 1793393897.1794455,
+      "system_ram_used_gib": 7.228721618652344,
+      "system_ram_free_gib": 24.506175994873047,
+      "gpu_memory_mib": 762.0,
+      "gpu_utilization_percent": 26.0,
+      "gpu_temperature_c": 64.8,
+      "gpu_power_w": 17.82
+    },
+    {
+      "time": 1793393898.243639,
+      "system_ram_used_gib": 7.314769744873047,
+      "system_ram_free_gib": 24.420127868652344,
+      "gpu_memory_mib": 757.0,
+      "gpu_utilization_percent": 31.0,
+      "gpu_temperature_c": 64.43,
+      "gpu_power_w": 17.72
+    },
+    {
+      "time": 1793393899.3046193,
+      "system_ram_used_gib": 7.404079437255859,
+      "system_ram_free_gib": 24.33081817626953,
+      "gpu_memory_mib": 757.0,
+      "gpu_utilization_percent": 31.0,
+      "gpu_temperature_c": 64.03,
+      "gpu_power_w": 17.74
+    },
+    {
+      "time": 1793393900.3668725,
+      "system_ram_used_gib": 8.708686828613281,
+      "system_ram_free_gib": 23.02621078491211,
+      "gpu_memory_mib": 932.0,
+      "gpu_utilization_percent": 11.0,
+      "gpu_temperature_c": 65.78,
+      "gpu_power_w": 24.34
+    },
+    {
+      "time": 1793393901.4246144,
+      "system_ram_used_gib": 8.727039337158203,
+      "system_ram_free_gib": 23.007858276367188,
+      "gpu_memory_mib": 2765.0,
+      "gpu_utilization_percent": 19.0,
+      "gpu_temperature_c": 65.66,
+      "gpu_power_w": 32.42
+    },
+    {
+      "time": 1793393902.5052989,
+      "system_ram_used_gib": 9.6031494140625,
+      "system_ram_free_gib": 22.13174819946289,
+      "gpu_memory_mib": 3762.0,
+      "gpu_utilization_percent": 18.0,
+      "gpu_temperature_c": 65.49,
+      "gpu_power_w": 32.01
+    },
+    {
+      "time": 1793393903.5700355,
+      "system_ram_used_gib": 9.105903625488281,
+      "system_ram_free_gib": 22.62899398803711,
+      "gpu_memory_mib": 4604.0,
+      "gpu_utilization_percent": 19.0,
+      "gpu_temperature_c": 64.38,
+      "gpu_power_w": 29.53
+    },
+    {
+      "time": 1793393904.6318629,
+      "system_ram_used_gib": 8.629631042480469,
+      "system_ram_free_gib": 23.105266571044922,
+      "gpu_memory_mib": 6650.0,
+      "gpu_utilization_percent": 20.0,
+      "gpu_temperature_c": 64.92,
+      "gpu_power_w": 29.02
+    },
+    {
+      "time": 1793393905.6960087,
+      "system_ram_used_gib": 10.091873168945312,
+      "system_ram_free_gib": 21.643024444580078,
+      "gpu_memory_mib": 6853.0,
+      "gpu_utilization_percent": 13.0,
+      "gpu_temperature_c": 64.86,
+      "gpu_power_w": 31.66
+    },
+    {
+      "time": 1793393906.7513309,
+      "system_ram_used_gib": 14.817352294921875,
+      "system_ram_free_gib": 16.917545318603516,
+      "gpu_memory_mib": 7136.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 66.7,
+      "gpu_power_w": 37.88
+    },
+    {
+      "time": 1793393907.8591163,
+      "system_ram_used_gib": 16.69281768798828,
+      "system_ram_free_gib": 15.04207992553711,
+      "gpu_memory_mib": 7194.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 69.82,
+      "gpu_power_w": 50.42
+    },
+    {
+      "time": 1793393908.940623,
+      "system_ram_used_gib": 17.427471160888672,
+      "system_ram_free_gib": 14.307426452636719,
+      "gpu_memory_mib": 7195.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 70.31,
+      "gpu_power_w": 56.83
+    },
+    {
+      "time": 1793393910.039515,
+      "system_ram_used_gib": 18.164417266845703,
+      "system_ram_free_gib": 13.570480346679688,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 97.0,
+      "gpu_temperature_c": 69.45,
+      "gpu_power_w": 57.68
+    },
+    {
+      "time": 1793393911.1854012,
+      "system_ram_used_gib": 19.267555236816406,
+      "system_ram_free_gib": 12.467342376708984,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 69.97,
+      "gpu_power_w": 55.58
+    },
+    {
+      "time": 1793393912.3661828,
+      "system_ram_used_gib": 20.047855377197266,
+      "system_ram_free_gib": 11.687042236328125,
+      "gpu_memory_mib": 7194.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 71.34,
+      "gpu_power_w": 58.36
+    },
+    {
+      "time": 1793393913.465208,
+      "system_ram_used_gib": 20.848697662353516,
+      "system_ram_free_gib": 10.886199951171875,
+      "gpu_memory_mib": 7195.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.49,
+      "gpu_power_w": 56.21
+    },
+    {
+      "time": 1793393914.5630255,
+      "system_ram_used_gib": 21.71363067626953,
+      "system_ram_free_gib": 10.02126693725586,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 70.86,
+      "gpu_power_w": 51.97
+    },
+    {
+      "time": 1793393915.7690992,
+      "system_ram_used_gib": 22.075054168701172,
+      "system_ram_free_gib": 9.659843444824219,
+      "gpu_memory_mib": 7211.0,
+      "gpu_utilization_percent": 94.0,
+      "gpu_temperature_c": 72.12,
+      "gpu_power_w": 56.92
+    },
+    {
+      "time": 1793393916.8663485,
+      "system_ram_used_gib": 22.358592987060547,
+      "system_ram_free_gib": 9.376304626464844,
+      "gpu_memory_mib": 7215.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.15,
+      "gpu_power_w": 53.92
+    },
+    {
+      "time": 1793393917.987507,
+      "system_ram_used_gib": 22.65645980834961,
+      "system_ram_free_gib": 9.078437805175781,
+      "gpu_memory_mib": 7215.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.66,
+      "gpu_power_w": 59.78
+    },
+    {
+      "time": 1793393919.0955503,
+      "system_ram_used_gib": 22.998748779296875,
+      "system_ram_free_gib": 8.736148834228516,
+      "gpu_memory_mib": 7215.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 73.18,
+      "gpu_power_w": 61.38
+    },
+    {
+      "time": 1793393920.1730738,
+      "system_ram_used_gib": 24.144969940185547,
+      "system_ram_free_gib": 7.589927673339844,
+      "gpu_memory_mib": 7215.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 70.91,
+      "gpu_power_w": 55.67
+    },
+    {
+      "time": 1793393921.3194911,
+      "system_ram_used_gib": 24.713096618652344,
+      "system_ram_free_gib": 7.021800994873047,
+      "gpu_memory_mib": 7215.0,
+      "gpu_utilization_percent": 95.0,
+      "gpu_temperature_c": 71.49,
+      "gpu_power_w": 50.61
+    },
+    {
+      "time": 1793393922.4211307,
+      "system_ram_used_gib": 24.934070587158203,
+      "system_ram_free_gib": 6.8008270263671875,
+      "gpu_memory_mib": 7215.0,
+      "gpu_utilization_percent": 95.0,
+      "gpu_temperature_c": 72.32,
+      "gpu_power_w": 55.5
+    },
+    {
+      "time": 1793393923.53047,
+      "system_ram_used_gib": 25.2996826171875,
+      "system_ram_free_gib": 6.435214996337891,
+      "gpu_memory_mib": 7215.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 73.73,
+      "gpu_power_w": 58.34
+    },
+    {
+      "time": 1793393924.6258006,
+      "system_ram_used_gib": 25.529560089111328,
+      "system_ram_free_gib": 6.2053375244140625,
+      "gpu_memory_mib": 7209.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 71.49,
+      "gpu_power_w": 60.27
+    },
+    {
+      "time": 1793393925.7649374,
+      "system_ram_used_gib": 26.299545288085938,
+      "system_ram_free_gib": 5.435352325439453,
+      "gpu_memory_mib": 7213.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.75,
+      "gpu_power_w": 57.15
+    },
+    {
+      "time": 1793393926.8591027,
+      "system_ram_used_gib": 26.94780731201172,
+      "system_ram_free_gib": 4.787090301513672,
+      "gpu_memory_mib": 7249.0,
+      "gpu_utilization_percent": 26.0,
+      "gpu_temperature_c": 72.03,
+      "gpu_power_w": 52.49
+    },
+    {
+      "time": 1793393927.9261734,
+      "system_ram_used_gib": 27.558265686035156,
+      "system_ram_free_gib": 4.176631927490234,
+      "gpu_memory_mib": 7246.0,
+      "gpu_utilization_percent": 55.0,
+      "gpu_temperature_c": 71.49,
+      "gpu_power_w": 56.72
+    },
+    {
+      "time": 1793393929.0251932,
+      "system_ram_used_gib": 27.71800994873047,
+      "system_ram_free_gib": 4.016887664794922,
+      "gpu_memory_mib": 7246.0,
+      "gpu_utilization_percent": 97.0,
+      "gpu_temperature_c": 72.23,
+      "gpu_power_w": 55.93
+    },
+    {
+      "time": 1793393930.2541306,
+      "system_ram_used_gib": 27.92174530029297,
+      "system_ram_free_gib": 3.813152313232422,
+      "gpu_memory_mib": 7250.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 73.58,
+      "gpu_power_w": 58.07
+    },
+    {
+      "time": 1793393931.4125953,
+      "system_ram_used_gib": 28.06491470336914,
+      "system_ram_free_gib": 3.66998291015625,
+      "gpu_memory_mib": 7246.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 73.07,
+      "gpu_power_w": 62.7
+    },
+    {
+      "time": 1793393932.5077765,
+      "system_ram_used_gib": 28.314720153808594,
+      "system_ram_free_gib": 3.420177459716797,
+      "gpu_memory_mib": 7246.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 74.21,
+      "gpu_power_w": 59.2
+    },
+    {
+      "time": 1793393933.5844126,
+      "system_ram_used_gib": 28.358436584472656,
+      "system_ram_free_gib": 3.3764610290527344,
+      "gpu_memory_mib": 7250.0,
+      "gpu_utilization_percent": 12.0,
+      "gpu_temperature_c": 69.68,
+      "gpu_power_w": 46.24
+    },
+    {
+      "time": 1793393934.6533852,
+      "system_ram_used_gib": 26.099842071533203,
+      "system_ram_free_gib": 5.6350555419921875,
+      "gpu_memory_mib": 6790.0,
+      "gpu_utilization_percent": 9.0,
+      "gpu_temperature_c": 68.93,
+      "gpu_power_w": 32.69
+    },
+    {
+      "time": 1793393935.720711,
+      "system_ram_used_gib": 14.045272827148438,
+      "system_ram_free_gib": 17.689624786376953,
+      "gpu_memory_mib": 6790.0,
+      "gpu_utilization_percent": 19.0,
+      "gpu_temperature_c": 66.3,
+      "gpu_power_w": 22.15
+    },
+    {
+      "time": 1793393936.7792227,
+      "system_ram_used_gib": 7.1016998291015625,
+      "system_ram_free_gib": 24.633197784423828,
+      "gpu_memory_mib": 760.0,
+      "gpu_utilization_percent": 21.0,
+      "gpu_temperature_c": 65.75,
+      "gpu_power_w": 17.59
+    },
+    {
+      "time": 1793393937.8384569,
+      "system_ram_used_gib": 7.303737640380859,
+      "system_ram_free_gib": 24.43115997314453,
+      "gpu_memory_mib": 764.0,
+      "gpu_utilization_percent": 31.0,
+      "gpu_temperature_c": 65.21,
+      "gpu_power_w": 17.75
+    },
+    {
+      "time": 1793393938.905852,
+      "system_ram_used_gib": 7.314876556396484,
+      "system_ram_free_gib": 24.420021057128906,
+      "gpu_memory_mib": 764.0,
+      "gpu_utilization_percent": 30.0,
+      "gpu_temperature_c": 64.77,
+      "gpu_power_w": 17.88
+    },
+    {
+      "time": 1793393939.9679909,
+      "system_ram_used_gib": 7.4699249267578125,
+      "system_ram_free_gib": 24.264972686767578,
+      "gpu_memory_mib": 764.0,
+      "gpu_utilization_percent": 36.0,
+      "gpu_temperature_c": 64.43,
+      "gpu_power_w": 17.93
+    },
+    {
+      "time": 1793393941.0326662,
+      "system_ram_used_gib": 8.874027252197266,
+      "system_ram_free_gib": 22.860870361328125,
+      "gpu_memory_mib": 930.0,
+      "gpu_utilization_percent": 9.0,
+      "gpu_temperature_c": 66.24,
+      "gpu_power_w": 25.14
+    },
+    {
+      "time": 1793393942.0955267,
+      "system_ram_used_gib": 8.88961410522461,
+      "system_ram_free_gib": 22.84528350830078,
+      "gpu_memory_mib": 2948.0,
+      "gpu_utilization_percent": 20.0,
+      "gpu_temperature_c": 66.21,
+      "gpu_power_w": 33.07
+    },
+    {
+      "time": 1793393943.1571426,
+      "system_ram_used_gib": 9.724918365478516,
+      "system_ram_free_gib": 22.009979248046875,
+      "gpu_memory_mib": 3906.0,
+      "gpu_utilization_percent": 18.0,
+      "gpu_temperature_c": 66.12,
+      "gpu_power_w": 32.27
+    },
+    {
+      "time": 1793393944.2179515,
+      "system_ram_used_gib": 8.473003387451172,
+      "system_ram_free_gib": 23.26189422607422,
+      "gpu_memory_mib": 4606.0,
+      "gpu_utilization_percent": 11.0,
+      "gpu_temperature_c": 64.98,
+      "gpu_power_w": 27.59
+    },
+    {
+      "time": 1793393945.2952938,
+      "system_ram_used_gib": 8.82455062866211,
+      "system_ram_free_gib": 22.91034698486328,
+      "gpu_memory_mib": 6652.0,
+      "gpu_utilization_percent": 16.0,
+      "gpu_temperature_c": 64.66,
+      "gpu_power_w": 26.69
+    },
+    {
+      "time": 1793393946.356996,
+      "system_ram_used_gib": 11.183704376220703,
+      "system_ram_free_gib": 20.551193237304688,
+      "gpu_memory_mib": 7126.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 64.34,
+      "gpu_power_w": 26.7
+    },
+    {
+      "time": 1793393947.5144908,
+      "system_ram_used_gib": 15.842899322509766,
+      "system_ram_free_gib": 15.891998291015625,
+      "gpu_memory_mib": 7174.0,
+      "gpu_utilization_percent": 97.0,
+      "gpu_temperature_c": 68.33,
+      "gpu_power_w": 42.85
+    },
+    {
+      "time": 1793393948.6431398,
+      "system_ram_used_gib": 17.059223175048828,
+      "system_ram_free_gib": 14.675674438476562,
+      "gpu_memory_mib": 7192.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 69.28,
+      "gpu_power_w": 53.02
+    },
+    {
+      "time": 1793393949.7731216,
+      "system_ram_used_gib": 18.046817779541016,
+      "system_ram_free_gib": 13.688079833984375,
+      "gpu_memory_mib": 7196.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 69.68,
+      "gpu_power_w": 55.27
+    },
+    {
+      "time": 1793393950.8873086,
+      "system_ram_used_gib": 18.71310043334961,
+      "system_ram_free_gib": 13.021797180175781,
+      "gpu_memory_mib": 7196.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 70.57,
+      "gpu_power_w": 55.83
+    },
+    {
+      "time": 1793393952.0163443,
+      "system_ram_used_gib": 19.818679809570312,
+      "system_ram_free_gib": 11.916217803955078,
+      "gpu_memory_mib": 7196.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 71.23,
+      "gpu_power_w": 57.51
+    },
+    {
+      "time": 1793393953.095919,
+      "system_ram_used_gib": 20.52606964111328,
+      "system_ram_free_gib": 11.20882797241211,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 57.0,
+      "gpu_temperature_c": 71.11,
+      "gpu_power_w": 57.62
+    },
+    {
+      "time": 1793393954.1633956,
+      "system_ram_used_gib": 21.620513916015625,
+      "system_ram_free_gib": 10.114383697509766,
+      "gpu_memory_mib": 7194.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 71.46,
+      "gpu_power_w": 49.63
+    },
+    {
+      "time": 1793393955.259947,
+      "system_ram_used_gib": 22.00592041015625,
+      "system_ram_free_gib": 9.72897720336914,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.92,
+      "gpu_power_w": 56.99
+    },
+    {
+      "time": 1793393956.3546038,
+      "system_ram_used_gib": 22.406768798828125,
+      "system_ram_free_gib": 9.328128814697266,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.98,
+      "gpu_power_w": 58.2
+    },
+    {
+      "time": 1793393957.4657612,
+      "system_ram_used_gib": 22.76245880126953,
+      "system_ram_free_gib": 8.97243881225586,
+      "gpu_memory_mib": 7194.0,
+      "gpu_utilization_percent": 96.0,
+      "gpu_temperature_c": 74.07,
+      "gpu_power_w": 61.07
+    },
+    {
+      "time": 1793393958.6398032,
+      "system_ram_used_gib": 23.148338317871094,
+      "system_ram_free_gib": 8.586559295654297,
+      "gpu_memory_mib": 7194.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.66,
+      "gpu_power_w": 60.72
+    },
+    {
+      "time": 1793393959.7532055,
+      "system_ram_used_gib": 23.745689392089844,
+      "system_ram_free_gib": 7.989208221435547,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.23,
+      "gpu_power_w": 58.53
+    },
+    {
+      "time": 1793393960.9505801,
+      "system_ram_used_gib": 24.83871841430664,
+      "system_ram_free_gib": 6.89617919921875,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 71.63,
+      "gpu_power_w": 48.87
+    },
+    {
+      "time": 1793393962.050417,
+      "system_ram_used_gib": 25.11693572998047,
+      "system_ram_free_gib": 6.617961883544922,
+      "gpu_memory_mib": 7194.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.69,
+      "gpu_power_w": 57.04
+    },
+    {
+      "time": 1793393963.1499643,
+      "system_ram_used_gib": 25.50208282470703,
+      "system_ram_free_gib": 6.232814788818359,
+      "gpu_memory_mib": 7194.0,
+      "gpu_utilization_percent": 98.0,
+      "gpu_temperature_c": 73.38,
+      "gpu_power_w": 56.5
+    },
+    {
+      "time": 1793393964.3094926,
+      "system_ram_used_gib": 25.759113311767578,
+      "system_ram_free_gib": 5.9757843017578125,
+      "gpu_memory_mib": 7190.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 73.32,
+      "gpu_power_w": 60.61
+    },
+    {
+      "time": 1793393965.390742,
+      "system_ram_used_gib": 26.424571990966797,
+      "system_ram_free_gib": 5.310325622558594,
+      "gpu_memory_mib": 7194.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 73.7,
+      "gpu_power_w": 56.27
+    },
+    {
+      "time": 1793393966.5472257,
+      "system_ram_used_gib": 27.09827423095703,
+      "system_ram_free_gib": 4.636623382568359,
+      "gpu_memory_mib": 7230.0,
+      "gpu_utilization_percent": 27.0,
+      "gpu_temperature_c": 70.71,
+      "gpu_power_w": 54.84
+    },
+    {
+      "time": 1793393967.6118808,
+      "system_ram_used_gib": 27.66763687133789,
+      "system_ram_free_gib": 4.0672607421875,
+      "gpu_memory_mib": 7232.0,
+      "gpu_utilization_percent": 96.0,
+      "gpu_temperature_c": 74.73,
+      "gpu_power_w": 58.09
+    },
+    {
+      "time": 1793393968.708846,
+      "system_ram_used_gib": 27.82341766357422,
+      "system_ram_free_gib": 3.911479949951172,
+      "gpu_memory_mib": 7232.0,
+      "gpu_utilization_percent": 95.0,
+      "gpu_temperature_c": 72.49,
+      "gpu_power_w": 54.13
+    },
+    {
+      "time": 1793393969.8661046,
+      "system_ram_used_gib": 27.927879333496094,
+      "system_ram_free_gib": 3.807018280029297,
+      "gpu_memory_mib": 7232.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 72.86,
+      "gpu_power_w": 57.34
+    },
+    {
+      "time": 1793393970.9713287,
+      "system_ram_used_gib": 28.091121673583984,
+      "system_ram_free_gib": 3.6437759399414062,
+      "gpu_memory_mib": 7232.0,
+      "gpu_utilization_percent": 99.0,
+      "gpu_temperature_c": 73.44,
+      "gpu_power_w": 58.79
+    },
+    {
+      "time": 1793393972.1184592,
+      "system_ram_used_gib": 28.188087463378906,
+      "system_ram_free_gib": 3.5468101501464844,
+      "gpu_memory_mib": 7228.0,
+      "gpu_utilization_percent": 100.0,
+      "gpu_temperature_c": 74.18,
+      "gpu_power_w": 61.46
+    },
+    {
+      "time": 1793393973.2076063,
+      "system_ram_used_gib": 28.45846176147461,
+      "system_ram_free_gib": 3.2764358520507812,
+      "gpu_memory_mib": 7248.0,
+      "gpu_utilization_percent": 78.0,
+      "gpu_temperature_c": 73.93,
+      "gpu_power_w": 58.88
+    },
+    {
+      "time": 1793393974.2666085,
+      "system_ram_used_gib": 28.466426849365234,
+      "system_ram_free_gib": 3.2684707641601562,
+      "gpu_memory_mib": 7248.0,
+      "gpu_utilization_percent": 10.0,
+      "gpu_temperature_c": 70.02,
+      "gpu_power_w": 35.5
+    },
+    {
+      "time": 1793393975.3359017,
+      "system_ram_used_gib": 25.94449234008789,
+      "system_ram_free_gib": 5.7904052734375,
+      "gpu_memory_mib": 6784.0,
+      "gpu_utilization_percent": 18.0,
+      "gpu_temperature_c": 67.01,
+      "gpu_power_w": 28.81
+    },
+    {
+      "time": 1793393976.3980691,
+      "system_ram_used_gib": 13.746475219726562,
+      "system_ram_free_gib": 17.988422393798828,
+      "gpu_memory_mib": 6784.0,
+      "gpu_utilization_percent": 20.0,
+      "gpu_temperature_c": 66.27,
+      "gpu_power_w": 17.63
+    },
+    {
+      "time": 1793393977.4593546,
+      "system_ram_used_gib": 7.121189117431641,
+      "system_ram_free_gib": 24.61370849609375,
+      "gpu_memory_mib": 762.0,
+      "gpu_utilization_percent": 27.0,
+      "gpu_temperature_c": 65.81,
+      "gpu_power_w": 17.72
+    },
+    {
+      "time": 1793393978.5200262,
+      "system_ram_used_gib": 7.309333801269531,
+      "system_ram_free_gib": 24.42556381225586,
+      "gpu_memory_mib": 762.0,
+      "gpu_utilization_percent": 28.0,
+      "gpu_temperature_c": 65.43,
+      "gpu_power_w": 17.89
+    },
+    {
+      "time": 1793393979.587427,
+      "system_ram_used_gib": 7.322601318359375,
+      "system_ram_free_gib": 24.412296295166016,
+      "gpu_memory_mib": 758.0,
+      "gpu_utilization_percent": 35.0,
+      "gpu_temperature_c": 64.92,
+      "gpu_power_w": 17.98
+    },
+    {
+      "time": 1793393980.6456587,
+      "system_ram_used_gib": 7.792938232421875,
+      "system_ram_free_gib": 23.941959381103516,
+      "gpu_memory_mib": 778.0,
+      "gpu_utilization_percent": 33.0,
+      "gpu_temperature_c": 64.63,
+      "gpu_power_w": 17.85
+    },
+    {
+      "time": 1793393981.7240095,
+      "system_ram_used_gib": 8.503665924072266,
+      "system_ram_free_gib": 23.231231689453125,
+      "gpu_memory_mib": 2401.0,
+      "gpu_utilization_percent": 11.0,
+      "gpu_temperature_c": 66.41,
+      "gpu_power_w": 28.42
+    },
+    {
+      "time": 1793393982.7839692,
+      "system_ram_used_gib": 9.119739532470703,
+      "system_ram_free_gib": 22.615158081054688,
+      "gpu_memory_mib": 3169.0,
+      "gpu_utilization_percent": 20.0,
+      "gpu_temperature_c": 66.41,
+      "gpu_power_w": 32.79
+    },
+    {
+      "time": 1793393983.8473523,
+      "system_ram_used_gib": 9.967849731445312,
+      "system_ram_free_gib": 21.767047882080078,
+      "gpu_memory_mib": 4137.0,
+      "gpu_utilization_percent": 18.0,
+      "gpu_temperature_c": 66.18,
+      "gpu_power_w": 32.23
+    },
+    {
+      "time": 1793393984.9071288,
+      "system_ram_used_gib": 8.692516326904297,
+      "system_ram_free_gib": 23.042381286621094,
+      "gpu_memory_mib": 5725.0,
+      "gpu_utilization_percent": 19.0,
+      "gpu_temperature_c": 65.15,
+      "gpu_power_w": 27.17
+    },
+    {
+      "time": 1793393985.9716568,
+      "system_ram_used_gib": 9.17593002319336,
+      "system_ram_free_gib": 22.55896759033203,
+      "gpu_memory_mib": 6687.0,
+      "gpu_utilization_percent": 31.0,
+      "gpu_temperature_c": 65.23,
+      "gpu_power_w": 27.29
+    }
+  ],
+  "summary": {
+    "r3-chain16": {
+      "median_tps": 25.0,
+      "by_workload": {
+        "prose": 25.3,
+        "code": 25.0,
+        "json": 24.6
+      },
+      "median_ttft": 1.431868200000281,
+      "wall_tps": 19.858520658742496
+    },
+    "r3-cost16": {
+      "median_tps": 23.4,
+      "by_workload": {
+        "prose": 23.3,
+        "code": 23.4,
+        "json": 26.0
+      },
+      "median_ttft": 1.4291317999995954,
+      "wall_tps": 19.13904253231515
+    },
+    "r3-plain16": {
+      "median_tps": 24.3,
+      "by_workload": {
+        "prose": 24.3,
+        "code": 25.0,
+        "json": 23.1
+      },
+      "median_ttft": 1.4123841000000539,
+      "wall_tps": 19.197365929420773
+    }
+  },
+  "restored_engine": {
+    "model": "qwen3.8-flash-next-gyro-s-abliterated",
+    "max_context": 8192,
+    "images": false,
+    "version": "0.1.54",
+    "logit_bias": 1,
+    "context": 8192,
+    "kv": "fp16",
+    "kv_resident": 0,
+    "expert_slots": 398,
+    "expert_cache_mib": 398,
+    "expert_slots_primary": 398,
+    "expert_cache_primary_mib": 398,
+    "spec": 6,
+    "mtp_max": 4,
+    "lookup": 3,
+    "vram_free_mib": 503,
+    "cvec": 0,
+    "arena_mib": 0,
+    "pool_workers": 23,
+    "pcie_frac": "0.34",
+    "spec_min_p": "0.50",
+    "conversation_cache_mib": 768,
+    "conversation_cache_slots": 2,
+    "conversation_cache_min_free_mib": 2560,
+    "conversation_cache_min_tokens": 0,
+    "tail_role_token": -1,
+    "vram_elastic": 0,
+    "prefill_cap": 256,
+    "prefill_stages": 1,
+    "stream_all_min": 1024,
+    "prefill_pipe": 0,
+    "engine": "0.1.54",
+    "drafting": "mtp",
+    "drafting_note": ""
+  },
+  "restored": true,
+  "finished": "2026-10-30T13:59:46.671379-07:00"
+}

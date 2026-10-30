@@ -1,0 +1,35 @@
+SWITCH r1 1-r1
+WARMUP r1
+RUN r1 prose
+{"mode": "r1", "case": "prose", "tps": 18.0, "ttft": 1.567}
+RUN r1 code
+{"mode": "r1", "case": "code", "tps": 16.3, "ttft": 2.652}
+RUN r1 json
+{"mode": "r1", "case": "json", "tps": 20.7, "ttft": 1.835}
+SWITCH r2-final 2-r2-final
+WARMUP r2-final
+RUN r2-final prose
+{"mode": "r2-final", "case": "prose", "tps": 20.1, "ttft": 1.302}
+RUN r2-final code
+{"mode": "r2-final", "case": "code", "tps": 19.0, "ttft": 2.109}
+RUN r2-final json
+{"mode": "r2-final", "case": "json", "tps": 20.6, "ttft": 1.692}
+SWITCH r2-final 3-r2-final
+WARMUP r2-final
+RUN r2-final prose
+{"mode": "r2-final", "case": "prose", "tps": 20.9, "ttft": 1.338}
+RUN r2-final code
+{"mode": "r2-final", "case": "code", "tps": 18.7, "ttft": 2.362}
+RUN r2-final json
+{"mode": "r2-final", "case": "json", "tps": 18.8, "ttft": 1.81}
+SWITCH r1 4-r1
+WARMUP r1
+RUN r1 prose
+{"mode": "r1", "case": "prose", "tps": 18.7, "ttft": 1.369}
+RUN r1 code
+{"mode": "r1", "case": "code", "tps": 18.9, "ttft": 2.238}
+RUN r1 json
+{"mode": "r1", "case": "json", "tps": 18.5, "ttft": 1.856}
+SUMMARY {"r1": {"median_tps": 18.6, "by_workload": {"prose": 18.35, "code": 17.6, "json": 19.6}, "median_ttft": 1.8454951500002608, "wall_tps": 16.26640454852456}, "r2-final": {"median_tps": 19.55, "by_workload": {"prose": 20.5, "code": 18.85, "json": 19.700000000000003}, "median_ttft": 1.7510089000002154, "wall_tps": 17.358490432983313}}
+SWITCH r1 restore-r1
+RESULT ${STRATA_ROOT}\custom\r2\experiments\20261030-125657\results.json

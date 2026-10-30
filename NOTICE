@@ -1,0 +1,8 @@
+Strata source excerpts and patches are based on Niko1221/Strata.
+Copyright (c) 2026 Niko1221 and the Strata contributors.
+Upstream MIT license is retained in LICENSE.
+
+New documentation and helper scripts: Copyright (c) 2026 AshenJyy.
+These contributions are provided under the MIT license in LICENSE.
+
+Model weights and third-party compiler/runtime libraries are not distributed here.

@@ -1,0 +1,11 @@
+SWITCH r2-profile 1-r2-profile
+WARMUP r2-profile
+RUN r2-profile prose
+{"mode": "r2-profile", "case": "prose", "tps": 16.7, "ttft": 1.461}
+RUN r2-profile code
+{"mode": "r2-profile", "case": "code", "tps": 11.9, "ttft": 4.345}
+RUN r2-profile json
+{"mode": "r2-profile", "case": "json", "tps": 19.3, "ttft": 1.713}
+SUMMARY {"r2-profile": {"median_tps": 16.7, "by_workload": {"prose": 16.7, "code": 11.9, "json": 19.3}, "median_ttft": 1.7127206000004662, "wall_tps": 13.385096125948113}}
+SWITCH r2 restore-r2
+RESULT ${STRATA_ROOT}\custom\r3\experiments\20261030-131146\results.json

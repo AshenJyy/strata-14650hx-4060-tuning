@@ -1,0 +1,35 @@
+SWITCH r3-plain16 1-r3-plain16
+WARMUP r3-plain16
+RUN r3-plain16 prose
+{"mode": "r3-plain16", "case": "prose", "tps": 18.6, "ttft": 1.338}
+RUN r3-plain16 code
+{"mode": "r3-plain16", "case": "code", "tps": 21.9, "ttft": 2.666}
+RUN r3-plain16 json
+{"mode": "r3-plain16", "case": "json", "tps": 23.8, "ttft": 1.783}
+SWITCH r3-base16 2-r3-base16
+WARMUP r3-base16
+RUN r3-base16 prose
+{"mode": "r3-base16", "case": "prose", "tps": 25.0, "ttft": 1.208}
+RUN r3-base16 code
+{"mode": "r3-base16", "case": "code", "tps": 24.8, "ttft": 1.973}
+RUN r3-base16 json
+{"mode": "r3-base16", "case": "json", "tps": 21.8, "ttft": 1.784}
+SWITCH r3-base16 3-r3-base16
+WARMUP r3-base16
+RUN r3-base16 prose
+{"mode": "r3-base16", "case": "prose", "tps": 23.8, "ttft": 1.265}
+RUN r3-base16 code
+{"mode": "r3-base16", "case": "code", "tps": 23.2, "ttft": 1.84}
+RUN r3-base16 json
+{"mode": "r3-base16", "case": "json", "tps": 24.4, "ttft": 1.75}
+SWITCH r3-plain16 4-r3-plain16
+WARMUP r3-plain16
+RUN r3-plain16 prose
+{"mode": "r3-plain16", "case": "prose", "tps": 24.1, "ttft": 1.416}
+RUN r3-plain16 code
+{"mode": "r3-plain16", "case": "code", "tps": 23.9, "ttft": 1.893}
+RUN r3-plain16 json
+{"mode": "r3-plain16", "case": "json", "tps": 23.2, "ttft": 1.805}
+SUMMARY {"r3-plain16": {"median_tps": 23.5, "by_workload": {"prose": 21.35, "code": 22.9, "json": 23.5}, "median_ttft": 1.7936700500004008, "wall_tps": 19.391932475836597}, "r3-base16": {"median_tps": 24.1, "by_workload": {"prose": 24.4, "code": 24.0, "json": 23.1}, "median_ttft": 1.7666732500001672, "wall_tps": 20.73807015815202}}
+SWITCH r2 restore-r2
+RESULT ${STRATA_ROOT}\custom\r3\experiments\20261030-141256\results.json

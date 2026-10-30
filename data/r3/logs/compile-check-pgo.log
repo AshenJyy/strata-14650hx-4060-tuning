@@ -1,0 +1,12 @@
+pool-check.cpp
+PGOMGR : warning PG0188: No .PGC files matching '${STRATA_ROOT}\custom\r3\pgo\pool-check!*.pgc' were found.
+  Reading PGD file 1: ${STRATA_ROOT}\custom\r3\pgo\pool-check.pgd
+Generating code
+
+0 of 0 ( 0.0%) original invalid call sites were matched.
+0 new call sites were added.
+50 of 1919 (  2.61%) profiled functions will be compiled for speed, and the rest of the functions will be compiled for size
+3390 of 9203 inline instances were from dead/cold paths 
+1919 of 2180 functions (88.0%) were optimized using profile data, and the rest of the functions were optimized without using profile data
+16135084246 of 16135090823 instructions (100.0%) were optimized using profile data, and the rest of the instructions were optimized without using profile data
+Finished generating code

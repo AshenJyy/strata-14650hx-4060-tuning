@@ -1,0 +1,89 @@
+{
+  "tuning_results": "${STRATA_ROOT}\\custom\\r2\\experiments\\20261030-124800\\results.json",
+  "selected": "r2",
+  "reason": "Lowest total request wall time over the three equal 256-token workloads; retain r1 MTP and scheduling settings.",
+  "ranking_by_wall_tps": [
+    [
+      17.465294827491768,
+      "r2"
+    ],
+    [
+      17.3460734400501,
+      "r2-mtp6"
+    ],
+    [
+      16.47398892287267,
+      "r2-t192"
+    ],
+    [
+      16.394655109322635,
+      "r2-t96"
+    ],
+    [
+      15.628153642617116,
+      "r2-mtp4p3"
+    ]
+  ],
+  "summary": {
+    "r1": {
+      "median_tps": 19.4,
+      "by_workload": {
+        "prose": 15.8,
+        "code": 19.4,
+        "json": 20.0
+      },
+      "median_ttft": 1.7370181999999659,
+      "wall_tps": 15.91569621503389
+    },
+    "r2": {
+      "median_tps": 19.9,
+      "by_workload": {
+        "prose": 18.5,
+        "code": 19.9,
+        "json": 21.6
+      },
+      "median_ttft": 1.7030334000000948,
+      "wall_tps": 17.465294827491768
+    },
+    "r2-t96": {
+      "median_tps": 20.0,
+      "by_workload": {
+        "prose": 20.0,
+        "code": 15.8,
+        "json": 20.8
+      },
+      "median_ttft": 1.8819499999999607,
+      "wall_tps": 16.394655109322635
+    },
+    "r2-t192": {
+      "median_tps": 19.3,
+      "by_workload": {
+        "prose": 19.3,
+        "code": 16.6,
+        "json": 20.1
+      },
+      "median_ttft": 1.7407210999999734,
+      "wall_tps": 16.47398892287267
+    },
+    "r2-mtp6": {
+      "median_tps": 20.3,
+      "by_workload": {
+        "prose": 18.4,
+        "code": 20.3,
+        "json": 20.5
+      },
+      "median_ttft": 1.7090638999998191,
+      "wall_tps": 17.3460734400501
+    },
+    "r2-mtp4p3": {
+      "median_tps": 18.4,
+      "by_workload": {
+        "prose": 15.5,
+        "code": 18.4,
+        "json": 20.2
+      },
+      "median_ttft": 1.7780493000000206,
+      "wall_tps": 15.628153642617116
+    }
+  }
+}

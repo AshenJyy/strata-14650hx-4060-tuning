@@ -1,0 +1,151 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ee7e9f1..9e02662 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,6 +9,14 @@
+ # and is wrong about its own performance, which is the worst of both outcomes.
+ cmake_minimum_required(VERSION 3.24)
+ project(strata VERSION 0.1.54 LANGUAGES CXX)
++option(STRATA_14650HX_4060 "Local Windows i7-14650HX / RTX 4060 Laptop build" OFF)
++if(STRATA_14650HX_4060)
++  if(NOT MSVC OR NOT WIN32)
++    message(FATAL_ERROR "STRATA_14650HX_4060 needs Windows and MSVC")
++  endif()
++  add_compile_definitions(STRATA_14650HX_4060=1)
++  message(STATUS "Strata local profile: 14650HX / 4060 Laptop; same quantization and arithmetic")
++endif()
+ # EXPERIMENTAL: the Intel Arc engine, the SYCL port in sycl/ (PR #423; icpx + oneMKL, docs/INTEL_ARC.md). It is its
+ # own project that takes the unported sources from src/; with this on, nothing below is configured.
+ option(STRATA_ENABLE_SYCL "EXPERIMENTAL: build the Intel Arc (SYCL) engine from sycl/ - docs/INTEL_ARC.md" OFF)
+diff --git a/src/kernels/cpu/pool.cpp b/src/kernels/cpu/pool.cpp
+index a43b5c6..dff02c6 100644
+--- a/src/kernels/cpu/pool.cpp
++++ b/src/kernels/cpu/pool.cpp
+@@ -1320,6 +1320,16 @@ void ExpertPool::run_split(ExpertJob* jobs, int n) {
+ }
+ 
+ int ExpertPool::phase_tasks(int64_t rows) const {
++#if defined(STRATA_14650HX_4060)
++    // The queue already lets faster workers claim more work. Finer, bounded row ranges
++    // shorten the last E-core/SMT task without changing any row's arithmetic or reductions.
++    // An explicit task count wins, and other topologies retain the upstream policy.
++    if (tasks_ == 0 && topo_.is_hybrid && topo_.p_cores == 8 && topo_.e_cores == 8) {
++        const int64_t threads = n_ + (host_works_ ? 1 : 0);
++        const int64_t want = (std::min)(6 * threads, (std::max)(threads, rows / 64));
++        return (int) (std::min)(rows, want);
++    }
++#endif
+     return tasks_ == 0 ? 3 * (n_ + (host_works_ ? 1 : 0)) : (int) (std::min)(rows, (int64_t) tasks_);
+ }
+ 
+diff --git a/src/kernels/cpu/tq_avx2.cpp b/src/kernels/cpu/tq_avx2.cpp
+index dbc6b5a..0a2d52f 100644
+--- a/src/kernels/cpu/tq_avx2.cpp
++++ b/src/kernels/cpu/tq_avx2.cpp
+@@ -28,6 +28,17 @@ inline __m256i rows4(const long long* tab, uint32_t s0, uint32_t s1, uint32_t s2
+     return _mm256_blend_epi32(v, _mm256_set1_epi64x(tab[s3]), 0xC0);
+ }
+ 
++#if defined(STRATA_14650HX_4060) && defined(_MSC_VER)
++// MSVC does not implement the GCC unroll directive below. Constant group indices let it
++// fold each trellis bit offset. Only integer weight decoding is changed: the dot products,
++// scale multiplication, FMA order and final reduction are exactly the original operations.
++template <int KB, int M>
++__forceinline __m256i local_tq_group(const long long* tab, const uint8_t* qs, uint64_t wr) {
++    return rows4(tab, tq_state<KB>(qs, wr, 4 * M), tq_state<KB>(qs, wr, 4 * M + 1),
++                     tq_state<KB>(qs, wr, 4 * M + 2), tq_state<KB>(qs, wr, 4 * M + 3));
++}
++#endif
++
+ template <int KB>
+ void rows_t(const int16_t* table, const uint8_t* w, size_t row_bytes, int n, const TqAct* const* a, int nt, float* const* out, int r0,
+             int r1) {
+@@ -43,12 +54,23 @@ void rows_t(const int16_t* table, const uint8_t* w, size_t row_bytes, int n, con
+             const uint8_t* qs = blk + 2;
+             const uint64_t wr = tq_wrap<KB>(qs);
+             __m256i wv[8];   // wv[m] = weights 16m .. 16m+15 (states 4m .. 4m+3)
++#if defined(STRATA_14650HX_4060) && defined(_MSC_VER)
++            wv[0] = local_tq_group<KB, 0>(tab, qs, wr);
++            wv[1] = local_tq_group<KB, 1>(tab, qs, wr);
++            wv[2] = local_tq_group<KB, 2>(tab, qs, wr);
++            wv[3] = local_tq_group<KB, 3>(tab, qs, wr);
++            wv[4] = local_tq_group<KB, 4>(tab, qs, wr);
++            wv[5] = local_tq_group<KB, 5>(tab, qs, wr);
++            wv[6] = local_tq_group<KB, 6>(tab, qs, wr);
++            wv[7] = local_tq_group<KB, 7>(tab, qs, wr);
++#else
+ #if defined(__GNUC__)
+ #pragma GCC unroll 8
+ #endif
+             for (int m = 0; m < 8; ++m)
+                 wv[m] = rows4(tab, tq_state<KB>(qs, wr, 4 * m), tq_state<KB>(qs, wr, 4 * m + 1),
+                               tq_state<KB>(qs, wr, 4 * m + 2), tq_state<KB>(qs, wr, 4 * m + 3));
++#endif
+             const __m128 dx = _mm_set1_ps(tq_half_to_float(tq_ld16(blk)));
+             for (int t = 0; t < nt; ++t) {
+                 const __m256i* q = (const __m256i*) (a[t]->q + 128 * i);
+diff --git a/src/program/generate.cpp b/src/program/generate.cpp
+index 956d2c5..b8c6055 100644
+--- a/src/program/generate.cpp
++++ b/src/program/generate.cpp
+@@ -685,7 +685,13 @@ struct Options {
+     bool no_fast_select = false;       ///< plan v0.3 P7 A/B: FP64 row scores + bit-serial cell top-k
+     /// Plan v0.3 P4: `--expert-cache auto` sizes the VRAM tier from what is free after the weights, the session
+     /// and the KV state, minus this reserve for the graphs, the hit scratch and the head.
++#if defined(STRATA_14650HX_4060)
++    // An automatic target: the small-card planner may trade some of this for the
++    // minimum cache that can LEND prefill buffers, avoiding a second allocation.
++    int vram_reserve_mib = 1024;
++#else
+     int vram_reserve_mib = 700;
++#endif
+     bool vram_reserve_given = false;   ///< --vram-reserve-mib on the command line (#496: no smaller automatic reserve)
+     /// #533 (opt-in): the expert cache in physical segments (CUDA virtual memory management), so the serve loop's
+     /// `VRAM <reserve_mib>` command can give part of it back to other programs and take it again.  Off: one cudaMalloc.
+@@ -2895,7 +2901,10 @@ int main(int argc, char** argv) {
+     if (std::getenv("STRATA_ARENA_MMAP") && std::getenv("STRATA_ARENA_MMAP")[0] == '1')
+         setenv("GPU_PINNED_MIN_XFER_SIZE", "1000000", 0);   // MiB; an explicit setting wins
+ #endif
+-    // Load every CUDA kernel when the context is created, before the expert cache takes the free VRAM.  With the
++#if defined(STRATA_14650HX_4060)
++    std::fprintf(stderr, "strata local build: 14650HX-4060-r1; sm_89; AVX2 trellis unroll; hybrid row scheduling; weights unchanged\n");
++#endif
++    // Load every CUDA kernel when the context is created, before the expert cache takes the free VRAM. With the
+     // default lazy loading, a kernel first used mid-prompt (MMQ for IQ3_XXS at 64K+ on a 12 GB card) found no VRAM
+     // left for its code and the engine ended ("out of memory: cudaFuncSetAttribute").  Costs ~30 MB of VRAM.
+     if (std::getenv("CUDA_MODULE_LOADING") == nullptr) {
+@@ -6733,9 +6742,14 @@ int main(int argc, char** argv) {
+         o.pool_affinity = measure_pool_affinity(srcp, o.pool_workers, !o.no_host_worker, o.pool_tasks);
+     strata::kernels::cpu::ExpertPool pool(o.pool_workers, /*pin=*/true, /*host_works=*/!o.no_host_worker,
+                                         o.pool_affinity, o.pool_tasks);
++    int auto_pool_tasks = 3 * (pool.workers() + (pool.host_works() ? 1 : 0));
++#if defined(STRATA_14650HX_4060)
++    if (pool.is_hybrid() && pool.p_cores() == 8 && pool.e_cores() == 8)
++        auto_pool_tasks = 6 * (pool.workers() + (pool.host_works() ? 1 : 0));
++#endif
+     std::fprintf(stderr, "strata generate: CPU pool tasks/phase: %d%s, participating threads: %d\n",
+-                 o.pool_tasks ? o.pool_tasks : 3 * (pool.workers() + (pool.host_works() ? 1 : 0)),
+-                 o.pool_tasks ? " (capped by rows)" : " (automatic)",
++                 o.pool_tasks ? o.pool_tasks : auto_pool_tasks,
++                 o.pool_tasks ? " (capped by rows)" : " (automatic upper bound, capped by row granularity)",
+                  pool.workers() + (pool.host_works() ? 1 : 0));
+     if (pool.plan_limit()[0] != '\0' && !pool.explicit_cores())   // the default count: what it was bounded by (a configured count is never changed; --pool-cores has its own line below)
+         std::fprintf(stderr, "strata generate: CPU pool: %d workers by default (%d physical cores, %d logical processors; bounded by %s)\n",
+@@ -6949,6 +6963,17 @@ int main(int argc, char** argv) {
+                 reserve_adapted = true;
+             }
+         }
++#if defined(STRATA_14650HX_4060)
++        // On this 8 GiB card a cache too small for the loan caused the prompt path
++        // to allocate its buffers AGAIN, silently consuming the requested reserve.
++        // Keep the automatic minimum-cache tradeoff above; never enter that fallback.
++        if (pf_borrow && o.prefill_auto && o.expert_cache > 0 && o.expert_cache < min_slots) {
++            std::fprintf(stderr, "strata local profile: only %d expert slots fit; %lld are needed to reuse prompt buffers. "
++                                 "Free GPU memory or remove a fixed VRAM reserve; refusing duplicated prompt buffers.\n",
++                         o.expert_cache, (long long) min_slots);
++            return 1;
++        }
++#endif
+         if (o.expert_cache == 0) {
+             // what is short, and what makes room: the numbers a small card picks from
+             const int64_t at_reserve = o.vram_reserve_given ? o.vram_reserve_mib

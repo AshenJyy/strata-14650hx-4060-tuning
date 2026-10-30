@@ -1,0 +1,43 @@
+SWITCH r3-no-mtp 1-r3-no-mtp
+WARMUP r3-no-mtp
+RUN r3-no-mtp prose
+{"mode": "r3-no-mtp", "case": "prose", "tps": 21.6, "ttft": 1.243}
+RUN r3-no-mtp code
+{"mode": "r3-no-mtp", "case": "code", "tps": 19.9, "ttft": 1.877}
+RUN r3-no-mtp json
+{"mode": "r3-no-mtp", "case": "json", "tps": 20.2, "ttft": 1.67}
+SWITCH r3-spec2 2-r3-spec2
+WARMUP r3-spec2
+RUN r3-spec2 prose
+{"mode": "r3-spec2", "case": "prose", "tps": 25.1, "ttft": 1.297}
+RUN r3-spec2 code
+{"mode": "r3-spec2", "case": "code", "tps": 24.9, "ttft": 1.825}
+RUN r3-spec2 json
+{"mode": "r3-spec2", "case": "json", "tps": 23.4, "ttft": 1.495}
+SWITCH r3-spec3 3-r3-spec3
+WARMUP r3-spec3
+RUN r3-spec3 prose
+{"mode": "r3-spec3", "case": "prose", "tps": 24.7, "ttft": 1.388}
+RUN r3-spec3 code
+{"mode": "r3-spec3", "case": "code", "tps": 25.1, "ttft": 1.786}
+RUN r3-spec3 json
+{"mode": "r3-spec3", "case": "json", "tps": 26.2, "ttft": 1.521}
+SWITCH r3-cached8 4-r3-cached8
+WARMUP r3-cached8
+RUN r3-cached8 prose
+{"mode": "r3-cached8", "case": "prose", "tps": 22.1, "ttft": 1.285}
+RUN r3-cached8 code
+{"mode": "r3-cached8", "case": "code", "tps": 23.4, "ttft": 1.937}
+RUN r3-cached8 json
+{"mode": "r3-cached8", "case": "json", "tps": 24.9, "ttft": 1.693}
+SWITCH r2-tuned16 5-r2-tuned16
+WARMUP r2-tuned16
+RUN r2-tuned16 prose
+{"mode": "r2-tuned16", "case": "prose", "tps": 22.4, "ttft": 1.397}
+RUN r2-tuned16 code
+{"mode": "r2-tuned16", "case": "code", "tps": 23.0, "ttft": 1.988}
+RUN r2-tuned16 json
+{"mode": "r2-tuned16", "case": "json", "tps": 22.7, "ttft": 1.562}
+SUMMARY {"r3-no-mtp": {"median_tps": 20.2, "by_workload": {"prose": 21.6, "code": 19.9, "json": 20.2}, "median_ttft": 1.6697462000001906, "wall_tps": 16.43673099667883}, "r3-spec2": {"median_tps": 24.9, "by_workload": {"prose": 25.1, "code": 24.9, "json": 23.4}, "median_ttft": 1.4949931000001015, "wall_tps": 19.02303620825318}, "r3-spec3": {"median_tps": 25.1, "by_workload": {"prose": 24.7, "code": 25.1, "json": 26.2}, "median_ttft": 1.52137379999931, "wall_tps": 19.470355228113736}, "r3-cached8": {"median_tps": 23.4, "by_workload": {"prose": 22.1, "code": 23.4, "json": 24.9}, "median_ttft": 1.6932065999999395, "wall_tps": 18.132777689619115}, "r2-tuned16": {"median_tps": 22.7, "by_workload": {"prose": 22.4, "code": 23.0, "json": 22.7}, "median_ttft": 1.562122699999236, "wall_tps": 17.73751575209223}}
+SWITCH r2 restore-r2
+RESULT ${STRATA_ROOT}\custom\r3\experiments\20261030-135315\results.json

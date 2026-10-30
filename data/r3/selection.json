@@ -1,0 +1,17 @@
+{
+  "build": "14650hx-4060-r2-tuned16",
+  "version": "r2",
+  "engine_build": "14650hx-4060-r2",
+  "config": "${STRATA_ROOT}\\install\\strata-gyro-s-abliterated-14650hx-4060-r2-tuned16.json",
+  "comparison": "${STRATA_ROOT}\\custom\\r3\\final-results.json",
+  "candidate": "r2-tuned16",
+  "median_decode_tps": 24.15,
+  "baseline_median_decode_tps": 21.75,
+  "gain_percent": 11.03448275862069,
+  "pool_cores": "2,4,6,8,10,12,14,16-23",
+  "created_at": "2026-10-30T14:22:46.998286-07:00",
+  "selection_reason": "Highest pooled formal median; PGO differs by only 0.2%, with no demonstrated stable advantage over the validated r2 kernel.",
+  "source_patch": "${STRATA_ROOT}\\custom\\r2\\14650hx-4060-r2.patch",
+  "experimental_patch": "${STRATA_ROOT}\\custom\\r3\\14650hx-4060-r3-experimental.patch",
+  "experimental_patch_deployed": false
+}
