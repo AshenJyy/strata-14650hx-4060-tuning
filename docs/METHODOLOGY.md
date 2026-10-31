@@ -1,5 +1,7 @@
 # 方法、失败和可复现范围
 
+[返回首页](../README.md) · [性能结果](RESULTS.md) · [原始数据索引](../data/README.md)
+
 ## 硬件和模型
 
 - Intel Core i7-14650HX，8P+8E，24 个逻辑处理器；32 GB DDR5-5600。
