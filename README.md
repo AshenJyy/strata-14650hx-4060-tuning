@@ -1,3 +1,5 @@
+<p align="center"><strong>⚠️ 注意：本项目使用的 Qwen3.8-Flash-Next Gyro-S abliterated 模型在实测中会出现基础算术错误，请核验计算结果。</strong></p>
+
 # Strata · i7-14650HX / RTX 4060 Laptop 调优
 
 面向 **Windows、i7-14650HX、RTX 4060 Laptop 8 GB、32 GB DDR5-5600** 的 Strata 补丁与实测记录。测试模型为 **Qwen3.8-Flash-Next Gyro-S abliterated**，保留原 TQK6/TQK7 精度，不重新量化、不剪枝、不跳过路由专家。
